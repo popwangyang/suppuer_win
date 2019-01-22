@@ -150,26 +150,17 @@
 				<el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="80px" size="mini">
 					<el-form-item label="歌曲名称">
 					
-						 <el-autocomplete
-				      class="inline-input"
-				      v-model="formInline.name"
-				      :fetch-suggestions="querySearch"
-				      placeholder="请输入内容"
-				      @select="handleSelect"
-				    ></el-autocomplete>
+	
+					 <el-input v-model="formInline.name" placeholder="请输入内容" style="width: 140px;"></el-input>
 					</el-form-item>
 					<el-form-item label="歌手名称">
 					
-						 <el-autocomplete
-				      class="inline-input"
-				      v-model="formInline.singer"
-				      :fetch-suggestions="querySearch"
-				      placeholder="请输入内容"
-				      @select="handleSelect"
-				    ></el-autocomplete>
+			
+					<el-input v-model="formInline.singer" placeholder="请输入内容" style="width: 140px;"></el-input>
 					</el-form-item>
 					<el-form-item label="时间范围">
 					<el-date-picker
+					size="mini"
 						v-model="formInlineDate"
 						@change="changeDate"
 						type="daterange"
@@ -185,7 +176,7 @@
 					</el-form-item>
 				</el-form>
 			</el-col>
-			<el-col :span="1" style="height: 50px;display: flex;align-items: center;margin-right: 40px;">
+			<el-col :span="2" style="height: 50px;display: flex;align-items: center;margin-right: 0px;">
 				<el-button type="primary" size="mini" @click="onSubmit"  :loading="onSubmitLoading">搜索</el-button>
 			</el-col>
 			<el-col :span="2" style="height: 50px;display: flex;align-items: center;">
@@ -216,7 +207,7 @@
 				
 				
 		 <el-dropdown trigger="click" size="mini">
-      <span class="el-dropdown-link" style="cursor: pointer;">
+      <span class="el-dropdown-link" style="cursor: pointer;color: black;font-size: 12px;">
         歌手类型<i class="el-icon-caret-bottom el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown" >
@@ -231,7 +222,7 @@
 				</li>	
 			<li :style="widthHead1[4]"  >
 				<el-dropdown trigger="click" size="mini">
-					<span class="el-dropdown-link" style="cursor: pointer;">
+					<span class="el-dropdown-link" style="cursor: pointer;color: black;font-size: 12px;">
 						语言<i class="el-icon-caret-bottom el-icon--right"></i>
 					</span>
 					<el-dropdown-menu slot="dropdown" >
@@ -248,7 +239,7 @@
 				</li>
 			<li :style="widthHead1[5]"  >
 			<el-dropdown trigger="click" size="mini">
-				<span class="el-dropdown-link" style="cursor: pointer;">
+				<span class="el-dropdown-link" style="cursor: pointer;color: black;font-size: 12px;">
 					画面<i class="el-icon-caret-bottom el-icon--right"></i>
 				</span>
 				<el-dropdown-menu slot="dropdown" >
@@ -267,7 +258,7 @@
 			<li :style="widthHead1[6]"  >
 				
 				<el-dropdown trigger="click" size="mini">
-					<span class="el-dropdown-link" style="cursor: pointer;">
+					<span class="el-dropdown-link" style="cursor: pointer;color: black;font-size: 12px;">
 						地区<i class="el-icon-caret-bottom el-icon--right"></i>
 					</span>
 					<el-dropdown-menu slot="dropdown" >
@@ -284,7 +275,7 @@
 			<li :style="widthHead1[7]"  >
 				
 				<el-dropdown trigger="click" size="mini">
-					<span class="el-dropdown-link" style="cursor: pointer;">
+					<span class="el-dropdown-link" style="cursor: pointer;color: black;font-size: 12px;">
 						格式<i class="el-icon-caret-bottom el-icon--right"></i>
 					</span>
 					<el-dropdown-menu slot="dropdown" >
@@ -299,7 +290,7 @@
 			<li :style="widthHead1[8]"  >
 				
 				<el-dropdown trigger="click" size="mini">
-					<span class="el-dropdown-link" style="cursor: pointer;">
+					<span class="el-dropdown-link" style="cursor: pointer;color: black;font-size: 12px;">
 						声音版本<i class="el-icon-caret-bottom el-icon--right"></i>
 					</span>
 					<el-dropdown-menu slot="dropdown" >
@@ -317,8 +308,7 @@
 			<li :style="widthHead1[11]" style="position: relative;">
 				<span v-if="!albumJurisdictionFlage">
 					专辑名称
-				</span>
-		
+				</span>		
 				<span v-else>						
 				<span class="el-dropdown-link" style="cursor: pointer;" @click.self.stop="album_nameFlage = !album_nameFlage;company_nameFlage = false;">
 					专辑名称<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -2163,11 +2153,10 @@
 		height: 100%;
 		display: flex;
 		align-items: center;
-		justify-content: center;
-		
-		font-weight: 600;
-		color: #909399;
-    font-size: 14px;
+		justify-content: center;		
+		font-weight: 0;
+		color: black;
+        font-size: 12px;
 	}
 	.box_head>ul{
 		width: 100%;
