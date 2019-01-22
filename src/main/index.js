@@ -20,28 +20,7 @@ const template = [
 		 },
 		 icon:path.join(__static,"/denlu.png")
 	 },
-// 		{
-// 			label:"帮助             ",
-// 				submenu: [
-// 				{
-// 					label: '使用帮助',
-// 					click () { require('electron').shell.openExternal('https://electron.atom.io') }
-// 				},
-// 				{
-// 					label: '关于',
-// 					click () { require('electron').shell.openExternal('https://electron.atom.io') }
-// 				},
-// 				{
-// 					label: '版本升级',
-// 					click () { require('electron').shell.openExternal('https://electron.atom.io') }
-// 				},
-// 				{
-// 					label: '问题反馈',
-// 					click () { require('electron').shell.openExternal('https://electron.atom.io') }
-// 				}
-// 			],
-// 		 icon: path.join(__static,"/问号.png")
-// 		},
+
     {label: "注销             ",
 		 click:function (){
 			        if(numWindow==2){
@@ -83,18 +62,12 @@ if (isSecondInstance) {
 	
 	
 function createWindow () {
-  /**
-   * Initial window options
-   */
-	console.log(package1.version)
     mainWindow = new BrowserWindow({
-    minHeight: 698,
-	maxHeigh:760,
-	maxWidth:1400,
-    width: 1280,
+	minWidth:1028,
+    width: 1200,
     useContentSize: true,
-    minWidth: 1284,
-    height:698,
+	minHeight: 600,
+    height:660,
     frame: false,
     thickFrame :true,
     autoHideMenuBar:true, 
@@ -102,7 +75,7 @@ function createWindow () {
     titleBarStyle:'hiddenInset',
     maximizable:false //Boolean类型（可选参数）- 窗口是否可以最大化。这个参数在Linux中是无效的。默认为true。       
   })
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
   mainWindow.loadURL(winURL)
 
   mainWindow.on('closed', () => {
@@ -299,16 +272,16 @@ ipcMain.on('childWindow',function(){
 var flage = true;
 					
 ipcMain.on("force-update",function(event, arg){
-	var str = "https://test.bjywkd.com/supplier_win/Test_QZupdate/"
-	// var str = "https://test.bjywkd.com/supplier_win/Master_QZupdate/"
+	// var str = "https://test.bjywkd.com/supplier_win/Test_QZupdate/"
+	var str = "https://test.bjywkd.com/supplier_win/Master_QZupdate/"
 	if (process.env.NODE_ENV !== 'development') {
 	  foo(str)
 	}
 	
 });
 ipcMain.on("handle-update",function(event, arg){
-	var str = "https://test.bjywkd.com/supplier_win/Test_HDupdate/"
-	// var str = "https://test.bjywkd.com/supplier_win/Master_HDupdate/"
+	// var str = "https://test.bjywkd.com/supplier_win/Test_HDupdate/"
+	var str = "https://test.bjywkd.com/supplier_win/Master_HDupdate/"
 	if (process.env.NODE_ENV !== 'development') {
 		foo(str)
 	}

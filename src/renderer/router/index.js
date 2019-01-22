@@ -21,7 +21,7 @@ export default new Router({
     	    	path:'/LibraryManagement',
     	    	name:'LibraryManagement',
 						meta: {keepAlive: false},
-    	    	component: require('@/components/LibraryManagement/page1').default,
+    	    	component: require('@/components/LibraryManagement/page2').default,
     	    },			    
     	    {
     	    	path:"/editPage",
