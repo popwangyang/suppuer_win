@@ -917,7 +917,7 @@
 				
 			},
      genxin(){
-			      console.log(this.updateStep,this.HDmessage)
+			      console.log(this.updateStep,this.HDmessage,"pppppp")
 					this.flage = false;//下拉框箭头动画
 					
 					if(this.updateStep == 1){
@@ -943,7 +943,8 @@
 					}else if(this.updateStep == 3){
 						
 						this.dialogHDupdateProgressVisible = true;
-					}		
+					}	
+	                
 			},
 			getVersion(){
 				this.version = localStorage.getItem('version')
@@ -958,7 +959,8 @@
 				setTimeout(()=>{
 					this.updateStep = 1;
 					ipcRenderer.send('force-update');
-				},3000)
+					console.log('force-update')
+				},500)
 				ipcRenderer.on("QZmessage",function(event,message){
 					console.log(message,"QZmessage")
 					

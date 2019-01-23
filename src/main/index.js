@@ -20,28 +20,7 @@ const template = [
 		 },
 		 icon:path.join(__static,"/denlu.png")
 	 },
-// 		{
-// 			label:"帮助             ",
-// 				submenu: [
-// 				{
-// 					label: '使用帮助',
-// 					click () { require('electron').shell.openExternal('https://electron.atom.io') }
-// 				},
-// 				{
-// 					label: '关于',
-// 					click () { require('electron').shell.openExternal('https://electron.atom.io') }
-// 				},
-// 				{
-// 					label: '版本升级',
-// 					click () { require('electron').shell.openExternal('https://electron.atom.io') }
-// 				},
-// 				{
-// 					label: '问题反馈',
-// 					click () { require('electron').shell.openExternal('https://electron.atom.io') }
-// 				}
-// 			],
-// 		 icon: path.join(__static,"/问号.png")
-// 		},
+
     {label: "注销             ",
 		 click:function (){
 			        if(numWindow==2){
@@ -215,6 +194,7 @@ ipcMain.on('window-close',function(){
 	}		
 })
 ipcMain.on("exitLogin",function(){
+	
 	if(numWindow==2){
 		mainWindow.webContents.send('closeChild')
 	}
@@ -297,9 +277,11 @@ ipcMain.on('childWindow',function(){
 var flage = true;
 					
 ipcMain.on("force-update",function(event, arg){
+	flage = true;
 	// var str = "https://test.bjywkd.com/supplier_win/Test_QZupdate/"
 	var str = "https://test.bjywkd.com/supplier_win/Master_QZupdate/"
 	if (process.env.NODE_ENV !== 'development') {
+		console.log('force-update')
 	  foo(str)
 	}
 	
@@ -308,6 +290,7 @@ ipcMain.on("handle-update",function(event, arg){
 	// var str = "https://test.bjywkd.com/supplier_win/Test_HDupdate/"
 	var str = "https://test.bjywkd.com/supplier_win/Master_HDupdate/"
 	if (process.env.NODE_ENV !== 'development') {
+		
 		foo(str)
 	}
 });
@@ -315,7 +298,7 @@ ipcMain.on("handle-update",function(event, arg){
 function foo(url){
 	const os=require("os");
 	let updateFeedUrl;
-	console.log(url)
+	
 	if(os.platform()=='darwin'){
 	            updateFeedUrl=url
 	        }else{
@@ -324,6 +307,7 @@ function foo(url){
 			if(!flage){
 				autoUpdater.autoDownload = false;
 			}
+			
 		  autoUpdater.setFeedURL(updateFeedUrl);
 			
 			//执行自动更新检查
@@ -332,26 +316,26 @@ function foo(url){
 	
 }
 function QZsendMessage(text) {
-		console.log(text)
+		
 	    mainWindow.webContents.send('QZmessage',text)
 	};
 function HDsendMessage(text) {
-		console.log(text)
+		
 	    mainWindow.webContents.send('HDmessage',text)
 	}
 
 	
 //autoUpdater的监听事件；
   autoUpdater.on('error', function(error){
-		 // sendQZUpdateMessage('error')
+		 sendQZUpdateMessage('error')
 	 
 			
 	});
 	autoUpdater.on('checking-for-update', function() {
-
+                    
 			}); 
 	autoUpdater.on('update-available', function(info) {
-					 
+					
 							if(flage){
 								
 								QZsendMessage('update-available')
@@ -369,7 +353,7 @@ function HDsendMessage(text) {
 
 					});
 	 autoUpdater.on('update-not-available', function(info) {
-				console.log("ppp",info)
+			console.log("ooooooopppppppppppppp")
 				if(flage){
 					flage = false;
 					QZsendMessage('update-not-available')
@@ -399,7 +383,7 @@ function HDsendMessage(text) {
 								HDsendMessage('update-downloaded')
 								
 							}			
-							console.log(releaseNotes, releaseName, releaseDate, updateUrl)
+							
 							mainWindow.webContents.send('programInformation', releaseName)
 							ipcMain.on("startInstall",function(){
 								
