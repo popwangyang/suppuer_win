@@ -64,10 +64,11 @@ if (isSecondInstance) {
 function createWindow () {
     mainWindow = new BrowserWindow({
 	minWidth:1028,
-    width: 1200,
+    width: 1280,
     useContentSize: true,
-	minHeight: 600,
-    height:660,
+	minHeight: 700,
+    height:700,
+	maxHeight:700,
     frame: false,
     thickFrame :true,
     autoHideMenuBar:true, 
@@ -272,6 +273,7 @@ ipcMain.on('childWindow',function(){
 var flage = true;
 					
 ipcMain.on("force-update",function(event, arg){
+	flage = true;
 	// var str = "https://test.bjywkd.com/supplier_win/Test_QZupdate/"
 	var str = "https://test.bjywkd.com/supplier_win/Master_QZupdate/"
 	if (process.env.NODE_ENV !== 'development') {

@@ -143,7 +143,7 @@
 	</el-dialog>
 	
 	
-	<div class="soushuo">
+	<div class="soushuo" ref="soushuo">
 		
 		<el-row>
 			<el-col :span="20" style="height: 50px;display: flex;align-items: center;font-size: 12px;">
@@ -151,12 +151,12 @@
 					<el-form-item label="歌曲名称">
 					
 	
-					 <el-input v-model="formInline.name" placeholder="请输入内容" style="width: 140px;"></el-input>
+					 <el-input v-model="formInline.name" placeholder="请输入内容" style="width: 110px;"></el-input>
 					</el-form-item>
 					<el-form-item label="歌手名称">
 					
 			
-					<el-input v-model="formInline.singer" placeholder="请输入内容" style="width: 140px;"></el-input>
+					<el-input v-model="formInline.singer" placeholder="请输入内容" style="width: 110px;"></el-input>
 					</el-form-item>
 					<el-form-item label="时间范围">
 					<el-date-picker
@@ -171,7 +171,8 @@
 						end-placeholder="结束日期"
 						format="yyyy 年 MM 月 dd 日"
             value-format="yyyy-MM-dd"
-						:picker-options="pickerOptions2">
+						:picker-options="pickerOptions2"
+						style="width:200px">
 					</el-date-picker>
 					</el-form-item>
 				</el-form>
@@ -195,7 +196,7 @@
 	
 
 	</div>
-	<div style="height: 59px;width: 100%;" ref="box_head" class="box_head">
+	<div style="height: 59px;width: 100%;display: none;" ref="box_head" class="box_head">
 		<ul>
 			<li style="width:40px">
 				<el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange"></el-checkbox>				
@@ -211,11 +212,11 @@
         歌手类型<i class="el-icon-caret-bottom el-icon--right"></i>
       </span>
       <el-dropdown-menu slot="dropdown" >
-				<el-dropdown-item><el-radio v-model="radioForm.singer_type" :label="100"  @change="singer_typeFilter(100)">全部</el-radio></el-dropdown-item>
+		<el-dropdown-item><el-radio v-model="radioForm.singer_type" :label="100"  @change="singer_typeFilter(100)">全部</el-radio></el-dropdown-item>
         <el-dropdown-item><el-radio v-model="radioForm.singer_type" :label="0"  @change="singer_typeFilter(0)">男歌手</el-radio></el-dropdown-item>
         <el-dropdown-item><el-radio v-model="radioForm.singer_type" :label="1"  @change="singer_typeFilter(1)">女歌手</el-radio></el-dropdown-item>
-			  <el-dropdown-item><el-radio v-model="radioForm.singer_type" :label="2"  @change="singer_typeFilter(2)">组合</el-radio></el-dropdown-item>
-			  <el-dropdown-item><el-radio v-model="radioForm.singer_type" :label="3"  @change="singer_typeFilter(3)">合唱</el-radio></el-dropdown-item>
+		<el-dropdown-item><el-radio v-model="radioForm.singer_type" :label="2"  @change="singer_typeFilter(2)">组合</el-radio></el-dropdown-item>
+		<el-dropdown-item><el-radio v-model="radioForm.singer_type" :label="3"  @change="singer_typeFilter(3)">合唱</el-radio></el-dropdown-item>
 			  
       </el-dropdown-menu>
     </el-dropdown>
@@ -287,7 +288,9 @@
 					</el-dropdown-menu>
 				</el-dropdown>
 				</li>	
-			<li :style="widthHead1[8]"  >
+			<li :style="widthHead1[8]"  
+			
+			>
 				
 				<el-dropdown trigger="click" size="mini">
 					<span class="el-dropdown-link" style="cursor: pointer;color: black;font-size: 12px;">
@@ -421,14 +424,14 @@
 		</ul>
 	</div>
 	<div style="flex: 1; 100%;position: relative;" id="box">
-		<div :class="{aa:flageClass,bb:!flageClass}" :style="height" id="scroll-1" @contextmenu.stop='rightMeun'>
-			<el-table ref="multipleTable" :data="tableData3" tooltip-effect="dark"  @selection-change="handleSelectionChange" @row-contextmenu="hoo" style="width: 100%;font-size: 12px;color: #666666;">
+		<div :class="{aa:flageClass,bb:!flageClass}" style="height:100%" id="scroll-1" @contextmenu.stop='rightMeun'>
+			<el-table ref="multipleTable" :data="tableData3" max-height="584" tooltip-effect="dark"  @selection-change="handleSelectionChange" @row-contextmenu="hoo" style="width: 100%;font-size: 12px;color: #666666;">
 				<el-table-column type="selection" width="40" >
 				</el-table-column>
-				<el-table-column prop="music_code" label="编号" :width="widthHead[0]">
+				<el-table-column prop="music_code" label="编号" fixed="left" :width="widthHead[0]">
 
 				</el-table-column>
-				<el-table-column prop="name" label="歌曲名称" :width="widthHead[1]">
+				<el-table-column prop="name" label="歌曲名称"  :width="widthHead[1]">
 					<template slot-scope="scope">
 						<span v-if="scope.row.name ==null " style="color: red;">
 							缺失
@@ -438,7 +441,7 @@
 						</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="singer" label="歌手名称" :width="widthHead[2]">
+				<el-table-column prop="singer" label="歌手名称"  :width="widthHead[2]">
 					<template slot-scope="scope">
 						<span v-if="scope.row.singer ==null " style="color: red;">
 							缺失
@@ -448,7 +451,10 @@
 						</span>
 					</template>
 				</el-table-column>
-        <el-table-column label="歌手类型" :width="widthHead[3]">
+        <el-table-column label="歌手类型"
+		 width="140"
+		 :render-header="renderHeader1"
+		 >
 					 <template slot-scope="scope">	
 					
 					      <span v-if="scope.row.singer_type =='0'">
@@ -468,12 +474,11 @@
 								 </span> 
 						</template>
 				</el-table-column>
-				<el-table-column prop="language" 
+				<el-table-column 
+				prop="language" 
 				label="语言" 
-				:width="widthHead[4]"
-				:filters="arrLanguage"
-        :filter-method="filterHandler"
-				filter-placement="bottom-end"
+				:render-header="renderHeader2"
+				width="120"
 				>
 					 <template slot-scope="scope">
 						 <span v-if="scope.row.language =='0'">
@@ -502,7 +507,10 @@
 							 </span>
 						</template>
 				</el-table-column>
-				<el-table-column  label="画面" :width="widthHead[5]">
+				<el-table-column  label="画面" 
+				width="110"
+				:render-header="renderHeader3"
+				>
 					<template slot-scope="scope">
 						<span v-if="scope.row.picture =='4'">
 							MTV
@@ -522,7 +530,10 @@
 					
 					</template>
 				</el-table-column>
-			<el-table-column  label="地区" :width="widthHead[6]">
+			<el-table-column  label="地区" 
+			width="110"
+			:render-header="renderHeader4"
+			>
 					<template slot-scope="scope">
 						<span v-if="scope.row.area =='0'">
 							大陆
@@ -544,7 +555,10 @@
 						</span>
 					</template>
 				</el-table-column>
-				<el-table-column label="格式" :width="widthHead[7]">
+				<el-table-column label="格式" 
+				width="110"
+				:render-header="renderHeader5"
+				>
 					<template slot-scope="scope">
 						<span v-if="scope.row.format_type =='0'">
 							 高清
@@ -561,7 +575,10 @@
 					</template>
 				</el-table-column>
 				
-				<el-table-column label="声音版本" :width="widthHead[8]">
+				<el-table-column label="声音版本" 
+				width="150"
+				:render-header="renderHeader6"
+				>
 					<template slot-scope="scope">
 						<span v-if="scope.row.voice_type =='0'">
 							消音
@@ -584,7 +601,9 @@
 					</template>
 				</el-table-column>
 				
-				<el-table-column  label="原唱声轨" :width="widthHead[9]">
+				<el-table-column  label="原唱声轨"
+				 width="150"
+				 >
 					<template slot-scope="scope">
 						<span v-if="scope.row.voice_track =='0'">
 							第1声轨
@@ -603,7 +622,8 @@
 						 </span>
 					</template>
 				</el-table-column>
-				<el-table-column  label="伴唱声轨" :width="widthHead[10]">
+				<el-table-column  label="伴唱声轨" 
+				width="150">
 					<template slot-scope="scope">
 						<span v-if="scope.row.vocal_track =='0'">
 							第1声轨
@@ -622,7 +642,9 @@
 						</span>
 					</template>
 				</el-table-column>
-				<el-table-column prop="album" label="专辑名称" :width="widthHead[11]">
+				<el-table-column prop="album" label="专辑名称" 
+				width="150"
+				:render-header="renderHeader7">
 					<template slot-scope="scope">
 						 <span v-if="scope.row.album ==null ">
 							 无
@@ -633,7 +655,10 @@
 					</template>
 				</el-table-column>
 				
-				<el-table-column prop="company" label="唱片公司" :width="widthHead[12]">
+				<el-table-column prop="company"
+				 label="唱片公司" 
+				 width="150"
+				 :render-header="renderHeader8">
 					<template slot-scope="scope">
 						<span v-if="scope.row.company ==null " >
 							无
@@ -644,7 +669,7 @@
 					</template>
 				</el-table-column>
 				
-				<el-table-column prop="upload_time" label="上传日期" :width="widthHead[13]">
+				<el-table-column prop="upload_time" label="上传日期">
 					<template slot-scope="scope">
 						<span v-if="scope.row.upload_time ==null " style="color: red;">
 							缺失
@@ -657,7 +682,7 @@
 					</template>
 				</el-table-column>
 				
-				<el-table-column label="操作" :width="widthHead[14]">
+				<el-table-column label="操作" fixed="right" :width="widthHead[14]">
 					<template slot-scope="scope">
 						<i class="iconfont icon-bofang" style="font-size: 20px;cursor: pointer;margin: 0 5px;"  @click="play(scope.row.id)" title="播放"></i>
 						<span v-show="user_id == scope.row.user_id">												
@@ -763,6 +788,7 @@
 				fileName: "", //当前上传文件的名字
 				templateFile: "", //最终的模板文件	
 				submitContentLoading: false, //提交按钮的loading图标
+				headerBtnLoading:false, // 表单头部按钮点击正在加载
 				showUpload1:false,
 				replaceVisible: false,
 				replacefileName:"",
@@ -815,7 +841,7 @@
 				page:1,
 				page_size:100,
 				count:0,
-				widthHead:[50,70,80,80,60,70,50,60,80,70,70,80,80,90,160],
+				widthHead:[60,80,80,80,60,70,50,60,80,70,70,80,80,90,160],
 				widthHead1:[],
 				arrLanguage:[
 				    {text:"国语",value:"国语"},
@@ -902,6 +928,227 @@
 			}
 		},
 		methods: {
+			renderHeader1(h, { column, $index }){
+				  return (
+					<div>
+						<el-dropdown trigger="click" onCommand={this.singer_typeFilter} size="mini">
+						 <span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+						   歌手类型<i class="el-icon-caret-bottom el-icon--right"></i>
+						 </span>
+						 <el-dropdown-menu slot="dropdown">														  
+							  <el-dropdown-item command="100">								  
+								  <label><input type="radio"  name="singer_type" value="100" checked onClick={this.stopEvent}/> 全部</label>							
+							  </el-dropdown-item>
+							 <el-dropdown-item command="0">
+							  
+							 <label> <input type="radio"  name="singer_type" value="1" onClick={this.stopEvent}/> 男歌手</label>	
+							    </el-dropdown-item>
+							 <el-dropdown-item command="1">
+								 
+								 <label> <input type="radio"  name="singer_type" value="2" onClick={this.stopEvent}/>女歌手</label>	
+							</el-dropdown-item>
+							 <el-dropdown-item command="2">
+							    
+							    <label> <input type="radio"  name="singer_type" value="3" onClick={this.stopEvent}/>组合</label>	
+							 </el-dropdown-item>
+							 <el-dropdown-item command="3">								
+								 <label> <input type="radio"  name="singer_type" value="4" onClick={this.stopEvent}/>合唱</label>	
+							 </el-dropdown-item>							  
+					  
+						 </el-dropdown-menu>
+					   </el-dropdown>
+					</div>
+				  )
+			},
+	        renderHeader2(h, { column, $index }){
+	        	  return (
+	        		<div>
+	        			<el-dropdown trigger="click" onCommand={this.languageFilter} size="mini">
+	        				<span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+	        					语言<i class="el-icon-caret-bottom el-icon--right"></i>
+	        				</span>
+	        				<el-dropdown-menu slot="dropdown" >
+	        					<el-dropdown-item command="100">
+								  <label><input type="radio"  name="language" value="100" checked onClick={this.stopEvent}/> 全部</label>		
+								
+								</el-dropdown-item>
+	        					<el-dropdown-item command="0">
+								
+								  <label><input type="radio"  name="language" value="100" onClick={this.stopEvent}/> 国语</label>
+								</el-dropdown-item>
+	        					<el-dropdown-item command="1">
+								
+								  <label><input type="radio"  name="language" value="100" /> 粤语</label>
+								</el-dropdown-item>
+	        					<el-dropdown-item command="2">
+								
+								<label><input type="radio"  name="language" value="100" onClick={this.stopEvent}/> 闽南语</label>
+								</el-dropdown-item>
+	        					<el-dropdown-item command="3">
+								
+								<label><input type="radio"  name="language" value="100" onClick={this.stopEvent}/> 英语</label>
+								</el-dropdown-item>
+	        					<el-dropdown-item command="4">
+								
+								<label><input type="radio"  name="language" value="100" onClick={this.stopEvent}/> 日语</label>
+								</el-dropdown-item>
+	        					<el-dropdown-item command="5">
+								
+								<label><input type="radio"  name="language" value="100" onClick={this.stopEvent}/> 韩语</label>
+								</el-dropdown-item>
+	        					<el-dropdown-item command="6">
+								
+								<label><input type="radio"  name="language" value="100" onClick={this.stopEvent}/> 其他</label>
+								</el-dropdown-item>
+	        				</el-dropdown-menu>
+	        			</el-dropdown>
+	        		</div>
+	        	  )
+	        },
+	        renderHeader3(h, { column, $index }){
+	        	  return (
+	        		<div>
+	        			<el-dropdown trigger="click" onCommand={this.pictureFilter} size="mini">
+	        				<span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+	        					画面<i class="el-icon-caret-bottom el-icon--right"></i>
+	        				</span>
+	        				<el-dropdown-menu slot="dropdown" >
+	        					<el-dropdown-item command="100">
+								<label><input type="radio"  name="picture"  checked onClick={this.stopEvent}/> 全部</label>
+								</el-dropdown-item>
+	        					<el-dropdown-item command="4"><label><input type="radio"  name="picture"  onClick={this.stopEvent}/> MTV</label></el-dropdown-item>	      			
+	        					<el-dropdown-item command="1"><label><input type="radio"  name="picture" onClick={this.stopEvent} /> LIVE</label></el-dropdown-item>
+	        					<el-dropdown-item command="2"><label><input type="radio"  name="picture" onClick={this.stopEvent} /> 舞曲</label></el-dropdown-item>
+	        					<el-dropdown-item command="3"><label><input type="radio"  name="picture"  onClick={this.stopEvent}/> 配置画面</label></el-dropdown-item>
+	        				</el-dropdown-menu>
+	        			</el-dropdown>
+	        		</div>
+	        	  )
+	        },	
+		 renderHeader4(h, { column, $index }){
+			  return (
+				<div>
+					<el-dropdown trigger="click" onCommand={this.areaFilter} size="mini">
+						<span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+							地区<i class="el-icon-caret-bottom el-icon--right"></i>
+						</span>
+						<el-dropdown-menu slot="dropdown" >
+							<el-dropdown-item command="100">
+							   <label><input type="radio"  name="area" checked onClick={this.stopEvent}/> 全部</label>
+							</el-dropdown-item>
+							<el-dropdown-item command="0"><label><input type="radio"  name="area"  onClick={this.stopEvent}/> 大陆</label></el-dropdown-item>
+							<el-dropdown-item command="1"><label><input type="radio"  name="area"  onClick={this.stopEvent}/> 港台</label></el-dropdown-item>
+							<el-dropdown-item command="2"> <label><input type="radio"  name="area" onClick={this.stopEvent} /> 日韩</label></el-dropdown-item>
+							<el-dropdown-item command="3"><label><input type="radio"  name="area"  onClick={this.stopEvent}/> 欧美</label></el-dropdown-item>
+							<el-dropdown-item command="4"><label><input type="radio"  name="area" onClick={this.stopEvent} /> 其他</label></el-dropdown-item>						
+						</el-dropdown-menu>
+					</el-dropdown>
+				</div>
+			  )
+		},	
+		 renderHeader5(h, { column, $index }){
+			  return (
+				<div>
+					<el-dropdown trigger="click" onCommand={this.formatFilter} size="mini">
+						<span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+							格式<i class="el-icon-caret-bottom el-icon--right"></i>
+						</span>
+						<el-dropdown-menu slot="dropdown" >
+							<el-dropdown-item command="100">
+							  <label><input type="radio"  name="area"  checked onClick={this.stopEvent}/> 全部</label>
+							</el-dropdown-item>
+							<el-dropdown-item command="0"><label><input type="radio"  name="area"  onClick={this.stopEvent}/> 高清</label></el-dropdown-item>
+							<el-dropdown-item command="1"><label><input type="radio"  name="area"  onClick={this.stopEvent}/> DVD</label></el-dropdown-item>
+							<el-dropdown-item command="2"><label><input type="radio"  name="area" onClick={this.stopEvent} /> MP4</label></el-dropdown-item>
+						</el-dropdown-menu>
+					</el-dropdown>
+				</div>
+			  )
+		},	
+		 renderHeader6(h, { column, $index }){
+			  return (
+				<div>
+					<el-dropdown trigger="click" onCommand={this.voice_typeFilter} size="mini">
+						<span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+							声音版本<i class="el-icon-caret-bottom el-icon--right"></i>
+						</span>
+						<el-dropdown-menu slot="dropdown" >
+							<el-dropdown-item command="100"><label><input type="radio"  name="voice_type"  checked onClick={this.stopEvent}/> 全部</label></el-dropdown-item>
+							<el-dropdown-item command="0"><label><input type="radio"  name="voice_type"  onClick={this.stopEvent}/> 消音</label></el-dropdown-item>
+							<el-dropdown-item command="1"><label><input type="radio"  name="voice_type"  onClick={this.stopEvent}/> 原版伴奏</label></el-dropdown-item>
+							<el-dropdown-item command="2"><label><input type="radio"  name="voice_type"  onClick={this.stopEvent}/> 演唱会</label></el-dropdown-item>
+							<el-dropdown-item command="3"><label><input type="radio"  name="voice_type"  onClick={this.stopEvent}/> remix</label></el-dropdown-item>	
+							<el-dropdown-item command="4"><label><input type="radio"  name="voice_type"  onClick={this.stopEvent}/> 其他</label></el-dropdown-item>	
+						</el-dropdown-menu>
+					</el-dropdown>
+				</div>
+			  )
+		},	
+		 renderHeader7(h, { column, $index }){
+			 if(this.album_nameArr.length > 0){
+				 return (
+						<div>
+							<el-dropdown trigger="click" onCommand={this.album_nameFilter} size="mini">
+								<span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+									专辑名称<i class="el-icon-caret-bottom el-icon--right"></i>
+								</span>
+								<el-dropdown-menu slot="dropdown" style="height:300px;overflow:auto;">
+								   <el-dropdown-item command='100'><label><input type="radio"  name="album_name"  checked onClick={this.stopEvent}/> 全部</label></el-dropdown-item>
+									{
+										this.album_nameArr.map((item) => {
+											return <el-dropdown-item command={item.value}><label><input type="radio"  name="album_name" onClick={this.stopEvent}/> {item.value}</label></el-dropdown-item>
+										})
+									}
+								</el-dropdown-menu>
+							</el-dropdown>
+						</div>
+				 )
+			 }else{
+				 return(
+				 <div>
+				   专辑名称
+				 </div>
+				    
+				 )
+			 }
+			 
+			  
+		},	
+		 renderHeader8(h, { column, $index }){
+		 if(this.company_nameArr.length > 0){
+			 return (
+					<div>
+						<el-dropdown trigger="click" onCommand={this.company_nameFilter} size="mini">
+							<span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+								唱片公司<i class="el-icon-caret-bottom el-icon--right"></i>
+							</span>
+							<el-dropdown-menu slot="dropdown" style="height:300px;overflow:auto;">
+							 <el-dropdown-item command='100'><label><input type="radio"  name="company_name"  checked onClick={this.stopEvent}/> 全部</label></el-dropdown-item>
+								{
+									this.company_nameArr.map((item) => {
+										return <el-dropdown-item command={item.value}><label><input type="radio"  name="company_name" onClick={this.stopEvent} /> {item.value}</label></el-dropdown-item>
+									})
+								}
+							</el-dropdown-menu>
+						</el-dropdown>
+					</div>
+			 )
+		 }else{
+			 return(
+			 <div>
+			  唱片公司
+			 </div>
+			    
+			 )
+		 }
+		 
+		  
+	},
+		stopEvent(){
+			event.stopPropagation();
+			console.log('ppppp')
+		},
+		
 			changeDate(){
 				console.log(this.formInlineDate)
 				if(this.formInlineDate !=null ){
@@ -917,35 +1164,46 @@
 				ipcRenderer.send('download', str);
 			},
 			singer_typeFilter(n){
-				// this.radioForm.singer_type = n
+							
+				this.radioForm.singer_type = n	
+							console.log(n)
 				this.searchHandler()
+				
+				
 			},
 			languageFilter(n){
-				// this.radioForm.language = n
+				this.radioForm.language = n
+				console.log(n)
 				this.searchHandler()
 			},
 			pictureFilter(n){
-				// this.radioForm.picture = n
+				this.radioForm.picture = n
+				console.log(n)
 				this.searchHandler()
 			},
 			areaFilter(n){
-				// this.radioForm.area = n
+				this.radioForm.area = n
+				console.log(n)
 				this.searchHandler()
 			},
 			formatFilter(n){
-				// this.radioForm.format = n
+				this.radioForm.format = n
+				console.log(n)
 				this.searchHandler()
 			},
 			voice_typeFilter(n){
-				// this.radioForm.voice = n
+				this.radioForm.voice = n
+				
 				this.searchHandler()
 			},
-			album_nameFilter(){
+			album_nameFilter(n){
+				this.radioForm.album_name = n
 				this.album_nameFlage = false;
 				console.log(this.radioForm)
 				this.searchHandler()
 			},
-			company_nameFilter(){
+			company_nameFilter(n){
+				this.radioForm.company_name = n
 				this.company_nameFlage = false;
 				console.log(this.radioForm)
 				this.searchHandler()
@@ -1011,7 +1269,6 @@
 						})
 		},
 			searchHandler(){
-				
 				this.isplSolo = false;
 				this.tableData3 = []
 				var _this = this;
@@ -1034,6 +1291,7 @@
 							
 							 _this.count = res.data.count
 							 _this.tableData3 = res.data.results
+							 
 				}).catch(() =>{
 					 _this.loading = false
 					 
@@ -1046,10 +1304,10 @@
 			
 
 			getWidthHead(){
-				console.log(this.$refs.box_head.offsetWidth)  
+				console.log(this.$refs.soushuo.offsetWidth)  
 				var _this = this
 				var arr = this.widthHead;
-				var num1 = this.$refs.box_head.offsetWidth;
+				var num1 = this.$refs.soushuo.offsetWidth;
 				var num2 = 40;
 				var num3 = 0;
 				this.widthHead1 = []
@@ -1933,7 +2191,7 @@
 		mounted() {
 		  this.user_id = localStorage.getItem("user_id");
 			var _this = this
-			this.getWidthHead();
+			// this.getWidthHead();
 			this.loadAllAlbum();
 			this.loadAllCompany();
 			// this.TipsFlage = true;
@@ -1971,7 +2229,7 @@
 				setTimeout(function() {
 					_this.height = "height:" + (document.body.clientHeight - 239) + "px"
 					if(_this.$refs.box_head){
-						_this.getWidthHead()
+						// _this.getWidthHead()
 
 					}
 				
@@ -2012,12 +2270,16 @@
 	}
 </script>
 <style>
+.el-table th div{
+	line-height: 0;
+	color: #909399;
+	}
  .el-picker-panel__shortcut{
 	 font-size: 14px;
  }
 	 
 	#LibraryManagement .has-gutter{
-	display: none;
+	/* display: none; */
 		}
 	.el-notification{
 		display: flex;
@@ -2257,29 +2519,6 @@
 		margin-right: 5px;
 		font-size: 12px;
 	}
+
 	
-	#ulo::-webkit-scrollbar-track, #scroll-1::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		border-radius: 10px;
-		background-color: #f0f0f0;
-	}
-	
-	#ulo::-webkit-scrollbar,#scroll-1::-webkit-scrollbar {
-		width: 10px;
-		background-color: #f0f0f0;
-	}
-	
-	#ulo::-webkit-scrollbar-thumb,#scroll-1::-webkit-scrollbar-thumb {
-		border-radius: 20px;
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-		background-color: #cfd1d3;
-	}
-	
-	#ulo::-webkit-scrollbar-thumb:hover,#scroll-1::-webkit-scrollbar-thumb:hover {
-		background-color: #a7acb1;
-	}
-	
-	#ulo::-webkit-scrollbar-thumb:active,#scroll-1::-webkit-scrollbar-thumb:active {
-		background-color: #9da2a7;
-	}
 </style>

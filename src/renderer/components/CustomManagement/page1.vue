@@ -14,7 +14,7 @@
 											<li :style="widthHead1[5]"  >格式</li>
 											<li :style="widthHead1[6]"  >	
 													<el-dropdown trigger="click" placement="bottom-end" size="mini">
-														 <span class="el-dropdown-link songStateSpan" >
+														 <span class="el-dropdown-link songStateSpan" style="font-size: 12px;">
 															歌曲状态<i class="el-icon-caret-bottom el-icon--right"></i>
 														</span>
 													<!--<el-radio-group v-model="songStateradio">-->
@@ -917,7 +917,7 @@
 				align-items: center;
 				color: #909399;
 				font-weight: 600;
-				font-size: 14px;
+				font-size: 12px;
 
 				}
 				#CustomManagement .box_head li:nth-child(1){
