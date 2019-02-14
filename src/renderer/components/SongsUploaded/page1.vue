@@ -748,7 +748,8 @@
 							"file":file,
 							"upload_data":time,
 							
-					}		
+					}
+					obj.content.status = 0;		
 					this.saveFile([obj])
 				}
 			})

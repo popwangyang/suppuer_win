@@ -423,7 +423,7 @@
 			<li :style="widthHead1[14]"  >操作</li>
 		</ul>
 	</div>
-	<div style="flex: 1; 100%;position: relative;" id="box">
+	<div style="position: relative;" id="box">
 		<div :class="{aa:flageClass,bb:!flageClass}" style="height:100%" id="scroll-1" @contextmenu.stop='rightMeun'>
 			<el-table ref="multipleTable" :data="tableData3" max-height="584" tooltip-effect="dark"  @selection-change="handleSelectionChange" @row-contextmenu="hoo" style="width: 100%;font-size: 12px;color: #666666;">
 				<el-table-column type="selection" width="40" >
@@ -694,10 +694,11 @@
 				</el-table-column>
 			</el-table>
 		</div>
-	</div>
-	<div style="height: 64vh;background: white;width: 100%;position: absolute;left: 0;top: 116px;display: flex;justify-content: center;align-items: center;z-index: 30;" v-show="loading">
+	
+	<div style="height: 536px;background: white;width: 100%;position: absolute;left: 0;top: 46px;display: flex;justify-content: center;align-items: center;z-index: 30;" v-show="loading">
 		<Loading/>
 		<!-- <Error/> -->
+	</div>
 	</div>
 	<div style="height: 50px;width:100%;position: absolute;bottom: 0;right: 0;padding: 0 20px;box-sizing: border-box;border-top: 1px solid gainsboro;">
 		<div class="block lastBlock">

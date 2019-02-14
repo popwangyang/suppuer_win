@@ -132,15 +132,18 @@
 					}
 				}
 				if(file.content.status == 3){
-					config += "/x:id/"+Base64.encode(file.THid);
-					stateCode = 204;
+					config += "/x:id/"+Base64.encode(file.THid);					
+					stateCode = 204;					
 				}
 				this.url = this.urlText + "/mkfile/" + this.file.size + "/key/" + this.key + "/" + config;
 				var xhr = new XMLHttpRequest();
 				xhr.open('post', this.url, true);
-
+               
+				
 				xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
-
+                
+				
+				
 				xhr.onreadystatechange = function(response) {
 					if (xhr.readyState == 4 && xhr.status == stateCode) {
 							console.log("上传完成")
