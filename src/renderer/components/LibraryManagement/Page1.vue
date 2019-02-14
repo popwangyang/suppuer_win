@@ -933,7 +933,7 @@
 				  return (
 					<div>
 						<el-dropdown trigger="click" onCommand={this.singer_typeFilter} size="mini">
-						 <span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
+						 <span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;width:40px">
 						   歌手类型<i class="el-icon-caret-bottom el-icon--right"></i>
 						 </span>
 						 <el-dropdown-menu slot="dropdown">														  
