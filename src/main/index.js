@@ -68,9 +68,11 @@ function createWindow () {
 	console.log(package1.version)
     mainWindow = new BrowserWindow({
     maxHeight: 760,
+	minHeight: 760,
     width: 1400,
     useContentSize: true,
     maxWidth: 1400,
+	minWidth: 1400,
     height:760,
     frame: false,
     thickFrame :true,
