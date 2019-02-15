@@ -63,22 +63,14 @@ if (isSecondInstance) {
 	
 function createWindow () {
     mainWindow = new BrowserWindow({
-<<<<<<< HEAD
+
 	minWidth:1080,
     width: 1280,
     useContentSize: true,
 	minHeight: 700,
     height:700,
 	maxHeight:700,
-=======
-    maxHeight: 760,
-	minHeight: 760,
-    width: 1400,
-    useContentSize: true,
-    maxWidth: 1400,
-	minWidth: 1400,
-    height:760,
->>>>>>> test
+
     frame: false,
     thickFrame :true,
     autoHideMenuBar:true, 

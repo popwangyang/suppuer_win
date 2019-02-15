@@ -759,13 +759,10 @@
 							"file":file,
 							"upload_data":time,
 							
-<<<<<<< HEAD
-					}
-					obj.content.status = 0;		
-=======
+
 					}		
 					obj.content.status = 0;
->>>>>>> test
+
 					this.saveFile([obj])
 				}
 			})
