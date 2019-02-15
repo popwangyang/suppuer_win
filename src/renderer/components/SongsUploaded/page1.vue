@@ -257,6 +257,7 @@
 	
 	const fs = require("fs")
 	var filename=`${__dirname}/../../assets/data.json`;
+	import { validateFormat } from '../util.js'
 	import { post , get } from '../api.js';
 	export default{
 		data(){
@@ -504,31 +505,28 @@
 		 foo(e,data){
 			 console.log(data)
 			 if(data){
-				 if(data.type.split("/")[0] == 'video'){
+				 if(data.type.split("/")[0] == 'video' || validateFormat(data.name)){
 					 
 				 this.getName(data,true);
 				 }else{
 					 this.$notify({				          
-					 							message: '请导入视频文件！',
-					 							type: 'warning',
-					 							offset: 60,
-					 							duration:1000,
-					 						});
-					 
-				 }
-			 
+						message: '请导入视频文件！',
+						type: 'warning',
+						offset: 60,
+						duration:1000,
+					});					 
+				 }		 
 			 }else{
 				console.log(this.$refs.file.files[0].type.split("/")[0],"视屏文件")
-				if(this.$refs.file.files[0].type.split("/")[0] == 'video'){
-					this.getName(this.$refs.file.files[0],true);
-				
+				if(this.$refs.file.files[0].type.split("/")[0] == 'video' || validateFormat(this.$refs.file.files[0].name)){
+					this.getName(this.$refs.file.files[0],true);				
 					}else{
 				   this.$notify({				          
-										message: '请导入视频文件！',
-										type: 'warning',
-										offset: 60,
-										duration:1000,
-									});
+						message: '请导入视频文件！',
+						type: 'warning',
+						offset: 60,
+						duration:1000,
+					});
 				}
 			 }
 		},
@@ -563,7 +561,8 @@
 										 		"id":new Date().getTime(),
 										 		"name":data.name,										
 										 		"path":data.path,
-										 		"type":data.type.split("/")[1],
+										 		"type":data.type.split("/")[1] || data.name.split(".")[data.name.split(".").length - 1],
+												
 										 		"isRepeated":false,
 										 		"size":data.size,
 										 		"upState":"0",
@@ -739,7 +738,7 @@
 							"id":new Date().getTime(),
 							"name":file.name,										
 							"path":file.path,
-							"type":file.type.split("/")[1],
+							"type":file.type.split("/")[1] || file.name.split(".")[file.name.split(".").length - 1],
 							"isRepeated":false,
 							"size":file.size,
 							"upState":"0",
@@ -874,7 +873,7 @@
 					 _this.delectesVisible = true	
 				})
 			Bus.$on("DRfoo",function(data){	    //Main导入函数；
-			if(data.type.split('/')[0] == 'video'){
+			if(data.type.split('/')[0] == 'video' || validateFormat(data.name)){
 				
 			    	_this.getName(data,true)		
 						
