@@ -63,12 +63,22 @@ if (isSecondInstance) {
 	
 function createWindow () {
     mainWindow = new BrowserWindow({
+<<<<<<< HEAD
 	minWidth:1080,
     width: 1280,
     useContentSize: true,
 	minHeight: 700,
     height:700,
 	maxHeight:700,
+=======
+    maxHeight: 760,
+	minHeight: 760,
+    width: 1400,
+    useContentSize: true,
+    maxWidth: 1400,
+	minWidth: 1400,
+    height:760,
+>>>>>>> test
     frame: false,
     thickFrame :true,
     autoHideMenuBar:true, 
@@ -191,6 +201,7 @@ ipcMain.on('window-close',function(){
 	}		
 })
 ipcMain.on("exitLogin",function(){
+	
 	if(numWindow==2){
 		mainWindow.webContents.send('closeChild')
 	}
@@ -277,6 +288,7 @@ ipcMain.on("force-update",function(event, arg){
 	// var str = "https://test.bjywkd.com/supplier_win/Test_QZupdate/"
 	var str = "https://test.bjywkd.com/supplier_win/Master_QZupdate/"
 	if (process.env.NODE_ENV !== 'development') {
+		console.log('force-update')
 	  foo(str)
 	}
 	
@@ -285,6 +297,7 @@ ipcMain.on("handle-update",function(event, arg){
 	// var str = "https://test.bjywkd.com/supplier_win/Test_HDupdate/"
 	var str = "https://test.bjywkd.com/supplier_win/Master_HDupdate/"
 	if (process.env.NODE_ENV !== 'development') {
+		
 		foo(str)
 	}
 });
@@ -292,7 +305,7 @@ ipcMain.on("handle-update",function(event, arg){
 function foo(url){
 	const os=require("os");
 	let updateFeedUrl;
-	console.log(url)
+	
 	if(os.platform()=='darwin'){
 	            updateFeedUrl=url
 	        }else{
@@ -301,6 +314,7 @@ function foo(url){
 			if(!flage){
 				autoUpdater.autoDownload = false;
 			}
+			
 		  autoUpdater.setFeedURL(updateFeedUrl);
 			
 			//执行自动更新检查
@@ -309,26 +323,26 @@ function foo(url){
 	
 }
 function QZsendMessage(text) {
-		console.log(text)
+		
 	    mainWindow.webContents.send('QZmessage',text)
 	};
 function HDsendMessage(text) {
-		console.log(text)
+		
 	    mainWindow.webContents.send('HDmessage',text)
 	}
 
 	
 //autoUpdater的监听事件；
   autoUpdater.on('error', function(error){
-		 // sendQZUpdateMessage('error')
+		 sendQZUpdateMessage('error')
 	 
 			
 	});
 	autoUpdater.on('checking-for-update', function() {
-
+                    
 			}); 
 	autoUpdater.on('update-available', function(info) {
-					 
+					
 							if(flage){
 								
 								QZsendMessage('update-available')
@@ -346,7 +360,7 @@ function HDsendMessage(text) {
 
 					});
 	 autoUpdater.on('update-not-available', function(info) {
-				console.log("ppp",info)
+			console.log("ooooooopppppppppppppp")
 				if(flage){
 					flage = false;
 					QZsendMessage('update-not-available')
@@ -376,7 +390,7 @@ function HDsendMessage(text) {
 								HDsendMessage('update-downloaded')
 								
 							}			
-							console.log(releaseNotes, releaseName, releaseDate, updateUrl)
+							
 							mainWindow.webContents.send('programInformation', releaseName)
 							ipcMain.on("startInstall",function(){
 								

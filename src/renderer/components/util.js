@@ -274,3 +274,12 @@ export const getDingZiNum = function(cb){
 	  console.log(error)
 	})
 }
+
+export const validateFormat = function (name){
+	var formate = name.split(".")[name.split(".").length - 1];
+	var formateArr = [ 'mp4', 'mpg', 'mpeg', 'mkv'];
+	var flage = formateArr.indexOf(formate) == -1 ? false:true;
+	console.log(flage, "oooooooooooooooo")
+	return flage;   
+	
+}
