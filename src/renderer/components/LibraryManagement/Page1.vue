@@ -452,7 +452,7 @@
 					</template>
 				</el-table-column>
         <el-table-column label="歌手类型"
-		 width="140"
+		 width="100"
 		 :render-header="renderHeader1"
 		 >
 					 <template slot-scope="scope">	
@@ -478,7 +478,7 @@
 				prop="language" 
 				label="语言" 
 				:render-header="renderHeader2"
-				width="120"
+				width="80"
 				>
 					 <template slot-scope="scope">
 						 <span v-if="scope.row.language =='0'">
@@ -508,7 +508,7 @@
 						</template>
 				</el-table-column>
 				<el-table-column  label="画面" 
-				width="110"
+				width="80"
 				:render-header="renderHeader3"
 				>
 					<template slot-scope="scope">
@@ -531,7 +531,7 @@
 					</template>
 				</el-table-column>
 			<el-table-column  label="地区" 
-			width="110"
+			width="80"
 			:render-header="renderHeader4"
 			>
 					<template slot-scope="scope">
@@ -556,7 +556,8 @@
 					</template>
 				</el-table-column>
 				<el-table-column label="格式" 
-				width="110"
+				width="80"
+				align="center"
 				:render-header="renderHeader5"
 				>
 					<template slot-scope="scope">
@@ -576,7 +577,7 @@
 				</el-table-column>
 				
 				<el-table-column label="声音版本" 
-				width="150"
+				width="110"
 				:render-header="renderHeader6"
 				>
 					<template slot-scope="scope">
@@ -602,7 +603,7 @@
 				</el-table-column>
 				
 				<el-table-column  label="原唱声轨"
-				 width="150"
+				 width="80"
 				 >
 					<template slot-scope="scope">
 						<span v-if="scope.row.voice_track =='0'">
@@ -623,7 +624,7 @@
 					</template>
 				</el-table-column>
 				<el-table-column  label="伴唱声轨" 
-				width="150">
+				width="80">
 					<template slot-scope="scope">
 						<span v-if="scope.row.vocal_track =='0'">
 							第1声轨
@@ -643,7 +644,7 @@
 					</template>
 				</el-table-column>
 				<el-table-column prop="album" label="专辑名称" 
-				width="150"
+				width="110"
 				:render-header="renderHeader7">
 					<template slot-scope="scope">
 						 <span v-if="scope.row.album ==null ">
@@ -657,7 +658,7 @@
 				
 				<el-table-column prop="company"
 				 label="唱片公司" 
-				 width="150"
+				 width="110"
 				 :render-header="renderHeader8">
 					<template slot-scope="scope">
 						<span v-if="scope.row.company ==null " >
@@ -934,7 +935,7 @@
 				  return (
 					<div>
 						<el-dropdown trigger="click" onCommand={this.singer_typeFilter} size="mini">
-						 <span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;width:40px">
+						 <span class="el-dropdown-link" style="cursor: pointer;color: #909399;font-size: 12px;">
 						   歌手类型<i class="el-icon-caret-bottom el-icon--right"></i>
 						 </span>
 						 <el-dropdown-menu slot="dropdown">														  

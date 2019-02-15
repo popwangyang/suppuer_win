@@ -900,7 +900,7 @@
 				}
 				#CustomManagement .box{
 				overflow: auto;
-				margin-right: 5px;
+				
 				font-size: 12px;
 				}
 				#CustomManagement .box_head ul{
@@ -996,7 +996,7 @@
 				.el-select-dropdown__item{
 				font-size: 12px;
 				}
-				#scroll-1::-webkit-scrollbar-track,.el-checkbox-group::-webkit-scrollbar-track {
+				/* #scroll-1::-webkit-scrollbar-track,.el-checkbox-group::-webkit-scrollbar-track {
 				-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 				border-radius: 10px;
 				background-color: #f0f0f0;
@@ -1019,5 +1019,5 @@
 
 				#scroll-1::-webkit-scrollbar-thumb:active,.el-checkbox-group::-webkit-scrollbar-thumb:active {
 				background-color: #9da2a7;
-				}	
+				}	 */
 				</style>

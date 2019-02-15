@@ -55,31 +55,34 @@
 			 </el-dialog>
 			 <el-table
 				ref="multipleTable"
+				:max-height="this.getHeight()"
 				:data="fileList"
 				tooltip-effect="dark"
 				style="width: 100%"
 				@selection-change="handleSelectionChange">
 				<el-table-column
 				  type="selection"
+				  fixed
 				  width="55">
 				</el-table-column>
 				<el-table-column
+				  fixed
 				  label="编号"
 				  min-width="50">
 				  <template slot-scope="scope">{{ scope.row.id }}</template>
 				</el-table-column>
 				<el-table-column
 				  prop="content.name"
+				  fixed
 				  label="歌曲名称"
 				  min-width="100">
 					<template slot-scope="scope">
 						  <span v-if="scope.row.content.name == null" style="color: red;">缺失</span>
 						  <span v-else>{{scope.row.content.name}}</span>
-
 					</template>
-
 				</el-table-column>
 				<el-table-column
+				  fixed
 				  prop="content.singer"
 				  label="歌手名称"
 				  min-width="100">
@@ -206,6 +209,7 @@
 				<el-table-column
 				prop="content.songeState"
 				label="状态"
+				fixed='right'
 				min-width="70">
 				<template slot-scope="scope">
 					<span v-if="scope.row.content.status ==0">
@@ -225,6 +229,7 @@
 				<el-table-column
 				prop="address"
 				label="操作"
+				fixed='right'
 				min-width="130">
 				<template slot-scope="scope">
         <i class="el-icon-upload" style="font-size: 20px; cursor: pointer; margin: 0px 5px;" @click="uploadFile(scope.row.id)" v-if="scope.row.content.status == 0"></i>
@@ -590,6 +595,13 @@
 				}
 			
 		},
+		getHeight(){
+			var box = document.getElementById('SongsUploaded');
+			if(box != null){
+				    console.log(box);
+				return box.offsetHeight - 50;
+			}
+		},
 		chaxun(data,file){
 			console.log(data)
 			var send_data = {};
@@ -909,10 +921,14 @@
 	.el-table .warning-row {
     background: oldlace;
 		color: black;
+	
   }
 
   .el-table .error-row {
     color: red;
+  }
+  .el-table{
+	  font-size:12px ;
   }
 	.el-table .warning-error-row{
 		background: oldlace;
@@ -926,7 +942,10 @@
 		font-style: normal;
 		
 	}
+	#SongsUploaded .cell {
 	
+	font-size: 12px;
+	}
 	#SongsUploaded{
 		width: 100%;
 		height: 100%;
@@ -996,7 +1015,7 @@
 			opacity: 0;
             -ms-filter: 'alpha(opacity=0)';
         }
-  #scroll-1::-webkit-scrollbar-track,.el-checkbox-group::-webkit-scrollbar-track {
+ /* #scroll-1::-webkit-scrollbar-track,.el-checkbox-group::-webkit-scrollbar-track {
 	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 	border-radius: 10px;
 	background-color: #f0f0f0;
@@ -1019,6 +1038,6 @@
 
 	#scroll-1::-webkit-scrollbar-thumb:active,.el-checkbox-group::-webkit-scrollbar-thumb:active {
 	background-color: #9da2a7;
-	}	
+	}	 */
 		
 </style>

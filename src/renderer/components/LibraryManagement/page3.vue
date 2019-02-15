@@ -5,7 +5,7 @@
 
 
 
-			<el-row style="width: 1120px;">
+			<el-row style="width: 960px;">
 				<el-col>
 					<h1 style="color: #666666;margin-left: 20px;">歌曲信息</h1>
 				</el-col>
@@ -61,7 +61,7 @@
 
 					<el-col :span="20" :offset="1" style="display: flex;justify-content:flex-start;">
 
-						<el-form-item label="唱片公司" prop="company" style="margin-left: 26px;" v-show="companyJurisdictionFlage">
+						<el-form-item label="唱片公司" prop="company" style="margin-left: 10px;" v-show="companyJurisdictionFlage">
 							<el-autocomplete class="inline-input" v-model="formInline.company" :fetch-suggestions="querySearch1" placeholder="无"
 							 @select="handleSelect1"></el-autocomplete>
 						</el-form-item>
@@ -90,18 +90,17 @@
 					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 30px;'>
 						<div>
 							<h3 style="color: #666666;">画面</h3>
-							<el-radio-group v-model="formInline.picture" style="margin-left: 20px;">
+							<el-radio-group v-model="formInline.picture" style="margin-left: 10px;">
 								<el-radio :label="4"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">MTV </i></el-radio>
 								<el-radio :label="1"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">LIVE </i></el-radio>
 								<el-radio :label="2"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">舞曲 </i></el-radio>
 								<el-radio :label="3"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">配置画面</i></el-radio>
 								<!--<el-radio :label="4"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">MTV</i></el-radio>-->
-
 							</el-radio-group>
 						</div>
 						<div>
 							<h3 style="color: #666666;">原唱声轨</h3>
-							<el-radio-group v-model="formInline.voice_track" style="margin-left: 20px;">
+							<el-radio-group v-model="formInline.voice_track" style="margin-left: 10px;">
 								<el-radio :label="0"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">第1声轨</i></el-radio>
 								<el-radio :label="1"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">第2声轨</i></el-radio>
 								<el-radio :label="2"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">左声道</i></el-radio>
@@ -112,18 +111,18 @@
 					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 30px;'>
 						<div>
 							<h3 style="color: #666666;">声音版本</h3>
-							<el-radio-group v-model="formInline.voice_type" style="margin-left: 20px;">
-								<el-radio :label="1"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">原版伴奏</i></el-radio>
-								<el-radio :label="0"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">消音</i></el-radio>
-								<el-radio :label="2"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">演唱会</i></el-radio>
-								<el-radio :label="3"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">remix</i></el-radio>
-								<el-radio :label="4"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">其他</i></el-radio>
+							<el-radio-group v-model="formInline.voice_type" style="margin-left: 10px;">
+								<el-radio :label="1"><i style="display: inline-block;width: 40px;font-style: normal;color: #666666;">原版伴奏</i></el-radio>
+								<el-radio :label="0"><i style="display: inline-block;width: 40px;font-style: normal;color: #666666;">消音</i></el-radio>
+								<el-radio :label="2"><i style="display: inline-block;width: 40px;font-style: normal;color: #666666;">演唱会</i></el-radio>
+								<el-radio :label="3"><i style="display: inline-block;width: 40px;font-style: normal;color: #666666;">remix</i></el-radio>
+								<el-radio :label="4"><i style="display: inline-block;width: 40px;font-style: normal;color: #666666;">其他</i></el-radio>
 
 							</el-radio-group>
 						</div>
 						<div>
 							<h3 style="color: #666666;">伴唱声轨</h3>
-							<el-radio-group v-model="formInline.vocal_track" style="margin-left: 20px;">
+							<el-radio-group v-model="formInline.vocal_track" style="margin-left: 10px;">
 								<el-radio :label="0"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">第1声轨</i></el-radio>
 								<el-radio :label="1"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">第2声轨</i></el-radio>
 								<el-radio :label="2"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">左声道</i></el-radio>
@@ -135,7 +134,7 @@
 					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 30px;'>
 						<div>
 							<h3 style="color: #666666;">格式</h3>
-							<el-radio-group v-model="formInline.format_type" style="margin-left: 20px;">
+							<el-radio-group v-model="formInline.format_type" style="margin-left: 10px;">
 								<el-radio :label="1"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">DVD</i></el-radio>
 								<el-radio :label="0"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">高清</i></el-radio>
 								<el-radio :label="2"><i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">MP4</i></el-radio>
@@ -1180,10 +1179,7 @@
 	#editPage .box {
 		overflow: auto;
 		flex: 1;
-		/*background: yellow;*/
-		/*display: none;*/
-		margin-right: 5px;
-		/**/
+		
 	}
 
 	#editPage .el-form-item__label {
@@ -1214,7 +1210,7 @@
 		font-size: 12px;
 	}
 
-	#scroll-1::-webkit-scrollbar-track,
+	/* #scroll-1::-webkit-scrollbar-track,
 	.el-checkbox-group::-webkit-scrollbar-track {
 		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 		border-radius: 10px;
@@ -1242,5 +1238,5 @@
 	#scroll-1::-webkit-scrollbar-thumb:active,
 	.el-checkbox-group::-webkit-scrollbar-thumb:active {
 		background-color: #9da2a7;
-	}
+	} */
 </style>
