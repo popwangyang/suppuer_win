@@ -74,12 +74,12 @@ Vue.directive('tishi',{
 			}
 		}		
 	})
-var devInnerHeight = 1080.0 // 开发时的InnerHeight
-var devDevicePixelRatio = 1.0// 开发时的devicepixelratio
-var devScaleFactor = 1.3 // 开发时的ScaleFactor
-var scaleFactor = require('electron').screen.getPrimaryDisplay().scaleFactor
-var zoomFactor = (window.innerHeight / devInnerHeight) * (window.devicePixelRatio / devDevicePixelRatio) * (devScaleFactor / scaleFactor)
-require('electron').webFrame.setZoomFactor(zoomFactor)
+// var devInnerHeight = 1200.0 // 开发时的InnerHeight
+// var devDevicePixelRatio = 0.84// 开发时的devicepixelratio
+// var devScaleFactor = 1.4 // 开发时的ScaleFactor
+// var scaleFactor = require('electron').screen.getPrimaryDisplay().scaleFactor
+// var zoomFactor = (window.innerHeight / devInnerHeight) * (window.devicePixelRatio / devDevicePixelRatio) * (devScaleFactor / scaleFactor)
+// require('electron').webFrame.setZoomFactor(zoomFactor)
 new Vue({
 	data:{
 		Bus: new Vue()

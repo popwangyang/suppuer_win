@@ -423,9 +423,9 @@
 			<li :style="widthHead1[14]"  >操作</li>
 		</ul>
 	</div>
-	<div style="position: relative;" id="box">
+	<div style="flex: 1;position: relative;" id="box">
 		<div :class="{aa:flageClass,bb:!flageClass}" style="height:100%" id="scroll-1" @contextmenu.stop='rightMeun'>
-			<el-table ref="multipleTable" :data="tableData3" max-height="584" tooltip-effect="dark"  @selection-change="handleSelectionChange" @row-contextmenu="hoo" style="width: 100%;font-size: 12px;color: #666666;">
+			<el-table ref="multipleTable" :data="tableData3" :max-height="this.getHeight()" tooltip-effect="dark"  @selection-change="handleSelectionChange" @row-contextmenu="hoo" style="width: 100%;font-size: 12px;color: #666666;">
 				<el-table-column type="selection" width="40" >
 				</el-table-column>
 				<el-table-column prop="music_code" label="编号" fixed="left" :width="widthHead[0]">
@@ -700,13 +700,7 @@
 		<!-- <Error/> -->
 	</div>
 	</div>
-	<div style="height: 50px;width:100%;position: absolute;bottom: 0;right: 0;padding: 0 20px;box-sizing: border-box;border-top: 1px solid gainsboro;">
-		<div class="block lastBlock">
-			<span class="demonstration" style="color: #999999;">已加载{{tableData3.length}}条数据</span>
-			<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[100, 200, 300, 400]" :page-size="page_size" layout="total, sizes, prev, pager, next, jumper" :total="count">
-			</el-pagination>
-		</div>
-	</div>
+<!--  -->
 	<div class="rightBox" ref='pppp'>
 		<ul>
 			<li @click="newBox">播放视频</li>
@@ -716,6 +710,13 @@
 			<li @click="deleteFileRight" v-show="user_id == rowData.user_id">删除</li>
 		</ul>
 	</div>
+		<div style="height: 50px;width:100%;padding: 0 20px;box-sizing: border-box;border-top: 1px solid gainsboro;">
+			<div class="block lastBlock">
+				<span class="demonstration" style="color: #999999;">已加载{{tableData3.length}}条数据</span>
+				<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :page-sizes="[100, 200, 300, 400]" :page-size="page_size" layout="total, sizes, prev, pager, next, jumper" :total="count">
+				</el-pagination>
+			</div>
+		</div>
 	</div>
 	</div>
 </template>
@@ -1409,6 +1410,14 @@
 			JumpPageRight(){
 				var id = this.rowData.id
 				this.$router.push({path:"/editPage",query:{fileID:id,page:"LM"}})
+			},
+			getHeight(){
+				var box = document.getElementById('box');
+				if(box != null){
+					    console.log(box);
+					return box.offsetHeight;
+				}
+				
 			},
 			replaceFileRight(){
 				var row = this.rowData;
