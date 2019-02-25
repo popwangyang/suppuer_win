@@ -551,9 +551,9 @@
 
                   if(res.data[0].status ==0 || res.data[0].status ==3){
 										
-									     _this.chaxun(res.data[0],data);
+									     // _this.chaxun(res.data[0],data);  //不需要查重了
 									
-                   }else{
+                   // }else{      //不需要查重了
 										 var time =  _this.getDate();
 										 
 										 var obj = {
