@@ -551,32 +551,26 @@
 
                   if(res.data[0].status ==0 || res.data[0].status ==3){
 										
-									     // _this.chaxun(res.data[0],data);  //不需要查重了
+		                     _this.chaxun(res.data[0],data);  
 									
-                   // }else{      //不需要查重了
-										 var time =  _this.getDate();
-										 
-										 var obj = {
-										 		"currentNum":0,
-										 		"id":new Date().getTime(),
-										 		"name":data.name,										
-										 		"path":data.path,
-										 		"type":data.type.split("/")[1] || data.name.split(".")[data.name.split(".").length - 1],
-												
-										 		"isRepeated":false,
-										 		"size":data.size,
-										 		"upState":"0",
-										 		"startFlage":true,
-										 		"content":res.data[0],
-										 		"file":data,
-										 		"upload_data":time,
-										 		
-										 }		
-										 _this.saveFile([obj])
-									 };
-										
-	
-	
+                            }else{     
+							 var time =  _this.getDate();							 
+							 var obj = {
+									"currentNum":0,
+									"id":new Date().getTime(),
+									"name":data.name,										
+									"path":data.path,
+									"type":data.type.split("/")[1] || data.name.split(".")[data.name.split(".").length - 1],									
+									"isRepeated":false,
+									"size":data.size,
+									"upState":"0",
+									"startFlage":true,
+									"content":res.data[0],
+									"file":data,
+									"upload_data":time,									
+							 }		
+							 _this.saveFile([obj])
+						 };
 					}).catch( error => {
 						  _this.$notify({				          
 						  message: '导入文件失败！',
@@ -726,8 +720,8 @@
 					this.$notify({							
 							message: '系统已存在该版本的歌曲',
 							type: 'error',
-										offset: 120,
-										duration:3000,
+							offset: 120,
+							duration:2000,
 						});
 				}else{
 					
@@ -748,7 +742,7 @@
 							"upload_data":time,
 							
 					}		
-					obj.content.status = 0;
+					// obj.content.status = 0;
 					this.saveFile([obj])
 				}
 			})
