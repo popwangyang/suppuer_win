@@ -549,7 +549,7 @@
 
 
 
-                  if(res.data[0].status ==0 || res.data[0].status ==3){
+                  if(res.data[0].status ==3){
 										
 		                     _this.chaxun(res.data[0],data);  
 									
@@ -697,6 +697,12 @@
 							case "右声道":
 								send_data.vocal_track = 3;
 							break;
+							case "左":
+								send_data.vocal_track = 2;
+							break;
+							case "右":
+								send_data.vocal_track = 3;
+							break;
 					};
 					switch(data.voice_track){
 							case "1":
@@ -709,6 +715,12 @@
 								send_data.voice_track = 2;
 							break;
 							case "右声道":
+								send_data.voice_track = 3;
+							break;
+							case "左":
+								send_data.voice_track = 2;
+							break;
+							case "右":
 								send_data.voice_track = 3;
 							break;
 					};
@@ -739,8 +751,7 @@
 							"startFlage":true,
 							"content":data,
 							"file":file,
-							"upload_data":time,
-							
+							"upload_data":time,							
 					}		
 					// obj.content.status = 0;
 					this.saveFile([obj])

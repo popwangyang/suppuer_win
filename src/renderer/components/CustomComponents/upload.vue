@@ -142,7 +142,11 @@
 				xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
 
 				xhr.onreadystatechange = function(response) {
-					if (xhr.readyState == 4 && xhr.status == stateCode) {
+					if(xhr.readyState != 4){
+						return;						
+					}
+					
+					if (xhr.status == stateCode) {
 							console.log("上传完成")
 							_this.stopStatus = false
 							_this.speed = ""
@@ -157,7 +161,7 @@
 							if (_this.$store.getters.number < 3) {
 								_this.$store.commit("NEXT")
 							}
-					}else if(xhr.readyState == 4 && xhr.status == 701){
+					}else if(xhr.status == 701){
 						var obj = {									
 							"id":file.id,
 							"key":"currentNum",
@@ -165,17 +169,28 @@
 						}
 						_this.$store.commit("goo",obj)
 						_this.Upload(0,file)
-					}else if(xhr.readyState == 4 && xhr.status == 579){
+					}else if(xhr.status == 579){
 						var obj = {
 							"id": file.id,
 							"key": "upState",
 							"value": "3"
 						}
 						_this.$store.commit("goo", obj)
+						if (_this.$store.getters.number < 3) {
+							_this.$store.commit("NEXT")
+						}
+					}else{
+						var obj = {
+							"id": file.id,
+							"key": "upState",
+							"value": "3"
+						}
+						_this.$store.commit("goo", obj)	
+						if (_this.$store.getters.number < 3) {
+							_this.$store.commit("NEXT")
+						}
 					}
-
 				};
-
 				xhr.send(str);
 			},
 			Upload(start, file) {
