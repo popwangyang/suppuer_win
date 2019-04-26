@@ -180,11 +180,11 @@ export let getFormat = function(obj){
 }
 
 export let getConfig = function(file){
-	var obj = {}
-	
+	var obj = {};	
 		obj.auth = "Bearer " + localStorage.getItem('token');
-			obj.uid = localStorage.getItem('user_id');
-			
+		obj.uid = localStorage.getItem('user_id');
+		obj.suffix = file.type;
+		console.log(obj)	
 	var arr = []
 	var urlStr = "";
 			for(var key in obj){
@@ -193,7 +193,7 @@ export let getConfig = function(file){
 				arr.push(str);	
 		}
 		urlStr = arr.join("\/");
-	 
+		console.log(urlStr)
 	return urlStr;
 }
 

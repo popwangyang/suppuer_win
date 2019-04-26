@@ -544,23 +544,18 @@
 				
 				console.log(new Date().getTime())
 				if(flage){
-					post("/music/music/store-verification",send_data).then(function(res){
-												console.log(res)
-
-
-
-                  if(res.data[0].status ==3){
-										
-		                     _this.chaxun(res.data[0],data);  
-									
-                            }else{     
+				post("/music/music/store-verification",send_data).then(function(res){
+                  if(res.data[0].status ==3){										
+		                     _this.chaxun(res.data[0],data);  									
+                            }else{  
+								console.log(data.name.split(".")[data.name.split(".").length - 1])
 							 var time =  _this.getDate();							 
 							 var obj = {
 									"currentNum":0,
 									"id":new Date().getTime(),
 									"name":data.name,										
 									"path":data.path,
-									"type":data.type.split("/")[1] || data.name.split(".")[data.name.split(".").length - 1],									
+									"type":data.name.split(".")[data.name.split(".").length - 1],									
 									"isRepeated":false,
 									"size":data.size,
 									"upState":"0",
@@ -744,7 +739,7 @@
 							"id":new Date().getTime(),
 							"name":file.name,										
 							"path":file.path,
-							"type":file.type.split("/")[1] || file.name.split(".")[file.name.split(".").length - 1],
+							"type":file.name.split(".")[file.name.split(".").length - 1],
 							"isRepeated":false,
 							"size":file.size,
 							"upState":"0",
@@ -838,8 +833,6 @@
 					
 					console.log(files.length,"ppollkiijjij")
 					if(files){
-						
-			
 								for(var i = 0; i < files.length; i++){
 									if(fs.statSync(files[i].path).isDirectory()){
 											_this.$notify({				          
@@ -852,6 +845,9 @@
 										var type = files[i].path.split('.')[files[i].path.split('.').length-1];
 										    if(types.indexOf(type) != -1){
 													 _this.getName(files[i],true)
+													 
+													 
+													 
 												}else{
 													 _this.$notify({				          
 														 message: '请导入正确格式的文件！',

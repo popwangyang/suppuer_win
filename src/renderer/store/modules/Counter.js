@@ -187,6 +187,12 @@ saveUpload(state,arr){
 		state.data = arr;		 
 		 // console.log('getters.number')
 	},
+	signOut(state) {
+		state.data = [];
+	  state.data1 = [];
+	  state.UPnumber =  0;
+	  state.DRnumber = 0;
+	},
 // 	hackResetFalse(){
 // 		var arr = state.data;
 // 		var id = state.currentID;

@@ -122,7 +122,7 @@
 	    				<i class="iconfont icon-subtract tubiao" @click="minSize"></i>
 	    				<!-- <i class="iconfont icon-zuidahua tubiao" @click="changeSize" v-show="screenFlage"></i>
 	    				<i class="iconfont icon-zuixiaohua tubiao"  @click="changeSize" v-show="!screenFlage"></i> -->
-	    				<i class="iconfont icon-close tubiao"@click="Close"></i>
+	    				<i class="iconfont icon-close tubiao" @click="Close"></i>
 	    			</div>
 	    			<div style="width: 110%;height: 26px;position: absolute;bottom: 0;right: -20px;-webkit-app-region: drag;"></div>
 	    			<div style="width: 30px;height: 28px;position: absolute;top: 26px;right: -20px;-webkit-app-region: drag;"></div>
@@ -650,7 +650,7 @@
 				this.childWindowFlage = true;
 				// localStorage.setItem('automaticLogon','0')
 				console.log("pppp",this.flage)
-			  console.log(this.$store.getters.number)
+			    console.log(this.$store.getters.number)
 				// ipcRenderer.send('exitLogin')
 				if(this.childWindowFlage){
 					if(this.$store.getters.number>0){
@@ -660,8 +660,6 @@
 						this.dialogExitLoginVisible = true;
 					}
 				}
-				
-				
 			},
 			dialogExitLoginBtn(){
 				this.dialogExitLoginLoading = true;
@@ -676,11 +674,11 @@
 				this.dialogUploadBtnLoading = true;
 				setTimeout( ()=> {
 					console.log(this.dialogUploadBtnLoading)
+					this.$store.commit("signOut");
 					this.dialogUploadBtnLoading = false;
 					this.dialogUploadVisible = false;
 					this.$router.push({path:"/",query:{index:true}});
-           ipcRenderer.send('window-exitLogin')
-					
+           ipcRenderer.send('window-exitLogin')					
 				},200)
        
 				
