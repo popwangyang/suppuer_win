@@ -1,5 +1,6 @@
 import axios from 'axios';
 //测试地址
+// export const baseUrl = "https://dev.bjywkd.com";
 export const baseUrl = "https://test.bjywkd.com";
 //正式服地址
 // export const baseUrl = "http://59.63.188.34:8080";

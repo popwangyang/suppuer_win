@@ -985,6 +985,7 @@
 					
 
 					var data = [...this.$store.state.Counter.data1]
+					console.log(data)
 
 					data.map(function(item) {
 						if (item.id == id) {
@@ -1081,10 +1082,10 @@
 								case "2":
 									_this.formInline.voice_track = 1;
 									break;
-								case "左声道":
+								case "左":
 									_this.formInline.voice_track = 2;
 									break;
-								case "右声道":
+								case "右":
 									_this.formInline.voice_track = 3;
 									break;
 								default:
@@ -1097,10 +1098,10 @@
 								case "2":
 									_this.formInline.vocal_track = 1;
 									break;
-								case "左声道":
+								case "左":
 									_this.formInline.vocal_track = 2;
 									break;
-								case "右声道":
+								case "右":
 									_this.formInline.vocal_track = 3;
 									break;
 								default:
