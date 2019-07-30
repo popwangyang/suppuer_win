@@ -1104,7 +1104,7 @@
 			 		console.log(num)
 			 	})
 			 	
-			 },10000)
+			 },1000*20)
 			 Bus.$on("getDingZiNum",() => {
 				  getDingZiNum((num) => {
 				  	this.DZnumber = num

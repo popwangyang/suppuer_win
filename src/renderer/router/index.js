@@ -16,35 +16,34 @@ export default new Router({
     	redirect:'/LibraryManagement',
     	component: require('@/components/Main').default,
     	children:[
-    	
     	    {
     	    	path:'/LibraryManagement',
     	    	name:'LibraryManagement',
-						meta: {keepAlive: false},
+				meta: {keepAlive: false},
     	    	component: require('@/components/LibraryManagement/page1').default,
     	    },			    
     	    {
     	    	path:"/editPage",
     	    	name:'editPage',
-						meta: {keepAlive: false},
+				meta: {keepAlive: false},
     	    	component: require("@/components/LibraryManagement/page3").default
     	    },
     	    {
     	    	path:'/CustomManagement',
     	    	name:'CustomManagement',
-						meta: {keepAlive: false},
+				meta: {keepAlive: false},
     	    	component: require('@/components/CustomManagement/page1').default
     	    },
     	    {
     	    	path:'/SongsUploaded',
     	    	name:'SongsUploaded',
-						meta: {keepAlive: false},
+				meta: {keepAlive: false},
     	    	component: require('@/components/SongsUploaded/page1').default
     	    },
     	    {
     	    	path:'/Uploading',
     	    	name:'Uploading',
-						meta: {keepAlive: true},
+				meta: {keepAlive: true},
     	    	component: require('@/components/Uploading/pageNew1').default
     	    },
     	    {
@@ -52,11 +51,11 @@ export default new Router({
     	    	name:'Refresh',
     	    	component: require('@/components/Refresh').default
     	    },
-					{
-						path:'/404',
-						name:'404',
-						component: require('@/components/404').default
-					}
+			{
+				path:'/404',
+				name:'404',
+				component: require('@/components/404').default
+			}
     	]
     },
     {
@@ -64,9 +63,9 @@ export default new Router({
       redirect: '/'
     },
     {
-    	 path: '/backGround',
+       path: '/backGround',
        name: 'backGround',
-		   component: require('@/components/backGround').default
+	   component: require('@/components/backGround').default
     }
   ]
 })

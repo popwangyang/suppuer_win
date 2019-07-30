@@ -1,6 +1,7 @@
 var fs = require("fs");
 var join = require("path").join
 import { post, get } from "./api.js"
+import config  from '../config'
 
 export let changeData = function(data){
 	var send_data = {};
@@ -184,12 +185,16 @@ export let getConfig = function(file){
 		obj.auth = "Bearer " + localStorage.getItem('token');
 		obj.uid = localStorage.getItem('user_id');
 		obj.suffix = file.type;
-		console.log(obj)	
+		if(file.content.album != ''){
+		  obj.album = file.content.album_id	
+		}
+		if(file.content.company != ''){
+		  obj.company = file.content.company_id
+		}
 	var arr = []
 	var urlStr = "";
 			for(var key in obj){
 			var str = "x:"+key+"/" + Base64.encode(obj[key]);
-				
 				arr.push(str);	
 		}
 		urlStr = arr.join("\/");
@@ -201,7 +206,6 @@ export const fileArray = function(obj, cb){
 	var arr = [];
 	var types= ['mpeg', 'mp4', 'mpg', 'mkv'];
 	var num = 0;
-	
 	function getFile(startPath){
 		var fileStat = fs.statSync(startPath);
 		if(fileStat.isDirectory()){
@@ -243,6 +247,8 @@ export const getAuth = function(obj, type, cb){
 	
 	post("music/music/store-credential", send_data).then((response) => {
 		cb(response.data)
+	}).catch(err => {
+		cb('err')
 	})
 }
 
@@ -291,7 +297,27 @@ export const validateFormat = function (name){
 	var formate = name.split(".")[name.split(".").length - 1];
 	var formateArr = [ 'mp4', 'mpg', 'mpeg', 'mkv'];
 	var flage = formateArr.indexOf(formate) == -1 ? false:true;
-	console.log(flage, "oooooooooooooooo")
 	return flage;   
 	
+}
+
+export const blackBox = function (key, value, type) {
+	if(value == null){
+		return "";
+	}
+	let dataArr = config.songInfoData[key];
+	let result = null;
+	if(!!!dataArr){
+		return value == undefined ? "":value;
+	}
+	if(type == 'value'){
+		result = dataArr.filter(item => {
+			return parseInt(item.value) == parseInt(value)
+		})[0].label	
+	}else{
+		result = dataArr.filter(item => {
+			return item.label.indexOf(value) > -1 
+		})[0].value
+	}
+	return result;
 }

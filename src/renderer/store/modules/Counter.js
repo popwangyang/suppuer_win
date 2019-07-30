@@ -120,7 +120,6 @@ uploadFile(state,id){
 				 }
 		})
 		state.data.push(obj)
-		
 		state.UPnumber = state.data.length;
 		state.DRnumber = state.data1.length;
 	},

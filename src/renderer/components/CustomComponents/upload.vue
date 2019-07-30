@@ -67,11 +67,16 @@
 						console.log(result, "result")
 						if(result == 1){
 							
+						}else if (result == 'err'){
+							var obj = {
+								"id": file.id,
+								"key": "upState",
+								"value": "3"
+							}
+							this.$store.commit("goo", obj)
 						}else{
-							
 							this.credential = result.credential;
 							this.key = Base64.encode(result.key);
-							console.log(this.credential)
 							this.Upload(this.file.currentNum, this.file)
 						}
 					})
@@ -179,6 +184,7 @@
 						if (_this.$store.getters.number < 3) {
 							_this.$store.commit("NEXT")
 						}
+						console.log(xhr.response)
 					}else{
 						var obj = {
 							"id": file.id,
