@@ -4,7 +4,7 @@ import {
 	ipcMain,
 	Menu,
 	Tray,
-	dialog
+	dialog 
 } from 'electron'
 const macObj = require('getmac')
 const path = require('path')
