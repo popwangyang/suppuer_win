@@ -256,10 +256,6 @@ ipcMain.on('childWindow', function() {
 			opcity: 0,
 			titleBarStyle: 'hiddenInset'
 		})
-
-
-
-
 		// childWindow.webContents.openDevTools();
 		const childURL = process.env.NODE_ENV === 'development' ?
 			`http://localhost:9080/index.html#/backGround` :
@@ -270,22 +266,11 @@ ipcMain.on('childWindow', function() {
 			numWindow--
 			childWindow = null
 		})
-
-
 		numWindow++
 	} else {
-
 		childWindow.webContents.send('song')
-
-
-
 	}
-
-
-
-
 });
-
 
 var flage = true;
 
