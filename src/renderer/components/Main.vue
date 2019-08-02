@@ -426,6 +426,7 @@
 </template>
 
 <script>
+	import '../assets/css/common.css'
 	const {ipcRenderer} = require('electron')
 	const fs = require("fs")
 	const path = require("path")
@@ -1290,7 +1291,7 @@ body{
 	#Main .headBtn .headBtn_stop{
 		border-radius: 5px;
 		padding: 0 8px;
-		cursor: default;
+		cursor: no-drop;
 		
 	}	
 	#Main .headBtn .headBtn_stop .el-icon-stop1{
@@ -1302,11 +1303,6 @@ body{
 		color: #b6bcce;
 		margin-left: 5px;
 	}
-	
-	
-	
-	
-
 	#Main .headBtn .headBtn_stop1{
 		border-radius: 5px;
 		padding: 0 8px;
@@ -1322,20 +1318,6 @@ body{
 		color: white;
 		margin-left: 5px;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	.hoverList{
 		text-align: center;
 		height: 30px;
@@ -1343,28 +1325,6 @@ body{
 		font-size: 14px;
 		line-height: 30px;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	.hoverList:hover{
 		background: #ececee;
 	}

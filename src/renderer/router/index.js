@@ -43,8 +43,8 @@ export default new Router({
     	    {
     	    	path:'/Uploading',
     	    	name:'Uploading',
-				meta: {keepAlive: true},
-    	    	component: require('@/components/Uploading/pageNew1').default
+				meta: {keepAlive: false},
+    	    	component: require('@/components/Uploading').default
     	    },
     	    {
     	    	path:'/Refresh',

@@ -11,11 +11,13 @@
 	import { validateFormat, getDate, blackBox, chaxun } from '../util.js'
 	import { post, get } from '../api.js'
 	import Empty from './components/emptyComponent.vue'
+	import Content from './components/conentComponent.vue'
 	const fs = require('fs');
 	export default{
 		name: 'songUpload',
 		components: {
 			Empty,
+			Content,
 		},
 		data(){
 			return{
@@ -23,8 +25,11 @@
 			}
 		},
 		computed: {
+			songNumbers(){
+			    return this.$store.state.SongUpload.songNumbers;
+			},
 			flage() {
-				return this.$store.state.SongUplod.songNumbers.length > 0 ? false:true; 
+				return this.$store.state.SongUpload.songNumbers.length > 0 ? false:true; 
 			}
 		},
 		methods: {
@@ -39,6 +44,7 @@
 						chaxun(res.data[0], (results) => {
 							if(results.length > 0){
 								this.$notify({
+									title: '提示',
 									message: '系统已存在该版本的歌曲',
 									type: 'error',
 									offset: 120,
@@ -71,6 +77,7 @@
 				}
 				this.$store.commit("saveSong", obj)
 				this.$notify({
+					title: '提示',
 					message: '导入成功！',
 					type: 'success',
 					offset: 60,
@@ -80,8 +87,9 @@
 			testFile(data){
 				let result = false;
 				this.songNumbers.forEach(item => {
-					if(item.name === name){
+					if(item.name === data.name){
 						this.$notify({
+							 title: '提示',
 							message: '已经导入成功，请勿重复操作！',
 							type: 'error',
 							offset: 60,
@@ -93,6 +101,7 @@
 				if(result) return true;
 				if(!validateFormat(data.name)){
 					this.$notify({
+						 title: '提示',
 						message: '请导入正确格式的文件！',
 						type: 'error',
 						offset: 60,
@@ -104,6 +113,7 @@
 				if (data.type.split('/')[0] != 'video') {
 					this.$notify.error({
 					  type: 'error',
+					  title: '提示',
 					  message: '请导入视频文件！',
 					  offset: 60,
 					  duration: 2000
@@ -123,6 +133,7 @@
 						let item = files[i];
 						if(fs.statSync(item.path).isDirectory()){
 							this.$notify({
+								title: '提示',
 								message: '暂不支持文件夹拖拽！',
 								type: 'error',
 								offset: 60,

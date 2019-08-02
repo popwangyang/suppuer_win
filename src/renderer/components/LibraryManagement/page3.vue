@@ -160,7 +160,7 @@
 		post
 	} from '../api.js'
 	import config from '../../config'
-	import { blackBox } from '../util'
+	import { blackBox, chaxun } from '../util'
 	import { Loading } from 'element-ui';
 	export default {
 		data() {
@@ -476,14 +476,13 @@
 						var send_data = {
 							name:str
 						}
-						post("music/music/store-credential", send_data).then( res => {
-							this.$store.commit("changeData1", {
+						// post("music/music/store-credential", send_data).then( res => {
+							this.$store.commit("setData", {
 								fileID: id,
-								content: obj,
-								credential:res.data.credential,
-								key:Base64.encode(res.data.key)
+								content: obj
 							})
 							this.$notify({
+								title: '提示',
 								message: '保存成功！',
 								type: 'success',
 								offset: 60,
@@ -492,10 +491,36 @@
 							setTimeout(() => {
 								this.$router.back(-1)
 							}, 1500)
-						})
+						// })
 					}
 					if (status == 3) {
-						this.chaxun(res.data[0], obj);
+						chaxun(res.data[0], (results) => {
+							if(results.length > 0){
+								this.$notify({
+									title: '提示',
+									message: '系统已存在该版本的歌曲',
+									type: 'error',
+									offset: 120,
+									duration: 2000,
+								});
+							}else{
+								var id = this.$route.query.fileID;
+								obj.status = 0;
+								this.$store.commit("setData", {
+									fileID: id,
+									content: obj
+								})
+								this.$notify({
+									message: '保存成功！',
+									type: 'success',
+									offset: 60,
+									duration: 1000,
+								});
+								setTimeout(() => {
+									this.$router.back(-1)
+								}, 1500)
+							}
+						});
 					}
 				}).catch((err) => {
 					this.$notify({
@@ -504,44 +529,6 @@
 						offset: 60,
 						duration: 1000,
 					});
-				})
-			},
-			chaxun(data, obj) {
-				var send_data = {};
-				send_data.name = data.name;
-				send_data.singer = data.singer;
-				for(let key in data){
-					send_data[key] = blackBox(key, data[key], 'label')
-				}
-				console.log(send_data, "blackBox转化的数据")
-				get("/music/music/store", send_data).then((res) => {
-					console.log(res)
-					if (res.data.results.length > 0) {
-						this.$notify({
-							message: '该版本歌曲已存在，请重新修改信息',
-							type: 'error',
-							offset: 120,
-							duration: 3000,
-						});
-					} else {
-						var id = this.$route.query.fileID;
-						var _this = this;
-						obj.status = 0;
-						this.$store.commit("changeData1", {
-							fileID: id,
-							content: obj
-						})
-						this.$notify({
-							message: '保存成功！',
-							type: 'success',
-							offset: 60,
-							duration: 1000,
-						});
-						setTimeout(function() {
-							_this.$router.back(-1)
-						}, 1500)
-
-					}
 				})
 			},
 			resetForm(formName) {
@@ -655,14 +642,13 @@
 						});
 					})
 				} else if (this.$route.query.page == 'SU') {
-					var data = [...this.$store.state.Counter.data1]
+					var data = this.$store.state.SongUpload.songNumbers;
 					data.map(item => {
 						if (item.id == id) {
 							this.type = item.type
 							for (var key in this.formInline) {
 								this.formInline[key] = blackBox(key, item.content[key], 'label')
 							}
-							console.log(this.formInline, item)
 						}
 					})
 					this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
@@ -706,10 +692,6 @@
 	#editPage .box {
 		overflow: auto;
 		flex: 1;
-		/*background: yellow;*/
-		/*display: none;*/
-		margin-right: 5px;
-		/**/
 	}
 
 	#editPage .el-form-item__label {
@@ -740,33 +722,4 @@
 		font-size: 12px;
 	}
 
-	#scroll-1::-webkit-scrollbar-track,
-	.el-checkbox-group::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		border-radius: 10px;
-		background-color: #f0f0f0;
-	}
-
-	#scroll-1::-webkit-scrollbar,
-	.el-checkbox-group::-webkit-scrollbar {
-		width: 10px;
-		background-color: #f0f0f0;
-	}
-
-	#scroll-1::-webkit-scrollbar-thumb,
-	.el-checkbox-group::-webkit-scrollbar-thumb {
-		border-radius: 20px;
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-		background-color: #cfd1d3;
-	}
-
-	#scroll-1::-webkit-scrollbar-thumb:hover,
-	.el-checkbox-group::-webkit-scrollbar-thumb:hover {
-		background-color: #a7acb1;
-	}
-
-	#scroll-1::-webkit-scrollbar-thumb:active,
-	.el-checkbox-group::-webkit-scrollbar-thumb:active {
-		background-color: #9da2a7;
-	}
 </style>

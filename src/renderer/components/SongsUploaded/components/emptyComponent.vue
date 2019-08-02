@@ -21,6 +21,7 @@
 		},
 		methods: {
 			change(e) {
+				console.log(this.$refs.file.files[0])
 				this.$emit('change', this.$refs.file.files[0])
 				this.$refs.file.value = ""
 			}
@@ -37,6 +38,7 @@
 	}
 	.box i{
 		font-style: normal;
+		font-size: 14px;
 	}
 	.box .content{
 		display: flex;

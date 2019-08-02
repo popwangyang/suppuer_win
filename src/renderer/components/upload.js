@@ -9,16 +9,16 @@ import {
 	post
 } from './api'
 
-function Upload(file, url, option) {
+function Upload(data, url) {
 	var UploadIndex = uploadIndex;
-	var uploadState = 0; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除；
+	var uploadState = 1; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除；
 	uploadIndex++;
-	this.uploadingStateNum = option.num || 1;
-	this.axios = option.axios;
+	this.uploadingStateNum = 3;  // 可以同时上传的总个数；
+	this.id = data.id;  // 上传实例的id
 	this.loading = false;
-	this.file = file;
-	this.key = option.key || "";
-	this.token = option.token || "";
+	this.file = data.file;
+	this.key = null;
+	this.token = this.getToken();
 	this.urlText = url;
 	this.url;
 	this.credential;
@@ -29,14 +29,14 @@ function Upload(file, url, option) {
 		_prograssEvent: 1,
 		_errorEvent: 1
 	};
-	this.repeatnumber = 3;
+	this.repeatnumber = 3;  // 发生错误时，自动重新上传的次数；
 	this.ctx;
 	this.offset;
 	this.arr = [];
 	this.config;
 	this.slice();
-	this.getAuth();
 	this.getConfig();
+	this.getAuth(this.startUpload);
 	this.stopFlage = true;
 	this.startTime;
 	this.endTime;
@@ -82,6 +82,7 @@ Upload.prototype.slice = function() {
 };
 
 Upload.prototype.startUpload = function() {
+	console.log(this.getUplaodingFlage())
 	if (this.getUplaodingFlage()) {
 		var obj = this.arr[this.index];
 		this.stopFlage = false;
@@ -133,14 +134,14 @@ Upload.prototype.deleteUpload = function() {
 };
 
 Upload.prototype.getToken = function() {
-
-
+  return localStorage.getItem('token');
 };
 
 Upload.prototype.getUplaodingFlage = function() {
 	var childrens = Upload.children;
 	var num = 0;
 	for (var i = 0; i < childrens.length; i++) {
+		console.log(childrens[i].getUploadState())
 		if (childrens[i].getUploadState() == 1) {
 			num++;
 		}
@@ -153,15 +154,13 @@ Upload.prototype.getUplaodingFlage = function() {
 }
 
 Upload.prototype.getAuth = function(cb) {
-	console.log(Upload.children, "pppppp");
 	var send_data = {
 		name: this.file.name
 	}
 	post("/music/music/store-credential", send_data).then((response) => {
 		this.credential = response.data.credential;
 		this.key = Base64.encode(response.data.key);
-		// this.startUpload();
-		cb()
+		cb.bind(this)()
 	})
 }
 
@@ -275,18 +274,21 @@ Upload.prototype.complateUplod = function() {
 	xhr.open('post', this.url, true);
 	xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
 	xhr.onreadystatechange = function(response) {
-		if (xhr.readyState == 4 && xhr.status == 204) {
+		if (xhr.readyState == 4 && xhr.status == 204 || xhr.readyState == 4 && xhr.status == 201) {
+			console.log(Upload.children, "ssssssssssssssss")
+			Upload.children.map((item, index) => {
+				if(item.id == _this.id){
+					Upload.children.splice(index, 1);
+				}
+			})
 			_this.event.prograssEvent = 1;
 			_this.setUploadState(3);
 			_this.next();
-		} else if (xhr.readyState == 4 && xhr.status != 204) {
-			_this.event.errorEvent = 1;
-		} else if (xhr.readyState == 4 && xhr.status == 401) {
+		}else if (xhr.readyState == 4 && xhr.status == 401) {
 			_this.getAuth(_this.complateUplod())
-		} else if (xhr.readyState == 4 && xhr.status == 579) {
+		}else if(xhr.readyState == 4) {
 			_this.event.errorEvent = 1;
-		}
-
+		} 
 	};
 	xhr.send(str);
 
