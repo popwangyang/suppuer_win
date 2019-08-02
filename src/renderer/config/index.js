@@ -1,5 +1,6 @@
 export default {
 	title: '云音乐',
+	fileType: ['mpeg', 'mp4', 'mpg', 'mkv'],
 	songInfoData:{
 		language:[
 			{

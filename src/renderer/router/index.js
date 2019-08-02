@@ -38,7 +38,7 @@ export default new Router({
     	    	path:'/SongsUploaded',
     	    	name:'SongsUploaded',
 				meta: {keepAlive: false},
-    	    	component: require('@/components/SongsUploaded/page1').default
+    	    	component: require('@/components/SongsUploaded').default
     	    },
     	    {
     	    	path:'/Uploading',

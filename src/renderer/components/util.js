@@ -1,6 +1,7 @@
 var fs = require("fs");
 var join = require("path").join
 import { post, get } from "./api.js"
+import { Notify } from 'element-ui'
 import config  from '../config'
 
 export let changeData = function(data){
@@ -300,7 +301,12 @@ export const validateFormat = function (name){
 	return flage;   
 	
 }
-
+/*
+ * 黑箱子函数，
+ * @param {key} 属性名
+ * @param {value}  属性值
+ * @param {type}[value, lable]  转换类型，如type值为 value 则函数返回歌曲信息的具体内容（国语）否则返回歌曲信息的数字形式（0）
+ */
 export const blackBox = function (key, value, type) {
 	if(value == null){
 		return "";
@@ -320,4 +326,39 @@ export const blackBox = function (key, value, type) {
 		})[0].value
 	}
 	return result;
+}
+
+export const getDate = () => {
+	var date = new Date();
+	var y = date.getFullYear()
+
+	var M = date.getMonth() + 1 //月份   
+	var d = date.getDate() //日   
+	var h = date.getHours() > 9 ? date.getHours() : "0" + date.getHours() //小时   
+	var m = date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes() //分   
+	var s = date.getSeconds() > 9 ? date.getSeconds() : "0" + date.getSeconds() //秒   
+	var str = y + "-" + M + "-" + d + "　" + h + ":" + m + ":" + s
+	return str;
+  }
+ 
+ /*
+  * 精确查询函数；
+  * @params {params} 查询的参数，必须为歌曲信息的具体信息；
+  * @function {callback} 查询后的回调函数；
+ */
+export const chaxun = (params, callback) => {
+	let send_data = {};
+		for(let key in params){
+		  send_data[key] = blackBox(key, params[key], 'label')
+		}
+	get("/music/music/store", send_data).then((res) => {
+	   callback(res.data.results)
+	}).catch(err => {
+	   notify({
+	   	message: '保存失败！',
+	   	type: 'error',
+	   	offset: 60,
+	   	duration: 1000,
+	   });
+	})
 }

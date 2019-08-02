@@ -433,34 +433,8 @@
 						offset: 60,
 						duration: 1000
 					});
-					// 						var send_data = {
-					// 							name:arr[i].name
-					// 						}
-					// 						post("music/music/store-credential", send_data).then((response) => {
-					// 							console.log(response.data.credential)
-					// 							   arr[i].credential = response.data.credential;
-					// 								 arr[i].key = Base64.encode(response.data.key);
-					// 								 arr[i].arr = this.sliceFile(arr[i].file);	
-					// 								 arr[i].UploadSize = 0;
-					// 								 this.$store.commit("saveUpload",[arr[i]])
-					// 								 this.$notify({				          
-					// 								 		message: '导入成功！',
-					// 								 		type: 'success',
-					// 								 		offset: 60,
-					// 								 		duration:1000
-					// 								 	});
-					// 						}).catch(() => {
-					// 							this.$notify({				          
-					// 								message: '导入失败！',
-					// 								type: 'error',
-					// 								offset: 60,
-					// 								duration:1000
-					// 							});
-					// 						})
 				}
-
 			},
-
 			foo(e, data) {
 				console.log(data)
 				if (data) {
