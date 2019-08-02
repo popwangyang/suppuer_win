@@ -1,6 +1,7 @@
 <template>
 	<div id="SongsUploaded">
 		<Empty v-if="flage" @change='getName'/>
+		<Content v-else/>
 	</div>
 </template>
 
@@ -22,9 +23,6 @@
 			}
 		},
 		computed: {
-			songNumbers() {
-				return this.$store.state.SongUplod.songNumbers; 
-			},
 			flage() {
 				return this.$store.state.SongUplod.songNumbers.length > 0 ? false:true; 
 			}
