@@ -291,8 +291,8 @@ var flage = true;
 
 ipcMain.on("force-update", function(event, arg) {
 	flage = true;
-	// var str = "https://test.bjywkd.com/supplier_win/Test_QZupdate/"
-	var str = "https://test.bjywkd.com/supplier_win/Master_QZupdate/"
+	var str = "https://test.bjywkd.com/supplier_win/Test_QZupdate/"
+	// var str = "https://test.bjywkd.com/supplier_win/Master_QZupdate/"
 	if (process.env.NODE_ENV !== 'development') {
 		console.log('force-update')
 		foo(str)
@@ -300,8 +300,8 @@ ipcMain.on("force-update", function(event, arg) {
 
 });
 ipcMain.on("handle-update", function(event, arg) {
-	// var str = "https://test.bjywkd.com/supplier_win/Test_HDupdate/"
-	var str = "https://test.bjywkd.com/supplier_win/Master_HDupdate/"
+	var str = "https://test.bjywkd.com/supplier_win/Test_HDupdate/"
+	// var str = "https://test.bjywkd.com/supplier_win/Master_HDupdate/"
 	if (process.env.NODE_ENV !== 'development') {
 
 		foo(str)
