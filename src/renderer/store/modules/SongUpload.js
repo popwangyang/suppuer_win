@@ -38,7 +38,7 @@ const mutations = {
 		state.songNumbers.forEach((item, index) => {
 			if(item.id == id){
 				new Upload(item, "http://up-z1.qiniup.com");
-				state.songNumbers.splice(index, 1)
+				state.songNumbers.splice(index, 1);
 			}
 		})
 	}

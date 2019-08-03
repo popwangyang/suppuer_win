@@ -1,12 +1,12 @@
 <template>
-	<div>
-		<Content v-if="flage"/>
+	<div class="page">
+		<Content v-if="flage" @change="change"/>
 		<Empty v-else/>
 	</div>
 </template>
 
 <script>
-	import Content from './components/content'
+	import Content from './components/content/index.vue'
 	import Empty from './components/empty'
 	export default{
 		components: {
@@ -15,17 +15,20 @@
 		},
 		data(){
 			return{
-				
+				flage: true
 			}
 		},
-		computed: {
-			flage() {
-				console.log(this.$store.state.SongUpload.Upload.children)
-				return this.$store.state.SongUpload.Upload.children.length > 0 ? true:false;
+		methods:{
+			change(flage){
+				this.flage = flage;
 			}
-		},
+		}
 	}
 </script>
 
 <style scoped="scoped">
+	.page{
+		width: 100%;
+		height: 100%;
+	}
 </style>

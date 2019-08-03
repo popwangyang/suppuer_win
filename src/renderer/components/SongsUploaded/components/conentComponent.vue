@@ -2,7 +2,7 @@
 	<div>
 		<el-table
 				:data="data"
-				height="704"
+				maxHeight="704"
 				@selection-change="handleSelectionChange"
 				style="width: 100%">
 				<el-table-column type="selection" width="55">

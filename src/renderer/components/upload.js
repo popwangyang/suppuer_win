@@ -16,6 +16,10 @@ function Upload(data, url) {
 	this.uploadingStateNum = 3;  // 可以同时上传的总个数；
 	this.id = data.id;  // 上传实例的id
 	this.loading = false;
+	this.content = data.content;  // 上传歌曲信息；
+	this.create_date = data.upload_data;  // 歌曲上传时间；
+	this.size = data.file.size;  // 上传文件的总大小；
+	this.precent = 0;  // 上传文件的进度；
 	this.file = data.file;
 	this.key = null;
 	this.token = this.getToken();
@@ -50,6 +54,7 @@ function Upload(data, url) {
 		return UploadIndex;
 	}
 	Upload.children.push(this);
+	
 }
 
 Upload.prototype.slice = function() {
@@ -203,7 +208,6 @@ Upload.prototype.getSpeed = function() {
 	var time = (this.endTime - this.startTime) / 1000;
 	var space = (this.arr[this.index].end - this.arr[this.index].start) / 1024;
 	var speed = (space / time) > 1024 ? ((space / time) / 1024).toFixed(2) + "MB/S" : ((space / time).toFixed(0) + "KB/S");
-	console.log(time, space)
 	return speed;
 }
 
@@ -226,11 +230,11 @@ Upload.prototype.progressEvent = function(callback) {
 				obj.precent = 100;
 			}
 			if (newValue == 0 && obj.uploadState != 5) {
-
 				obj.displayFlage = false;
 			} else {
 				obj.displayFlage = true;
 			}
+			this.precent = obj.precent;
 			callback(obj);
 		}
 	})
@@ -275,12 +279,12 @@ Upload.prototype.complateUplod = function() {
 	xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
 	xhr.onreadystatechange = function(response) {
 		if (xhr.readyState == 4 && xhr.status == 204 || xhr.readyState == 4 && xhr.status == 201) {
-			console.log(Upload.children, "ssssssssssssssss")
 			Upload.children.map((item, index) => {
 				if(item.id == _this.id){
 					Upload.children.splice(index, 1);
 				}
 			})
+			console.log(Upload.children, "ssssssssssssssss")
 			_this.event.prograssEvent = 1;
 			_this.setUploadState(3);
 			_this.next();
