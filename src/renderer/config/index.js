@@ -1,6 +1,48 @@
 export default {
 	title: '云音乐',
 	fileType: ['mpeg', 'mp4', 'mpg', 'mkv'],
+	titles: [
+		{
+			name: '',
+			width: 5,
+			key: 'checkbox'
+		},
+		{
+			name: '歌曲名称',
+			width: 10,
+			key: 'singer'
+	    },
+		{
+			name: '歌手名称',
+			width: 10,
+			key: 'song'
+		},
+		{
+			name: '格式',
+			width: 10,
+			key: 'singer'
+		},
+		{
+			name: '上传日期',
+			width: 15,
+			key: 'singer'
+		},
+		{
+			name: '大小',
+			width: 10,
+			key: 'singer'
+		},
+		{
+			name: '状态',
+			width: 25,
+			key: 'singer'
+		},
+		{
+			name: '操作',
+			width: 15,
+			key: 'singer'
+		},
+	],
 	songInfoData:{
 		language:[
 			{

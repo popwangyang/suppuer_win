@@ -1,53 +1,63 @@
 <template>
 	<div>
-		<!-- <span v-for="item  in arr" :key="item.id">
-			<ItemComponent :item="item"/>
-		</span> -->
-		 <el-table
-			:data="arr"
-			maxHeight="704"
-			style="width: 100%">
-			<el-table-column prop="content.name" label="歌曲名称" min-width="80">
-				
-			</el-table-column>
-			<el-table-column prop="content.singer" label="歌手名称" min-width="80">
-				
-			</el-table-column>
-			
-			<el-table-column prop="content.format_type" label="格式" min-width="80">
-			</el-table-column>
-			
-			<el-table-column label="上传日期" min-width="60">
-				<template slot-scope="scope">
-					<span v-if="scope.row.create_date">
-						<div> {{scope.row.create_date.split("　")[0]}}</div>
-						<div>{{scope.row.create_date.split("　")[1]}}</div>
-					</span>
-					<span v-else>
-						<div> {{scope.row.upload_data.split("　")[0]}}</div>
-						<div>{{scope.row.upload_data.split("　")[1]}}</div>
-					</span>
-				</template>
-			</el-table-column>
-			
-			<el-table-column label="大小" min-width="40">
-				<template slot-scope="scope">
-					<span>{{(scope.row.precent*scope.row.size) | FileSize }}</span>
-					<span>/</span>
-					<span>{{ scope.row.size | FileSize }}</span>
-				</template>
-			</el-table-column>
-			
-		  </el-table>
+	<el-table
+    :data="arr"
+	@selection-change="handleSelectionChange"
+    max-height="704"
+    style="width: 100%">
+	<el-table-column
+      type="selection"
+      width="55">
+	</el-table-column>
+    <el-table-column
+      prop="content.name"
+      label="歌曲名称"
+      width="150">
+    </el-table-column>
+    <el-table-column
+      prop="content.singer"
+      label="歌手名称"
+      width="150">
+    </el-table-column>
+    <el-table-column
+      prop="content.format_type"
+	  width="140"
+      label="格式">
+    </el-table-column>
+	<el-table-column
+	  prop="create_date"
+	  width="180"
+	  label="上传日期">
+	</el-table-column>
+	<el-table-column prop="size" label="大小">
+		<template slot-scope="scope">
+			<Size :item="scope.row" />
+		</template>
+	</el-table-column>
+	<el-table-column prop="size" label="状态">
+		<template slot-scope="scope">
+			<UpState :item="scope.row" />
+		</template>
+	</el-table-column>
+	<el-table-column  prop="size" label="操作"  width="150">
+		<template slot-scope="scope">
+			<Event :item="scope.row" />
+		</template>
+	</el-table-column>
+  </el-table>
 	</div>
 </template>
-
 <script>
 	import Upload from '../../../upload.js'
-	import ItemComponent from './components/itemComponent.vue'
+	import Size from './components/size'
+	import UpState from './components/upState'
+	import Event from './components/event'
+	import config from '../../../../config'
 	export default{
 		components:{
-		  	ItemComponent
+			Size,
+			UpState,
+			Event,
 		},
 		filters: {
 			FileSize: function(value) {
@@ -69,8 +79,13 @@
 		},
 		data() {
 			return {
-				arr: Upload.children
+				arr: Upload.children,
 			}
+		},
+		methods:{
+			handleSelectionChange(val){
+			  	
+			},
 		},
 		mounted() {
 			console.log(this.arr)

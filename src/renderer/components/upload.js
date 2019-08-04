@@ -31,7 +31,9 @@ function Upload(data, url) {
 	this.ChunkLength = 1024 * 1024 / 2;
 	this.event = {
 		_prograssEvent: 1,
-		_errorEvent: 1
+		_errorEvent: 1,
+		_sizeEvent:1,
+		_operationEvent:1,
 	};
 	this.repeatnumber = 3;  // 发生错误时，自动重新上传的次数；
 	this.ctx;
@@ -99,6 +101,8 @@ Upload.prototype.startUpload = function() {
 		this.setUploadState(2);
 	}
 	this.event.prograssEvent = 0;
+	this.event.sizeEvent = 0;
+	this.event.operationEvent = 0;
 };
 
 Upload.prototype.waite = function() {
@@ -124,6 +128,8 @@ Upload.prototype.stopUpload = function() {
 	}
 	this.setUploadState(0);
 	this.event.prograssEvent = 0;
+	this.event.sizeEvent = 0;
+	this.event.operationEvent = 0;
 };
 
 Upload.prototype.deleteUpload = function() {
@@ -136,6 +142,8 @@ Upload.prototype.deleteUpload = function() {
 	}
 	this.setUploadState(5);
 	this.event.prograssEvent = 0;
+	this.event.sizeEvent = 0;
+	this.event.operationEvent = 0;
 };
 
 Upload.prototype.getToken = function() {
@@ -211,11 +219,12 @@ Upload.prototype.getSpeed = function() {
 	return speed;
 }
 
+
 Upload.prototype.progressEvent = function(callback) {
 	var _this = this;
 	Object.defineProperty(this.event, "prograssEvent", {
 		set: function(newValue) {
-			this._prograssEvent = newValue;
+			_this._prograssEvent = newValue;
 			var obj = {};
 			obj.total = _this.file.size;
 			obj.uploadState = _this.getUploadState();
@@ -234,7 +243,6 @@ Upload.prototype.progressEvent = function(callback) {
 			} else {
 				obj.displayFlage = true;
 			}
-			this.precent = obj.precent;
 			callback(obj);
 		}
 	})
@@ -250,6 +258,37 @@ Upload.prototype.errorEvent = function(callback) {
 	})
 };
 
+Upload.prototype.sizeEvent = function(callback) {
+	var _this = this;
+	Object.defineProperty(this.event, "sizeEvent", {
+		set: function(newValue) {
+			_this._sizeEvent = newValue;
+			var obj = {};
+			if (_this.index <= _this.arr.length - 1) {
+				obj.size = _this.arr[_this.index].start;
+			} else {
+				obj.size = _this.file.size;;
+			}
+			callback(obj);
+		}
+	})
+};
+
+Upload.prototype.operationEvent = function(callback) {
+	var _this = this;
+	Object.defineProperty(this.event, "operationEvent", {
+		set: function(newValue) {
+			_this._operationEvent = newValue;
+			var obj = {};
+			obj.uploadState = _this.getUploadState();
+			if (_this.loading) {
+				obj.uploadState = 0.5;
+			}
+			callback(obj);
+		}
+	})
+};
+
 Upload.prototype.on = function(key, callback) {
 	switch (key) {
 		case "prograss":
@@ -257,6 +296,12 @@ Upload.prototype.on = function(key, callback) {
 			break;
 		case "error":
 			this.errorEvent(callback)
+			break;
+		case  "size":
+		    this.sizeEvent(callback)
+			break;
+		case  "operation":
+		    this.operationEvent(callback)
 			break;
 	}
 };
@@ -279,15 +324,18 @@ Upload.prototype.complateUplod = function() {
 	xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
 	xhr.onreadystatechange = function(response) {
 		if (xhr.readyState == 4 && xhr.status == 204 || xhr.readyState == 4 && xhr.status == 201) {
+			console.log(Upload.children, "ssssssssssssssss")
+			_this.event.prograssEvent = 1;
+			_this.event.sizeEvent = 1;
+			_this.event.sizeEvent = 1;
+			_this.event.operationEvent = 0;
+			_this.setUploadState(3);
+			_this.next();
 			Upload.children.map((item, index) => {
 				if(item.id == _this.id){
 					Upload.children.splice(index, 1);
 				}
 			})
-			console.log(Upload.children, "ssssssssssssssss")
-			_this.event.prograssEvent = 1;
-			_this.setUploadState(3);
-			_this.next();
 		}else if (xhr.readyState == 4 && xhr.status == 401) {
 			_this.getAuth(_this.complateUplod())
 		}else if(xhr.readyState == 4) {
@@ -316,6 +364,8 @@ Upload.prototype.Uploading = function() {
 			_this.offset = resDate.offset;
 			_this.arr[_this.index].ctx = _this.ctx;
 			_this.event.prograssEvent = 0;
+			_this.event.sizeEvent = 0;
+			_this.event.operationEvent = 0;
 			_this.index++;
 			if (_this.index <= _this.arr.length - 1) {
 				_this.changeURL(_this.arr[_this.index]);
@@ -323,6 +373,8 @@ Upload.prototype.Uploading = function() {
 					_this.Uploading();
 				} else {
 					_this.event.prograssEvent = 0;
+					_this.event.sizeEvent = 0;
+					_this.event.operationEvent = 0;
 					_this.next();
 				}
 			} else {
