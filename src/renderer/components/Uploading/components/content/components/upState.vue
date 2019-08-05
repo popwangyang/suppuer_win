@@ -4,15 +4,21 @@
 			<Progress  :precent="precent"></Progress>
 		</span>
 		<span>
-			<i v-if="upState=='0'">已暂停</i>
-			<i v-if="upState=='1'">{{speed}}</i>
-			<i v-if="upState=='0.5'">正在连接</i>
-			<i v-if="upState=='2'">正在等待上传</i>
-			<i v-if="upState=='3'">上传完成</i>
-			<i v-if="upState=='5'"style="color: red;">网络断开</i>
-			<i v-if="upState=='7'">替换中...</i>
-			<i v-if="upState=='9'" style="color: red;">文件读取异常，请重新导入</i>
+			<span>
+				<i v-if="upState=='0'">暂停中...</i>
+				<i v-if="upState=='1'">{{speed}}</i>
+				<i v-if="upState=='0.5'">{{loadText}}</i>
+				<i v-if="upState=='2'">等待上传...</i>
+				<i v-if="upState=='3'">上传完成</i>
+				<i v-if="upState=='5'"style="color: red;">网络断开</i>
+				<i v-if="upState=='7'">替换中...</i>
+				<i v-if="upState=='9'" style="color: red;">文件读取异常，请重新导入</i>
+			</span>
+			<span>
+				{{restTime}}
+			</span>
 		</span>
+		
 	</div>
 </template>
 
@@ -30,7 +36,8 @@
 				precent:20,
 				speed: '',
 				upState: 0.5,
-				deleteFlage: true,
+				restTime: '-- --',
+				loadText: "正在连接...",
 			}
 		},
 		mounted(){
@@ -38,6 +45,7 @@
 				this.precent = e.precent;
 				this.speed = e.speed;
 				this.upState = e.uploadState;
+				this.restTime = e.restTime;
 				if(this.upState == 5){
 					this.$emit('change')
 				}
@@ -63,7 +71,8 @@
 	.upStateBox>span:nth-child(2){
 		/* background: honeydew; */
 		font-size: 14px;
-		text-align: left;
+		display: flex;
+		justify-content: space-between;
 	}
 	.upStateBox>span:nth-child(2) i{
 		font-style: normal;

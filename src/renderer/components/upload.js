@@ -218,12 +218,27 @@ Upload.prototype.next = function() {
 Upload.prototype.getSpeed = function() {
 	var speed = '-- --';
 	var time = (this.endTime - this.startTime) / 1000;
-	
 	if(!isNaN(time) && time > 0){
 		var space = (this.arr[this.index].end - this.arr[this.index].start) / 1024;
 		    speed= (space / time) > 1024 ? ((space / time) / 1024).toFixed(2) + "MB/S" : ((space / time).toFixed(0) + "KB/S");
 	}
 	return speed;
+}
+
+Upload.prototype.getRestTime = function(){
+	let speed = this.getSpeed();
+	let restTime = '-- --';
+	if(speed!= '-- --'){
+		var restNumber = Math.floor((this.file.size - this.arr[this.index].start) / (1024 * 1024 * speed) < 0 ? 0 : ((this.file.size -
+			this.arr[this.index].start) / (1024 * 1024 * speed)))
+		var p1 = Math.floor(restNumber / 3600) > 9 ? Math.floor(restNumber / 3600) : "0" + Math.floor(restNumber / 3600);
+		var p2 = Math.floor(restNumber / 60 % 60) > 9 ? Math.floor(restNumber / 60 % 60) : "0" + Math.floor(restNumber /
+			60 % 60);
+		var p3 = Math.floor(restNumber % 60) > 9 ? Math.floor(restNumber % 60) : "0" + Math.floor(restNumber % 60);
+		console.log((this.file.size - this.arr[this.index].start) , (1024 * 1024 * speed))
+		restTime = p1 + ":" + p2 + ":" + p3;
+	}
+	return restTime;
 }
 
 
@@ -242,6 +257,7 @@ Upload.prototype.progressEvent = function(callback) {
 				obj.start = _this.arr[_this.index].start;
 				obj.precent = Math.ceil((obj.start / obj.total) * 100);
 				obj.speed = _this.getSpeed();
+				obj.restTime = _this.getRestTime();
 			} else {
 				obj.precent = 100;
 			}
