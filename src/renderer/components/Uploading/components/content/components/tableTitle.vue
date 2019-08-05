@@ -2,7 +2,9 @@
 	<div class="box">
 		<span class="item" v-for="item in titles" :key="item.key" :style="{width: item.width+'%'}">
 			<span v-if="item.name != ''">{{item.name}}</span>
-			<span v-else>checkbox</span>
+			<span v-else>
+				 <el-checkbox :indeterminate="isIndeterminate" v-model="checkAll" @change="handleCheckAllChange"/>
+			</span>
 		</span>
 	</div>
 </template>
@@ -13,6 +15,19 @@
 			titles: {
 				type: Array,
 			},
+			isIndeterminate: {
+				type: Boolean,
+			}
+		},
+		data() {
+			return {
+				checkAll: false
+			}
+		},
+		methods: {
+			handleCheckAllChange(e) {
+				this.$emit('change', this.checkAll)
+			}
 		},
 	}
 </script>

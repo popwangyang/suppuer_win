@@ -1,11 +1,13 @@
 <template>
 	<div class="upBodyBox">
 	  <div class="title">
-		  <TableTitle :titles="titles"/>
+		  <TableTitle :titles="titles" @change='handleCheckAllChange' :isIndeterminate="flage" ref="title"/>
 	  </div>
 	  <div class="body">
 		  <span v-for="item in arr " :key="item.id">
-			  <TableBody :titles="titles" :item="item" @change="getList"/>
+			  <TableBody :titles="titles" :item="item" @change="getList">
+				  <el-checkbox v-model="item.isSelect" @change="handleCheckChange"/>
+			  </TableBody>
 		  </span>
 	  </div>
 	</div>
@@ -42,22 +44,41 @@
 			return {
 				arr: Upload.children,
 				titles: config.titles,
+				flage: false,
+				checkAll: true,
+				selectArr: []
 			}
 		},
 		methods:{
 			getList(){
-				let srr = []
 				this.arr = Upload.children.filter(item => {
 					return item.getUploadState() != 5;
 				})
+			},
+			handleCheckAllChange(e){
 				this.arr.map(item => {
-					console.log(item.getUploadState(), item.id)
+					item.isSelect = e;
 				})
-				console.log(this.arr)
+				this.handleCheckChange()
+			},
+			handleCheckChange(){
+				this.selectArr = this.arr.filter(item => {
+					return (item.isSelect);
+				})
+				if(this.selectArr.length == this.arr.length || this.selectArr.length == 0){
+					this.flage = false
+				}else{
+					this.flage = true
+				}
+				if(this.selectArr.length == this.arr.length){
+					this.$refs.title.checkAll = true;
+				}else{
+					this.$refs.title.checkAll = false;
+				}
 			}
 		},
 		mounted() {
-			console.log(this.arr)
+			
 		}
 	}
 </script>

@@ -45,7 +45,11 @@
 				this.precent = e.precent;
 				this.speed = e.speed;
 				this.upState = e.uploadState;
-				this.restTime = e.restTime;
+				if(this.upState == 1){
+					this.restTime = e.restTime;
+				}else{
+					this.restTime = "-- --";
+				}
 				if(this.upState == 5){
 					this.$emit('change')
 				}

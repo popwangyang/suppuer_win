@@ -429,11 +429,15 @@
 					</el-table-column>
 					<el-table-column label="画面" :width="widthHead[5]">
 						<template slot-scope="scope">
+							
 							<span v-if="scope.row.picture =='4'">
 								MTV
 							</span>
 							<span v-else-if="scope.row.picture =='1'">
 								LIVE
+							</span>
+							<span v-else-if="scope.row.picture =='0'">
+								原版MV
 							</span>
 							<span v-else-if="scope.row.picture =='2'">
 								舞曲
@@ -444,7 +448,6 @@
 							<span v-else style="color: red;">
 								缺失
 							</span>
-
 						</template>
 					</el-table-column>
 					<el-table-column label="地区" :width="widthHead[6]">

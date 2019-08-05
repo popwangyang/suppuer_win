@@ -94,7 +94,7 @@
                                 	
                                 	描述：正在上传页面显示
                                 -->
-                    <span class="headBtn_stop1" v-show="pageBtn4" @click="StopUpload">
+                              <span class="headBtn_stop1" v-show="pageBtn4" @click="StopUpload">
 	    				   	 	<i class="iconfont icon-xiazaizanting el-icon-stop1" style="font-size: 12px;"></i>
 	    				   	 	<i class="headBtn_stop_font" v-show="!selectFlage3">全部暂停</i>
 										<i class="headBtn_stop_font" v-show="selectFlage3">暂停</i>

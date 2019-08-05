@@ -20,6 +20,7 @@ function Upload(data, url) {
 	this.create_date = data.upload_data;  // 歌曲上传时间；
 	this.size = data.file.size;  // 上传文件的总大小；
 	this.precent = 0;  // 上传文件的进度；
+	this.isSelect = false;  // 文件是否被选中
 	this.file = data.file;
 	this.key = null;
 	this.token = this.getToken();
@@ -90,7 +91,6 @@ Upload.prototype.slice = function() {
 
 Upload.prototype.startUpload = function() {
 	if (this.getUplaodingFlage()) {
-		console.log(this.getUplaodingFlage(), this.getUploadState(), "getUplaodingFlage")
 		var obj = this.arr[this.index];
 		this.stopFlage = false;
 		this.loading = true;
@@ -101,12 +101,16 @@ Upload.prototype.startUpload = function() {
 		this.stopFlage = false;
 		this.loading = false;
 		this.setUploadState(2);
-		console.log(this.getUplaodingFlage(), this.getUploadState(), "getUplaodingFlage")
 	}
 	this.event.prograssEvent = 0;
 	this.event.sizeEvent = 0;
 	this.event.operationEvent = 0;
 };
+
+Upload.prototype.refreshUpload = function(){
+	this.index = 0;
+	this.startUpload();
+}
 
 Upload.prototype.waite = function() {
 	this.setUploadState(0);
@@ -229,6 +233,9 @@ Upload.prototype.getRestTime = function(){
 	let speed = this.getSpeed();
 	let restTime = '-- --';
 	if(speed!= '-- --'){
+		let value = speed.substring(0, speed.length-4)
+		let type = speed.substring(speed.length-4, speed.length)
+		speed = type== "KB/S" ? value/1024 : value;
 		var restNumber = Math.floor((this.file.size - this.arr[this.index].start) / (1024 * 1024 * speed) < 0 ? 0 : ((this.file.size -
 			this.arr[this.index].start) / (1024 * 1024 * speed)))
 		var p1 = Math.floor(restNumber / 3600) > 9 ? Math.floor(restNumber / 3600) : "0" + Math.floor(restNumber / 3600);

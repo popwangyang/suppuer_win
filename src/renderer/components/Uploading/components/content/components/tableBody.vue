@@ -1,7 +1,9 @@
 <template>
 	<div class="box">
 		<span class="item" v-for="title in titles" :key="title.key" :style="{width: title.width+'%'}">
-			<span v-if="title.name == ''">checkbox</span>
+			<span v-if="title.name == ''">
+				<slot></slot>
+			</span>
 			<span v-if="title.key == 'create_date'">{{item.create_date}}</span>
 			<span v-if="title.key == 'size'">
 				<Size :item="item" />
