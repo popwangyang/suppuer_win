@@ -11,7 +11,7 @@ import {
 
 function Upload(data, url) {
 	var UploadIndex = uploadIndex;
-	var uploadState = 1; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除；
+	var uploadState = 0; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除；
 	uploadIndex++;
 	this.uploadingStateNum = 3;  // 可以同时上传的总个数；
 	this.id = data.id;  // 上传实例的id
@@ -89,16 +89,19 @@ Upload.prototype.slice = function() {
 };
 
 Upload.prototype.startUpload = function() {
-	console.log(this.getUplaodingFlage())
 	if (this.getUplaodingFlage()) {
+		console.log(this.getUplaodingFlage(), this.getUploadState(), "getUplaodingFlage")
 		var obj = this.arr[this.index];
 		this.stopFlage = false;
 		this.loading = true;
+		this.setUploadState(1);
 		this.changeURL(obj);
 		this.Uploading();
-		this.setUploadState(1);
 	} else {
+		this.stopFlage = false;
+		this.loading = false;
 		this.setUploadState(2);
+		console.log(this.getUplaodingFlage(), this.getUploadState(), "getUplaodingFlage")
 	}
 	this.event.prograssEvent = 0;
 	this.event.sizeEvent = 0;
@@ -140,10 +143,12 @@ Upload.prototype.deleteUpload = function() {
 		this.stopFlage = false;
 		this.loading = false;
 	}
+	
 	this.setUploadState(5);
 	this.event.prograssEvent = 0;
 	this.event.sizeEvent = 0;
 	this.event.operationEvent = 0;
+	console.log("deleteUpload")
 };
 
 Upload.prototype.getToken = function() {
@@ -154,11 +159,11 @@ Upload.prototype.getUplaodingFlage = function() {
 	var childrens = Upload.children;
 	var num = 0;
 	for (var i = 0; i < childrens.length; i++) {
-		console.log(childrens[i].getUploadState())
 		if (childrens[i].getUploadState() == 1) {
 			num++;
 		}
 	};
+	
 	if (num < this.uploadingStateNum) {
 		return true;
 	} else {
@@ -195,7 +200,6 @@ Upload.prototype.getConfig = function() {
 			arr.push(str);
 		}
 		urlStr = arr.join("\/");
-		console.log(urlStr);
 		this.config = urlStr;
 	})
 }
@@ -203,7 +207,6 @@ Upload.prototype.getConfig = function() {
 Upload.prototype.next = function() {
 	var childrens = Upload.children;
 	for (var i = 0; i < childrens.length; i++) {
-		console.log(childrens[i].getUploadState())
 		if (childrens[i].getUploadState() == 2) {
 			childrens[i].startUpload();
 			break;
@@ -213,9 +216,13 @@ Upload.prototype.next = function() {
 
 
 Upload.prototype.getSpeed = function() {
+	var speed = '-- --';
 	var time = (this.endTime - this.startTime) / 1000;
-	var space = (this.arr[this.index].end - this.arr[this.index].start) / 1024;
-	var speed = (space / time) > 1024 ? ((space / time) / 1024).toFixed(2) + "MB/S" : ((space / time).toFixed(0) + "KB/S");
+	
+	if(!isNaN(time) && time > 0){
+		var space = (this.arr[this.index].end - this.arr[this.index].start) / 1024;
+		    speed= (space / time) > 1024 ? ((space / time) / 1024).toFixed(2) + "MB/S" : ((space / time).toFixed(0) + "KB/S");
+	}
 	return speed;
 }
 
@@ -238,7 +245,7 @@ Upload.prototype.progressEvent = function(callback) {
 			} else {
 				obj.precent = 100;
 			}
-			if (newValue == 0 && obj.uploadState != 5) {
+			if (obj.uploadState == 5) {
 				obj.displayFlage = false;
 			} else {
 				obj.displayFlage = true;
@@ -292,16 +299,19 @@ Upload.prototype.operationEvent = function(callback) {
 Upload.prototype.on = function(key, callback) {
 	switch (key) {
 		case "prograss":
-			this.progressEvent(callback)
+			this.progressEvent(callback);
+			this.event.prograssEvent = 0;
 			break;
 		case "error":
-			this.errorEvent(callback)
+			this.errorEvent(callback);
 			break;
 		case  "size":
 		    this.sizeEvent(callback)
+			this.event.sizeEvent = 0;
 			break;
 		case  "operation":
 		    this.operationEvent(callback)
+			this.event.operationEvent = 0;
 			break;
 	}
 };
@@ -324,22 +334,15 @@ Upload.prototype.complateUplod = function() {
 	xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
 	xhr.onreadystatechange = function(response) {
 		if (xhr.readyState == 4 && xhr.status == 204 || xhr.readyState == 4 && xhr.status == 201) {
-			console.log(Upload.children, "ssssssssssssssss")
-			_this.event.prograssEvent = 1;
-			_this.event.sizeEvent = 1;
-			_this.event.sizeEvent = 1;
-			_this.event.operationEvent = 0;
 			_this.setUploadState(3);
+			_this.event.prograssEvent = 0;
+			_this.event.sizeEvent = 0;
+			_this.event.operationEvent = 0;
 			_this.next();
-			Upload.children.map((item, index) => {
-				if(item.id == _this.id){
-					Upload.children.splice(index, 1);
-				}
-			})
 		}else if (xhr.readyState == 4 && xhr.status == 401) {
 			_this.getAuth(_this.complateUplod())
 		}else if(xhr.readyState == 4) {
-			_this.event.errorEvent = 1;
+			_this.event.errorEvent = 0;
 		} 
 	};
 	xhr.send(str);
@@ -385,7 +388,7 @@ Upload.prototype.Uploading = function() {
 				_this.Uploading();
 				_this.repeatnumber--;
 			} else {
-				_this.event.errorEvent = 1;
+				_this.event.errorEvent = 0;
 			}
 		} else if (xhr.readyState == 4 && xhr.status == 401) {
 			_this.getAuth(_this.Uploading())

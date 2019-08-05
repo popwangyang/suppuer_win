@@ -887,9 +887,7 @@
 				this.$refs.file.value = ""
 			},
 			UploadFileOK2(){
-				
 				if(this.selectFlage2){
-					console.log("wangyan")
 					Bus.$emit('UploadFileOK2')
 				}
 			},
@@ -898,37 +896,22 @@
 					Bus.$emit('delected2')
 				}
 			},
-			
-			
 			StopUpload(){
-				
-					Bus.$emit("StopUpload")
-				
+				Bus.$emit("StopUpload")
 			},
 			StartUpload(){
-				
-					Bus.$emit("StartUpload")
-				
+				Bus.$emit("StartUpload")
 			},
 			DelectUpload(){
-				
-					Bus.$emit("DelectUpload")
-				
+				Bus.$emit("DelectUpload")
 			},
-     genxin(){
-			      console.log(this.updateStep,this.HDmessage,"pppppp")
+            genxin(){
 					this.flage = false;//下拉框箭头动画
-					
 					if(this.updateStep == 1){
-						
 						this.dialogQZupdateVisible = true;
-						
 					}else if(this.updateStep == 2){
-						
 						setTimeout(()=>{
-							
 								this.handleUpdateFlage = true;
-								
 						if(this.HDmessage == "update-available"){
 											
 									this.dialogHDupdateVisible = true;

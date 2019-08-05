@@ -177,7 +177,7 @@
 		},
 		methods: {
 			uploadFile(id){
-				this.$store.commit("uploadSong", id)
+				this.$store.commit("uploadSong", [id])
 			},
 			JumpPage(id){
 				this.$router.push({
@@ -203,7 +203,12 @@
 		},
 		mounted(){
 			Bus.$on("UploadFileOK2", () => {
-				this.UploadesVisible = true;
+				let ids = this.multipleSelection.reduce((cur, next) => {
+					cur.push(next.id);
+					return cur;
+				}, [])
+				this.$store.commit("uploadSong", ids)
+				this.multipleSelection = [];
 			})
 			Bus.$on("delected2", () => {
 				this.deldecteFileIDS = this.multipleSelection.reduce((cur, next) => {

@@ -34,13 +34,16 @@ const mutations = {
 		})
 		state.songNumbers = results;
 	},
-	uploadSong(state, id) {
+	uploadSong(state, ids) {
+		let results = []
 		state.songNumbers.forEach((item, index) => {
-			if(item.id == id){
+			if(ids.indexOf(item.id) > -1){
 				new Upload(item, "http://up-z1.qiniup.com");
-				state.songNumbers.splice(index, 1);
+			}else{
+				results.push(item);
 			}
 		})
+		state.songNumbers = results;
 	}
 }
 

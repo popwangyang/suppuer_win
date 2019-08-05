@@ -1,69 +1,30 @@
 <template>
-	<div>
-	<el-table
-    :data="arr"
-	@selection-change="handleSelectionChange"
-    max-height="704"
-    style="width: 100%">
-	<el-table-column
-      type="selection"
-      width="55">
-	</el-table-column>
-    <el-table-column
-      prop="content.name"
-      label="歌曲名称"
-      width="150">
-    </el-table-column>
-    <el-table-column
-      prop="content.singer"
-      label="歌手名称"
-      width="150">
-    </el-table-column>
-    <el-table-column
-      prop="content.format_type"
-	  width="140"
-      label="格式">
-    </el-table-column>
-	<el-table-column
-	  prop="create_date"
-	  width="180"
-	  label="上传日期">
-	</el-table-column>
-	<el-table-column prop="size" label="大小">
-		<template slot-scope="scope">
-			<Size :item="scope.row" />
-		</template>
-	</el-table-column>
-	<el-table-column prop="size" label="状态">
-		<template slot-scope="scope">
-			<UpState :item="scope.row" />
-		</template>
-	</el-table-column>
-	<el-table-column  prop="size" label="操作"  width="150">
-		<template slot-scope="scope">
-			<Event :item="scope.row" />
-		</template>
-	</el-table-column>
-  </el-table>
+	<div class="upBodyBox">
+	  <div class="title">
+		  <TableTitle :titles="titles"/>
+	  </div>
+	  <div class="body">
+		  <span v-for="item in arr " :key="item.id">
+			  <TableBody :titles="titles" :item="item" @change="getList"/>
+		  </span>
+	  </div>
 	</div>
 </template>
 <script>
 	import Upload from '../../../upload.js'
 	import Size from './components/size'
+	import TableBody from './components/tableBody'
+	import TableTitle from './components/tableTitle'
 	import UpState from './components/upState'
 	import Event from './components/event'
 	import config from '../../../../config'
 	export default{
 		components:{
+			TableBody,
+			TableTitle,
 			Size,
 			UpState,
 			Event,
-		},
-		filters: {
-			FileSize: function(value) {
-				return Math.floor(value / 1024 / 1024) > 1024 ? Math.floor(value / 1024 / 1024) / 1024 + "G" : Math.floor(value /
-					1024 / 1024) + "M";
-			}
 		},
 		watch: {
 			arr: {
@@ -80,12 +41,20 @@
 		data() {
 			return {
 				arr: Upload.children,
+				titles: config.titles,
 			}
 		},
 		methods:{
-			handleSelectionChange(val){
-			  	
-			},
+			getList(){
+				let srr = []
+				this.arr = Upload.children.filter(item => {
+					return item.getUploadState() != 5;
+				})
+				this.arr.map(item => {
+					console.log(item.getUploadState(), item.id)
+				})
+				console.log(this.arr)
+			}
 		},
 		mounted() {
 			console.log(this.arr)
@@ -93,5 +62,16 @@
 	}
 </script>
 
-<style>
+<style scoped="scoped">
+	.upBodyBox{
+		width: 100%;
+		height: 100%;
+	}
+	.upBodyBox .title{
+		height: 46px;
+	}
+	.upBodyBox .body{
+		height: 705px;
+		overflow: auto;
+	}
 </style>

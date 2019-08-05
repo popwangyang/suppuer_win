@@ -21,9 +21,7 @@
 			}
 		},
 		mounted(){
-			console.log(this.item)
 			this.item.on('size', (e) => {
-				console.log(e, 'size')
 				this.size = e.size;
 			})
 		}

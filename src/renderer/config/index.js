@@ -9,38 +9,38 @@ export default {
 		},
 		{
 			name: '歌曲名称',
-			width: 10,
-			key: 'singer'
+			width: 15,
+			key: 'name'
 	    },
 		{
 			name: '歌手名称',
-			width: 10,
-			key: 'song'
+			width: 15,
+			key: 'singer'
 		},
 		{
 			name: '格式',
-			width: 10,
-			key: 'singer'
+			width: 11,
+			key: 'format_type'
 		},
 		{
 			name: '上传日期',
 			width: 15,
-			key: 'singer'
+			key: 'create_date'
 		},
 		{
 			name: '大小',
 			width: 10,
-			key: 'singer'
+			key: 'size'
 		},
 		{
 			name: '状态',
-			width: 25,
-			key: 'singer'
+			width: 15,
+			key: 'statue'
 		},
 		{
 			name: '操作',
-			width: 15,
-			key: 'singer'
+			width: 14,
+			key: 'operation'
 		},
 	],
 	songInfoData:{
