@@ -13,6 +13,7 @@
 	</div>
 </template>
 <script>
+	import Bus from '../../../bus.js'
 	import Upload from '../../../upload.js'
 	import Size from './components/size'
 	import TableBody from './components/tableBody'
@@ -74,6 +75,11 @@
 					this.$refs.title.checkAll = true;
 				}else{
 					this.$refs.title.checkAll = false;
+				}
+				if(this.selectArr.length > 0){
+					Bus.$emit('val3', "1")
+				}else{
+					Bus.$emit('val3', "0")
 				}
 			}
 		},
