@@ -906,7 +906,11 @@
 			},
 			loadAllAlbum() {
 				var _this = this;
-				get("/music/music/album").then(function(res) {
+				let send_data = {
+					page:1,
+					page_size: 99999999
+				}
+				get("/music/music/album", send_data).then(function(res) {
 					console.log(res)
 					var arr = res.data.results
 					var arr1 = []
@@ -935,7 +939,11 @@
 			},
 			loadAllCompany() {
 				var _this = this;
-				get("/music/music/company").then(function(res) {
+				let send_data = {
+					page:1,
+					page_size: 99999999
+				}
+				get("/music/music/company", send_data).then(function(res) {
 					var arr = res.data.results
 					var arr1 = []
 					var arr2 = []

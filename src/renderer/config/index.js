@@ -52,10 +52,10 @@ export default {
 				label:'MTV',
 				value:4
 			},
-			{
-				label:'其他',
-				value:5
-			},
+			// {
+			// 	label:'其他',
+			// 	value:5
+			// },
 		],
 		area:[
 			{
@@ -92,10 +92,10 @@ export default {
 				label:'MP4',
 				value:2
 			},
-			{
-				label:'其他',
-				value:3
-			},
+			// {
+			// 	label:'其他',
+			// 	value:3
+			// },
 			{
 				label:'MKV',
 				value:4
@@ -140,10 +140,10 @@ export default {
 				label:'右声道',
 				value:3
 			},
-			{
-				label:'无',
-				value:4
-			},
+			// {
+			// 	label:'无',
+			// 	value:4
+			// },
 		],
 		vocal_track: [
 			{
@@ -162,10 +162,10 @@ export default {
 				label:'右声道',
 				value:3
 			},
-			{
-				label:'无',
-				value:4
-			}
+			// {
+			// 	label:'无',
+			// 	value:4
+			// }
 		],
 		singer_type:[
 			{
@@ -184,10 +184,10 @@ export default {
 				label:'合唱',
 				value:3
 			},
-			{
-				label:'无',
-				value:4
-			}
+			// {
+			// 	label:'无',
+			// 	value:4
+			// }
 		],
 		save_sign: [
 			{
