@@ -8,10 +8,11 @@ import {
 import {
 	post
 } from './api'
+const fs = require("fs");
 
 function Upload(data, url) {
 	var UploadIndex = uploadIndex;
-	var uploadState = 0; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除；
+	var uploadState = 0; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除； 6文件读取异常;
 	uploadIndex++;
 	this.uploadingStateNum = 3;  // 可以同时上传的总个数；
 	this.id = data.id;  // 上传实例的id
@@ -41,6 +42,7 @@ function Upload(data, url) {
 	this.offset;
 	this.arr = [];
 	this.config;
+	
 	this.slice();
 	this.getConfig();
 	this.getAuth(this.startUpload);
@@ -56,8 +58,18 @@ function Upload(data, url) {
 	this.getUploadIndex = function() {
 		return UploadIndex;
 	}
+	this.getFileExite();
 	Upload.children.push(this);
-	
+}
+Upload.prototype.getFileExite = function(){
+	console.log(this)
+	if(!fs.existsSync(this.file.path)){
+		this.setUploadState(6);
+		this.stopFlage = false;
+		this.event.prograssEvent = 0;
+		this.event.sizeEvent = 0;
+		this.event.operationEvent = 0;
+	}
 }
 
 Upload.prototype.slice = function() {
@@ -72,7 +84,7 @@ Upload.prototype.slice = function() {
 		var obj = {};
 		obj.type = n;
 		obj.start = this.ChunkLength * i;
-		obj.end = this.ChunkLength * (i + 1);
+		obj.end = this.ChunkLength * (i + 1) - 1;
 		obj.BlockIndex = Math.ceil((i + 1) / 8);
 		obj.ChunkIndex = n;
 		if (n == 1) {
@@ -147,12 +159,10 @@ Upload.prototype.deleteUpload = function() {
 		this.stopFlage = false;
 		this.loading = false;
 	}
-	
 	this.setUploadState(5);
 	this.event.prograssEvent = 0;
 	this.event.sizeEvent = 0;
 	this.event.operationEvent = 0;
-	console.log("deleteUpload")
 };
 
 Upload.prototype.getToken = function() {
@@ -242,7 +252,6 @@ Upload.prototype.getRestTime = function(){
 		var p2 = Math.floor(restNumber / 60 % 60) > 9 ? Math.floor(restNumber / 60 % 60) : "0" + Math.floor(restNumber /
 			60 % 60);
 		var p3 = Math.floor(restNumber % 60) > 9 ? Math.floor(restNumber % 60) : "0" + Math.floor(restNumber % 60);
-		console.log((this.file.size - this.arr[this.index].start) , (1024 * 1024 * speed))
 		restTime = p1 + ":" + p2 + ":" + p3;
 	}
 	return restTime;
@@ -376,48 +385,58 @@ Upload.prototype.Uploading = function() {
 	this.startTime = new Date().getTime();
 	var _this = this;
 	var obj = this.arr[this.index];
-	var fileContent = this.file.slice(obj.start, obj.end);
-	var xhr = new XMLHttpRequest();
-	xhr.open('post', this.url, true);
-	xhr.setRequestHeader("Content-Type", "text/plain");
-	xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
-	xhr.onreadystatechange = function() {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			_this.loading = false;
-			_this.endTime = new Date().getTime();
-			var resDate = JSON.parse(xhr.response)
-			_this.ctx = resDate.ctx;
-			_this.offset = resDate.offset;
-			_this.arr[_this.index].ctx = _this.ctx;
-			_this.event.prograssEvent = 0;
-			_this.event.sizeEvent = 0;
-			_this.event.operationEvent = 0;
-			_this.index++;
-			if (_this.index <= _this.arr.length - 1) {
-				_this.changeURL(_this.arr[_this.index]);
-				if (!_this.stopFlage) {
-					_this.Uploading();
-				} else {
+	// var fileContent = this.file.slice(obj.start, obj.end);
+	console.log(this.arr, this.index, obj)
+	let Buffer = [];
+	let readStream = fs.createReadStream(this.file.path, { start:obj.start, end: obj.end });
+	    readStream.on('data', (data) => {
+		   Buffer.push(data)
+	    })
+		readStream.on('end', () => {
+			let blob = new Blob(Buffer);
+			console.log(blob.size)
+			var xhr = new XMLHttpRequest();
+			xhr.open('post', this.url, true);
+			xhr.setRequestHeader("Content-Type", "text/plain");
+			xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4 && xhr.status == 200) {
+					_this.loading = false;
+					_this.endTime = new Date().getTime();
+					var resDate = JSON.parse(xhr.response)
+					_this.ctx = resDate.ctx;
+					_this.offset = resDate.offset;
+					_this.arr[_this.index].ctx = _this.ctx;
 					_this.event.prograssEvent = 0;
 					_this.event.sizeEvent = 0;
 					_this.event.operationEvent = 0;
-					_this.next();
+					_this.index++;
+					if (_this.index <= _this.arr.length - 1) {
+						_this.changeURL(_this.arr[_this.index]);
+						if (!_this.stopFlage) {
+							_this.Uploading();
+						} else {
+							_this.event.prograssEvent = 0;
+							_this.event.sizeEvent = 0;
+							_this.event.operationEvent = 0;
+							_this.next();
+						}
+					} else {
+						_this.complateUplod();
+					}
+				} else if (xhr.readyState == 4 && xhr.status != 200) {
+					if (_this.repeatnumber > 0) {
+						_this.Uploading();
+						_this.repeatnumber--;
+					} else {
+						_this.event.errorEvent = 0;
+					}
+				} else if (xhr.readyState == 4 && xhr.status == 401) {
+					_this.getAuth(_this.Uploading())
 				}
-			} else {
-				_this.complateUplod();
-			}
-		} else if (xhr.readyState == 4 && xhr.status != 200) {
-			if (_this.repeatnumber > 0) {
-				_this.Uploading();
-				_this.repeatnumber--;
-			} else {
-				_this.event.errorEvent = 0;
-			}
-		} else if (xhr.readyState == 4 && xhr.status == 401) {
-			_this.getAuth(_this.Uploading())
-		}
-	};
-	xhr.send(fileContent);
+			};
+			xhr.send(blob);
+		})
 };
 
 var Upload = Upload;

@@ -37,6 +37,7 @@
 					}else{
 						this.$emit('change', false)
 					}
+					this.setUploadNum();
 				},
 				immediate: true,
 			}
@@ -51,10 +52,20 @@
 			}
 		},
 		methods:{
+			setUploadNum(){
+			    let num = this.arr.reduce((cur, next) => {
+					if(next.getUploadState() == 1 || next.getUploadState() == 2){
+						cur++;
+					}
+				    return cur;
+				}, 0)
+				this.$store.commit('setUplaodNum', num);
+			},
 			getList(){
 				this.arr = Upload.children.filter(item => {
 					return item.getUploadState() != 5;
 				})
+				this.handleCheckChange()  // 每次处理完去除被删除的选项执行。
 			},
 			handleCheckAllChange(e){
 				this.arr.map(item => {
@@ -81,10 +92,58 @@
 				}else{
 					Bus.$emit('val3', "0")
 				}
+			},
+			stopUpload(arr){
+				arr.map(item => {
+					if(item.getUploadState() == 1 || item.getUploadState() == 2){
+						item.stopUpload()
+					}
+				})
+			},
+			startUpload(arr){
+				arr.map(item => {
+					if(item.getUploadState() == 0){
+						item.startUpload()
+					}
+				})
+			},
+			deleteUpload(arr){
+				arr.map(item => {
+					item.deleteUpload()
+				})
 			}
 		},
 		mounted() {
-			
+			Bus.$on('StopUpload', () => {
+				if(this.selectArr.length > 0){
+					this.stopUpload(this.selectArr)
+				}else{
+					this.stopUpload(this.arr)
+				}
+			})
+			Bus.$on("StartUpload",() => {
+				if(this.selectArr.length > 0){
+					this.startUpload(this.selectArr)
+				}else{
+					this.startUpload(this.arr)
+				}
+			})
+			Bus.$on("DelectUpload",() => {
+				if(this.selectArr.length > 0){
+					this.deleteUpload(this.selectArr)
+				}else{
+					this.deleteUpload(this.arr)
+				}
+			})
+			Bus.$on("exitLogin", () => {
+				console.log('exitLogin')
+			})
+		},
+		beforeDestroy(){
+			Bus.$off("StopUpload");
+			Bus.$off("StartUpload");
+			Bus.$off("DelectUpload");
+			Bus.$off("exitLogin");
 		}
 	}
 </script>

@@ -8,7 +8,7 @@
 <script>
 	import Bus from '../bus.js'
 	import config from '../../config'
-	import { validateFormat, getDate, blackBox, chaxun } from '../util.js'
+	import { validateFormat, getDate, blackBox, chaxun, saveStoreDB } from '../util.js'
 	import { post, get } from '../api.js'
 	import Empty from './components/emptyComponent.vue'
 	import Content from './components/conentComponent.vue'
@@ -60,6 +60,10 @@
 				})
 			},
 			saveFile(data, res){
+				let file = {}
+				for(let key in data){
+					file[key] = data[key]
+				}
 				let obj = {
 					"currentNum": 0,
 					"id": new Date().getTime(),
@@ -72,9 +76,10 @@
 					"UploadSize" : 0,
 					"startFlage": true,
 					"content": res.data[0],
-					"file": data,
+					"file": file,
 					"upload_data": getDate(),
 				}
+				saveStoreDB(this, 'songNumbers', obj)
 				this.$store.commit("saveSong", obj)
 				this.$notify({
 					title: '提示',

@@ -355,10 +355,66 @@ export const chaxun = (params, callback) => {
 	   callback(res.data.results)
 	}).catch(err => {
 	   notify({
+		title: '提示',
 	   	message: '保存失败！',
 	   	type: 'error',
 	   	offset: 60,
 	   	duration: 1000,
 	   });
+	})
+}
+
+/* 
+ * 从db数据库中读取数据
+ * @params {vm} vue实例对象；
+ * @params {key} 查询的关键字
+ */
+export const readStoreDB = (vm, key) => {
+	return new Promise((resolve, reject) => {
+	  vm.$db.find({ name: key}, (err, docs) => {
+		  if(err) {
+			reject(err)  
+		  }
+	  	resolve(docs)
+	  })	
+	})
+}
+/* 
+ *将数据导入到db数据库中
+ * @params {vm} vue实例对象；
+ * @params {key} 储存的关键字；
+ * @params {data} 储存的数据集；
+ * */
+ export const saveStoreDB = (vm, key, data) =>{
+	return new Promise((resolve, reject) => {
+		readStoreDB(vm, key).then(res => {
+			if(res.length == 0){
+				vm.$db.insert({name: key, value: [data]}, (err, newDoc) => {
+					if(err) {
+						reject(err)  
+					}
+					resolve(newDoc) 
+				}) 
+			}else{
+				vm.$db.update({name: key},{ $push: {value: data} }, (err, newDoc) => {
+					if(err) {
+						reject(err)  
+					}
+					resolve(newDoc) 
+				}) 
+			}
+		})
+	 })
+ }
+ 
+ /* 
+ * 从db数据库中删除数据
+ * 
+ */
+
+export const removeStoreDB = (vm, key, ids) => {
+	readStoreDB(vm, key).then(res => {
+		if(res.length == 0) return;
+		
 	})
 }

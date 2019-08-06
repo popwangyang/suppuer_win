@@ -2,7 +2,7 @@
 	<div id="uploadTemplate">
 		<div>
 			<el-progress :percentage="percentage"></el-progress>
-			<div style="height: 20px;display: flex;justify-content: space-between;margin: 0 20px;font-size: 12px;line-height: 12px;">
+			<div style="height: 20px;display: flex;justify-content: space-between;margin: 0 20px;font-size: 14px;line-height: 12px;">
 				<i style="margin-right:10px;display: inline-block;width: 110px;">{{speed}}</i>
 				<i style="display: inline-block;width:80px;">{{restTime}}</i>
 			</div>

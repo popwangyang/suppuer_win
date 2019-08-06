@@ -95,7 +95,7 @@
                                 	描述：正在上传页面显示
                                 -->
                               <span class="headBtn_stop1" v-show="pageBtn4" @click="StopUpload">
-	    				   	 	<i class="iconfont icon-xiazaizanting el-icon-stop1" style="font-size: 12px;"></i>
+	    				   	 	<i class="iconfont icon-xiazaizanting el-icon-stop1" style="font-size: 14px;"></i>
 	    				   	 	<i class="headBtn_stop_font" v-show="!selectFlage3">全部暂停</i>
 										<i class="headBtn_stop_font" v-show="selectFlage3">暂停</i>
 	    				   	 </span>
@@ -434,7 +434,7 @@
 	import HistoryRouter from './CustomComponents/HistoryRouter';
 	import Bus from './bus.js'
 	import { patch } from "./api.js"
-	import { getDingZiNum } from "./util.js"
+	import { getDingZiNum, readStoreDB } from "./util.js"
 	export default{
 		components:{ HistoryRouter },
 		data(){
@@ -538,17 +538,10 @@
 		},
 		computed: {
 		  UPnumber() {
-				var arr = this.$store.state.Counter.data;
-				var i = 0;
-				    arr.map(function(item){
-							  if(item.upState == "1" || item.upState == "4"){
-									i++
-								}
-						})
-				return i; 
+				return this.$store.state.SongUpload.uploadSongNumbers; 
 			},
 			DRnumber() {
-				return this.$store.state.Counter.data1.length; 
+				return this.$store.getters.importSongNumbers; 
 			},
 			btnLeft() {
 				if(this.$store.state.Router.currentIndex!=0){
@@ -936,7 +929,15 @@
 		},
 
 	    mounted(){
-
+			    // this.$db.remove({},{multi: true})
+				readStoreDB(this, 'songNumbers').then(res => {
+					console.log(res)
+					if(res.length > 0){
+						res[0].value.map(item => {
+							this.$store.commit('saveSong', item)
+						})
+					}
+				})
 				var _this = this;
 				setTimeout(()=>{
 					this.updateStep = 1;
@@ -1103,7 +1104,7 @@
 body{
 		margin: 0;
 		padding: 0;
-		font-size: 12px !important;
+		font-size: 14px !important;
 	}
 #Main .el-menu-vertical-demo{
 	border: 0;

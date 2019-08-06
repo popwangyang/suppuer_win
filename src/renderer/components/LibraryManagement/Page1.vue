@@ -21,11 +21,11 @@
 				<el-upload ref="upload" v-show="showUpload" :headers="headers" class="upload-demo" drag :on-progress="handleProgress"
 				 :on-success="handleSuccess" :on-error="handleError" :before-upload="handleUpload" :action="actionUrl">
 					<i class="el-icon-upload"></i>
-					<div class="el-upload__text" style="font-size: 12px;" v-show="TJerror">将文件拖到此处，或<em>点击上传</em></div>
-					<div class="el-upload__text" style="font-size: 12px;color: red;" v-show="!TJerror">{{fileName}}上传失败，请重新上传</div>
+					<div class="el-upload__text" style="font-size: 14px;" v-show="TJerror">将文件拖到此处，或<em>点击上传</em></div>
+					<div class="el-upload__text" style="font-size: 14px;color: red;" v-show="!TJerror">{{fileName}}上传失败，请重新上传</div>
 				</el-upload>
 			</span>
-			<p style="margin: 0;padding: 0; text-align: left;margin-top: 20px;font-size: 12px;">请先上传模板文件已完成批量搜索
+			<p style="margin: 0;padding: 0; text-align: left;margin-top: 20px;font-size: 14px;">请先上传模板文件已完成批量搜索
 				<a style="color:#7f74ef;cursor: pointer;text-decoration: underline;" @click="MBdown">下载模板</a>
 			</p>
 			<span slot="footer" class="dialog-footer">
@@ -89,7 +89,7 @@
 		</el-dialog>
 		<div class="soushuo">
 			<el-row>
-				<el-col :span="20" style="height: 50px;display: flex;align-items: center;font-size: 12px;">
+				<el-col :span="20" style="height: 50px;display: flex;align-items: center;font-size: 14px;">
 					<el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="80px" size="mini">
 						<el-form-item label="歌曲名称">
 							<el-autocomplete class="inline-input" v-model="formInline.name" :fetch-suggestions="querySearch" placeholder="请输入内容"
@@ -278,11 +278,11 @@
 										border-radius: 4px;
 										box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);"
 								        id="ulo">
-									<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 12px;">
-										<el-radio v-model="radioForm.album_name" :label="100" @change="album_nameFilter(100)"><span style="font-size: 12px;">全部</span></el-radio>
+									<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 14px;">
+										<el-radio v-model="radioForm.album_name" :label="100" @change="album_nameFilter(100)"><span style="font-size: 14px;">全部</span></el-radio>
 									</li>
-									<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 12px;" v-for="item in album_nameArr">
-										<el-radio v-model="radioForm.album_name" :label="item.value" @change="album_nameFilter()"><span style="font-size: 12px;">{{item.value}}</span></el-radio>
+									<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 14px;" v-for="item in album_nameArr">
+										<el-radio v-model="radioForm.album_name" :label="item.value" @change="album_nameFilter()"><span style="font-size: 14px;">{{item.value}}</span></el-radio>
 									</li>
 								</ul>
 							</span>
@@ -336,11 +336,11 @@
 										border-radius: 4px;
 										box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);"
 							 id="ulo">
-								<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 12px;">
-									<el-radio v-model="radioForm.company_name" :label="100" @change="company_nameFilter(100)"><span style="font-size: 12px;">全部</span></el-radio>
+								<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 14px;">
+									<el-radio v-model="radioForm.company_name" :label="100" @change="company_nameFilter(100)"><span style="font-size: 14px;">全部</span></el-radio>
 								</li>
-								<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 12px;" v-for="item in company_nameArr">
-									<el-radio v-model="radioForm.company_name" :label="item.value" @change="company_nameFilter()"><span style="font-size: 12px;">{{item.value}}</span></el-radio>
+								<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 14px;" v-for="item in company_nameArr">
+									<el-radio v-model="radioForm.company_name" :label="item.value" @change="company_nameFilter()"><span style="font-size: 14px;">{{item.value}}</span></el-radio>
 								</li>
 							</ul>
 						</span>
@@ -353,7 +353,7 @@
 		<div style="flex: 1; 100%;position: relative;" id="box">
 			<div :class="{aa:flageClass,bb:!flageClass}" :style="height" id="scroll-1" @contextmenu.stop='rightMeun'>
 				<el-table ref="multipleTable" :data="tableData3" tooltip-effect="dark" @selection-change="handleSelectionChange"
-				 @row-contextmenu="hoo" style="width: 100%;font-size: 12px;color: #666666;">
+				 @row-contextmenu="hoo" style="width: 100%;font-size: 14px;color: #666666;">
 					<el-table-column type="selection" width="40">
 					</el-table-column>
 					<el-table-column prop="music_code" label="编号" :width="widthHead[0]">
@@ -758,7 +758,7 @@
 				page: 1,
 				page_size: 100,
 				count: 0,
-				widthHead: [50, 70, 80, 80, 60, 70, 50, 60, 80, 70, 70, 80, 80, 90, 160],
+				widthHead: [110, 70, 80, 80, 60, 70, 50, 60, 80, 70, 70, 80, 80, 100, 150],
 				widthHead1: [],
 				arrLanguage: [{
 						text: "国语",
@@ -1052,6 +1052,7 @@
 						_this.loading = false
 					}).catch(error => {
 						_this.$notify({
+							title: '提示',
 							message: '搜索失败，请重试',
 							type: 'warning',
 							offset: 120,
@@ -1064,6 +1065,7 @@
 					})
 				}).catch(errro => {
 					_this.$notify({
+						title: '提示',
 						message: '提交失败，请重试',
 						type: 'warning',
 						offset: 120,
@@ -1117,6 +1119,7 @@
 					this.percentage = 0
 				} else {
 					this.$notify({
+						title: '提示',
 						message: '上传文件格式不正确',
 						type: 'warning',
 						offset: 150,
@@ -1166,6 +1169,7 @@
 						} else {
 							this.$refs.replaceUpload.value = ""
 							this.$notify({
+								title: '提示',
 								message: '文件名有误无法上传',
 								type: 'error',
 								offset: 120,
@@ -1175,6 +1179,7 @@
 					})
 				} else {
 					this.$notify({
+						title: '提示',
 						message: '请上传视频文件',
 						type: 'warning',
 						offset: 120,
@@ -1194,6 +1199,7 @@
 				if (data.status == 1 || data.status == 2 || !flag) {
 					this.$refs.replaceUpload.value = ""
 					this.$notify({
+						title: '提示',
 						message: '文件名有误无法上传',
 						type: 'error',
 						offset: 120,
@@ -1344,6 +1350,7 @@
 					if (res.data.results.length > 0) {
 						this.$refs.replaceUpload.value = ""
 						this.$notify({
+							title: '提示',
 							message: '歌曲已存在，请勿重复上传',
 							type: 'error',
 							offset: 120,
@@ -1361,6 +1368,7 @@
 				this.$refs.replaceUpload.value = ""
 				var name = "已替换" + this.songName + "歌曲文件"
 				this.$notify({
+					title: '提示',
 					message: name,
 					type: 'success',
 					offset: 120,
@@ -1418,6 +1426,7 @@
 					_this.delecteLoading = false
 					_this.delecteVisible = false
 					_this.$notify({
+						title: '提示',
 						message: '删除成功！',
 						type: 'success',
 						offset: 120,
@@ -1427,6 +1436,7 @@
 					_this.delecteLoading = false
 					_this.delecteVisible = false
 					_this.$notify({
+						title: '提示',
 						message: '删除失败！',
 						type: 'error',
 						offset: 120,
@@ -1536,13 +1546,11 @@
 					this.isIndeterminate = true;
 					this.checkAll = false;
 					Bus.$emit('val', "1")
-				}
-				if (this.multipleSelection.length == 0) {
+				}else if(this.multipleSelection.length == 0) {
 					this.isIndeterminate = false;
 					this.checkAll = false;
 					Bus.$emit('val', "0")
-				}
-				if (this.multipleSelection.length == this.tableData3.length) {
+				}else if(this.multipleSelection.length == this.tableData3.length) {
 					this.isIndeterminate = false;
 					this.checkAll = true;
 					Bus.$emit('val', "1")
@@ -1655,6 +1663,9 @@
 			detail(id) {
 				var _this = this
 				this.loading = true
+				this.isIndeterminate = false;
+				this.checkAll = false;
+				this.handleSelectionChange([])
 				if (id) {
 					get("/music/music/store/" + id + "").then(function(res) {
 						_this.loading = false
@@ -1678,6 +1689,7 @@
 						_this.tableData3 = response.data.results
 					}).catch(function(response) {})
 				}
+				
 			},
 			loadAll() {
 				var _this = this
@@ -1763,19 +1775,6 @@
 	#LibraryManagement .has-gutter {
 		display: none;
 	}
-
-	.el-notification {
-		display: flex;
-		align-items: center;
-	}
-
-	.el-notification .el-notification__content {
-		margin: 0;
-		font-size: 12px;
-		color: #959595;
-		font-weight: 600;
-	}
-
 	#LibraryManagement .fileinput-button {
 		position: relative;
 		display: inline-block;
@@ -1796,7 +1795,7 @@
 	}
 
 	#LibraryManagement .el-button {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	#LibraryManagement .cell {
@@ -1841,7 +1840,7 @@
 	}
 
 	#LibraryManagement .PLSOSU .el-dialog__header .el-dialog__title {
-		font-size: 12px;
+		font-size: 14px;
 		color: #666666;
 	}
 
@@ -1857,7 +1856,7 @@
 	#LibraryManagement .PLSOSU .el-dialog__body .el-upload-dragger {
 		border: none;
 		background-color: rgba(255, 255, 255, 0);
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	#LibraryManagement .PLSOSU .el-dialog__footer {
@@ -2022,13 +2021,13 @@
 	.aa {
 		overflow: auto;
 		margin-right: 5px;
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	.bb {
 		overflow: auto;
 		margin-right: 5px;
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	#ulo::-webkit-scrollbar-track,

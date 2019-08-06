@@ -715,11 +715,11 @@
 	}
 
 	.el-select-dropdown__list .el-select-dropdown__item {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	.el-autocomplete-suggestion .el-autocomplete-suggestion__wrap .el-autocomplete-suggestion__list li {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 </style>

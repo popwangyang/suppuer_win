@@ -3,13 +3,19 @@ import Upload from '../../components/upload.js'
 const state = {
 	songNumbers: [],
 	Upload: Upload,
+	uploadSongNumbers: 0,
 };
 
 const getters = {
-	
+	importSongNumbers(state){
+		return state.songNumbers.length;
+	}
 }
 
 const mutations = {
+	setUplaodNum(state, num){
+		state.uploadSongNumbers = num;
+	},
 	saveSong(state, obj) {
 		state.songNumbers.push(obj);
 	},
@@ -44,6 +50,7 @@ const mutations = {
 			}
 		})
 		state.songNumbers = results;
+		state.uploadSongNumbers += ids.length;
 	}
 }
 

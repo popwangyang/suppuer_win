@@ -5,14 +5,14 @@
 		</span>
 		<span>
 			<span>
+				<!--  0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除；6文件读取异常，请重新导入 -->
 				<i v-if="upState=='0'">暂停中...</i>
 				<i v-if="upState=='1'">{{speed}}</i>
 				<i v-if="upState=='0.5'">{{loadText}}</i>
 				<i v-if="upState=='2'">等待上传...</i>
 				<i v-if="upState=='3'">上传完成</i>
-				<i v-if="upState=='5'"style="color: red;">网络断开</i>
-				<i v-if="upState=='7'">替换中...</i>
-				<i v-if="upState=='9'" style="color: red;">文件读取异常，请重新导入</i>
+				<i v-if="upState=='4'">上传出错</i>
+				<i v-if="upState=='6'" style="color: red;">文件读取异常，请重新导入</i>
 			</span>
 			<span>
 				{{restTime}}

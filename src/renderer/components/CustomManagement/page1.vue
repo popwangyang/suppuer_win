@@ -24,19 +24,19 @@
 							</el-dropdown-item>
 							<el-dropdown-item>
 								<span style="display: flex;align-items: center;padding:2px 0;">
-									<!--<span style="display: block;width: 5px;height: 5px;border-radius: 50%;background: #999999;margin-right: 8px;"></span><i style="font-size: 12px;">待制作</i>-->
+									<!--<span style="display: block;width: 5px;height: 5px;border-radius: 50%;background: #999999;margin-right: 8px;"></span><i style="font-size: 14px;">待制作</i>-->
 									<el-radio v-model="songStateradio" :label="0" @change="songeStateFilterHandler(0)">待制作</el-radio>
 								</span>
 							</el-dropdown-item>
 							<el-dropdown-item>
 								<span style="display: flex;align-items: center;padding:2px 0;">
-									<!--<span style="display: block;width: 5px;height: 5px;border-radius: 50%;background: #2eba07;margin-right: 8px;"></span><i style="font-size: 12px;">制作中</i>-->
+									<!--<span style="display: block;width: 5px;height: 5px;border-radius: 50%;background: #2eba07;margin-right: 8px;"></span><i style="font-size: 14px;">制作中</i>-->
 									<el-radio v-model="songStateradio" :label="1" @change="songeStateFilterHandler(1)">制作中</el-radio>
 								</span>
 							</el-dropdown-item>
 							<el-dropdown-item>
-								<span style="display: flex;align-items: center;font-size: 12px;padding:2px 0;">
-									<!--<span style="display: block;width: 5px;height: 5px;border-radius: 50%;background: #108de9;margin-right: 8px;"></span><i style="font-size: 12px;">已上传</i>-->
+								<span style="display: flex;align-items: center;font-size: 14px;padding:2px 0;">
+									<!--<span style="display: block;width: 5px;height: 5px;border-radius: 50%;background: #108de9;margin-right: 8px;"></span><i style="font-size: 14px;">已上传</i>-->
 									<el-radio v-model="songStateradio" :label="2" size="mini" @change="songeStateFilterHandler(2)">已上传</el-radio>
 								</span>
 							</el-dropdown-item>
@@ -44,7 +44,7 @@
 							<el-dropdown-item>
 								<span style="display: flex;align-items: center;padding-bottom:10px;padding-top:2px">
 
-									<!--<span style="display: block;width: 5px;height: 5px;border-radius: 50%;background: #999999;margin-right: 8px;"></span><i style="font-size: 12px;">审核不通过</i>-->
+									<!--<span style="display: block;width: 5px;height: 5px;border-radius: 50%;background: #999999;margin-right: 8px;"></span><i style="font-size: 14px;">审核不通过</i>-->
 									<el-radio v-model="songStateradio" :label="3" @change="songeStateFilterHandler(3)">审核不通过</el-radio>
 								</span>
 							</el-dropdown-item>
@@ -154,28 +154,28 @@
 
 				<el-table-column label="操作" :width="widthHead[8]">
 					<template slot-scope="scope">
-						<el-button v-if="scope.row.state=='1'" type="text" @click="btnUpload(scope.row.id)" size="small">
+						<el-button v-if="scope.row.state=='1'" type="text" @click="btnUpload(scope.row.id)" size="default">
 							确认上传
 						</el-button>
-						<el-button v-if="scope.row.state=='2'" type="text" @click="queryBtn(scope.row.id)" size="small">
+						<el-button v-if="scope.row.state=='2'" type="text" @click="queryBtn(scope.row.id)" size="default">
 							查询曲库
 						</el-button>
 						<div v-if="scope.row.state=='4'">
 							<i class="el-icon-loading" style="font-size: 24px;"></i>
 						</div>
 						<div style="display: flex;align-content: center;justify-content: center;" v-if="scope.row.state=='0'">
-							<el-button type="text" @click="make(scope.row.id)" size="small">
+							<el-button type="text" @click="make(scope.row.id)" size="default">
 								制作
 							</el-button>
 							<i style="display: block;height: 16px;width: 0px;border-left: 1px solid #cdc0cd;margin: 0 10px;margin-top:8px ;"></i>
-							<el-button type="text" @click.stop="showBackReasonDialog(scope.row.id)" size="small">
+							<el-button type="text" @click.stop="showBackReasonDialog(scope.row.id)" size="default">
 								不通过
 							</el-button>
 						</div>
 						<div @mouseenter="goo" @mouseleave="goo1">
 							<el-popover v-if="scope.row.state=='3'" placement="left-start" title="不通过原因" width="200" trigger="hover"
 							 :content="scope.row.refuse_reason">
-								<el-button type="text" slot="reference" size="small">
+								<el-button type="text" slot="reference" size="default">
 									查看原因
 								</el-button>
 							</el-popover>
@@ -840,7 +840,7 @@
 
 	#CustomManagement .cell {
 		text-align: center;
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	#CustomManagement {
@@ -853,7 +853,7 @@
 	#CustomManagement .box {
 		overflow: auto;
 		margin-right: 5px;
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	#CustomManagement .box_head ul {
@@ -902,7 +902,7 @@
 	}
 
 	.el-table-filter__content .el-checkbox__label {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	.el-dialog {
@@ -931,15 +931,15 @@
 	}
 
 	.el-select-dropdown__item {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	.el-form-item__label {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	.el-popover {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	.el-popover__title {
@@ -963,11 +963,11 @@
 	}
 
 	.el-dropdown-menu__item .el-radio__label {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	.el-select-dropdown__item {
-		font-size: 12px;
+		font-size: 14px;
 	}
 
 	#scroll-1::-webkit-scrollbar-track,
