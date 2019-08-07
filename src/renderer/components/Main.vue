@@ -737,9 +737,7 @@
 			dialogcloseBtn(){
 				this.dialogcloseLoading = true;
 				setTimeout( () => {
-					
 				ipcRenderer.send('window-close')
-				// ipcRenderer.send('window-exitLogin')
 				},200)
 			},
 			dialogcloseSettingBtn(){
@@ -780,14 +778,10 @@
 				var arr = this.$store.state.Router.historyRoute;
 				var currentIndex = this.$store.state.Router.currentIndex;
 				if(this.btnLeft){
-					 var str = arr[currentIndex-1]
-					 // this.routerFlage = true;
-					 console.log(this.$store.state.Router.flage)
-				   this.$store.commit("RouterFlageGB")
-					 console.log(this.$store.state.Router.flage)
-					 this.$router.push(str)
-					 this.$store.commit("RouterBack")
-					 console.log(this.$store.state.Router.currentIndex,this.$store.state.Router.historyRoute)
+					var str = arr[currentIndex-1]
+				    this.$store.commit("RouterFlageGB")
+					this.$router.push(str)
+					this.$store.commit("RouterBack")
 				}								
 			},
 			routerGo(){
@@ -795,12 +789,9 @@
 				var currentIndex = this.$store.state.Router.currentIndex;
 				if(this.btnRight){
 					var str = arr[currentIndex+1]
-					// this.routerFlage = false;
-					console.log(this.$store.state.Router.flage)
 					this.$store.commit("RouterFlageGB")
 					this.$router.push(str)
 					this.$store.commit("RouterGo")
-					console.log(this.$store.state.Router.currentIndex,this.$store.state.Router.historyRoute)
 				}				
 			},
 			pageRefresh(){
@@ -931,7 +922,6 @@
 	    mounted(){
 			    // this.$db.remove({},{multi: true})
 				readStoreDB(this, {"isUpload": false}).then(res => {
-					console.log(res)
 					if(res.length > 0){
 						res.map(item => {
 							this.$store.commit('saveSong', item)

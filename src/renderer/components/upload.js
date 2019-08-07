@@ -378,7 +378,6 @@ Upload.prototype.complateUplod = function() {
 		} 
 	};
 	xhr.send(str);
-
 };
 
 Upload.prototype.Uploading = function() {

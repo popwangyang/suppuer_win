@@ -476,22 +476,21 @@
 						var send_data = {
 							name:str
 						}
-						// post("music/music/store-credential", send_data).then( res => {
-							this.$store.commit("setData", {
-								fileID: id,
-								content: obj
-							})
-							this.$notify({
-								title: '提示',
-								message: '保存成功！',
-								type: 'success',
-								offset: 60,
-								duration: 1000,
-							});
-							setTimeout(() => {
-								this.$router.back(-1)
-							}, 1500)
-						// })
+						this.$store.commit("setData", {
+							fileID: id,
+							content: obj
+						})
+						updateStoreDB(this, id, 'content', obj);
+						this.$notify({
+							title: '提示',
+							message: '保存成功！',
+							type: 'success',
+							offset: 60,
+							duration: 1000,
+						});
+						setTimeout(() => {
+							this.$router.back(-1)
+						}, 1500)
 					}
 					if (status == 3) {
 						chaxun(res.data[0], (results) => {
@@ -505,7 +504,7 @@
 								});
 							}else{
 								var id = this.$route.query.fileID;
-								obj.status = 0;
+								obj.status = 3;
 								this.$store.commit("setData", {
 									fileID: id,
 									content: obj

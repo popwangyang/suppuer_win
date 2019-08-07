@@ -424,8 +424,12 @@ export const removeStoreDB = (vm, ids) => {
  */
 export const updateStoreDB = (vm, id, key, value) => {
 	return new Promise((resolve, reject) => {
-		vm.$db.update({id: id}, { $set: {key, value}}, {multi: true}, (err, numReplaced) => {
+		console.log({key: value})
+		let obj = {};
+		    obj[key] = value;
+		vm.$db.update({id: id}, { $set: obj}, {multi: true}, (err, numReplaced) => {
 			if(err) return reject(err);
+			console.log(numReplaced)
 			resolve(numReplaced)
 		})
 	})

@@ -605,19 +605,7 @@
 						upload_data: item.update_date,
 						name: obj.file.name
 					}
-					// 					item.currentNum = 0;
-					// 					item.file = obj.file;
-					// 					item.THid = item.id;
-					// 					item.id = length;
 					length++;
-					// 					
-					// 					 if(_this.$store.getters.number<3){
-					// 					 	_this.$store.commit("startUplaodRepeatAll",{fileID:_this.moveRepeatID,THid:item.id})
-					// 					 
-					// 					 }else{
-					// 					 	_this.$store.commit("startUplaodRepeatAll1",{fileID:_this.moveRepeatID,THid:item.id})
-					// 					 }
-
 					if (number < 3) {
 						file.upState = '1'
 						number++
@@ -634,7 +622,6 @@
 			},
 			xinZheng(id) {
 				this.moveRepeatVisible = false;
-				// this.uploadBtn(this.moveRepeatID)
 				if (this.$store.getters.number < 3) {
 					this.$store.commit("startUplaodxiZheng", {
 						fileID: this.moveRepeatID
@@ -659,10 +646,8 @@
 				this.multipleSelection1 = val;
 				if (this.multipleSelection1.length > 0) {
 					this.replaceFlage = true;
-
 				} else {
 					this.replaceFlage = false;
-
 				}
 			},
 			uploadBtn(id) {
@@ -671,20 +656,14 @@
 				var _this = this;
 				arr.map(function(item) {
 					if (item.id == id) {
-						// console.log(_this.$store.getters.number)
 						if (item.upState == "0") {
-
-							// item.upState = '1'
 							if (_this.$store.getters.number < 3) {
-
 								var obj = {
-
 									"id": id,
 									"key": "upState",
 									"value": "1"
 								}
 								_this.$store.commit("goo", obj)
-
 							} else {
 								var obj = {
 									"id": id,
@@ -693,12 +672,8 @@
 								}
 								_this.$store.commit("goo", obj)
 							}
-
 						} else if (item.upState == "1") {
-
-
 							var obj = {
-
 								"id": id,
 								"key": "upState",
 								"value": "2"
@@ -706,7 +681,6 @@
 							_this.$refs[id].stop()
 							_this.$store.commit("goo", obj)
 							_this.$store.commit("NEXT")
-
 						} else if (item.upState == "2") {
 							var obj = {
 								"id": id,
@@ -715,14 +689,12 @@
 							}
 							_this.$store.commit("goo", obj)
 							if (_this.$store.getters.number < 3) {
-
 								var obj = {
 									"id": id,
 									"key": "upState",
 									"value": "1"
 								}
-								_this.$store.commit("goo", obj)
-								// _this.$refs[id].start()									 
+								_this.$store.commit("goo", obj)								 
 							} else {
 								var obj = {
 									"id": id,
@@ -735,15 +707,12 @@
 							console.log("重新上传")
 							if (_this.$store.getters.number < 3) {
 								var obj1 = {
-
 									"id": id,
 									"key": "currentNum",
 									"value": 0
 								}
 								_this.$store.commit("goo", obj1)
-
 								var obj = {
-
 									"id": id,
 									"key": "upState",
 									"value": "1"
@@ -751,45 +720,36 @@
 								_this.$store.commit("goo", obj)
 							} else {
 								var obj1 = {
-
 									"id": id,
 									"key": "currentNum",
 									"value": 0
 								}
 								_this.$store.commit("goo", obj1)
-
 								var obj = {
-
 									"id": id,
 									"key": "upState",
 									"value": "4"
 								}
 								_this.$store.commit("goo", obj)
 							}
-
 						}
 					}
 				})
-
 			},
 			uploadDelect(id) {
 				this.currentID = id;
 				this.delecteVisible = true
 				var _this = this;
-
-
 			},
 			beforeClose() {
 				console.log("beforeClose")
 				var _this = this;
-
 			},
 			StopUpload() {
 				var _this = this;
 				var arr = [];
 				if (this.flageAll) {
 					arr = [...this.tableData]
-
 				} else {
 					arr = this.multipleSelection
 				}
@@ -799,7 +759,6 @@
 							"id": item.id,
 							"key": "upState",
 							"value": "2"
-
 						}
 						_this.$refs[item.id].stop()
 						_this.$store.commit("goo", obj)
@@ -812,7 +771,6 @@
 						_this.$store.commit("goo", obj)
 					}
 				})
-				// this.$store.commit("NEXT")
 			},
 			StartUpload() {
 				var _this = this;
@@ -830,7 +788,6 @@
 							"value": "1"
 						}
 						_this.$store.commit("goo", obj)
-						// _this.$refs[item.id].start()
 
 					} else if (item.upState == "0" && _this.$store.getters.number >= 3) {
 						var obj = {
