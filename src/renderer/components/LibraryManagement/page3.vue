@@ -513,7 +513,6 @@
 				for(let key in data){
 					send_data[key] = blackBox(key, data[key], 'label')
 				}
-				console.log(send_data, "blackBox转化的数据")
 				get("/music/music/store", send_data).then((res) => {
 					console.log(res)
 					if (res.data.results.length > 0) {
@@ -526,7 +525,7 @@
 					} else {
 						var id = this.$route.query.fileID;
 						var _this = this;
-						obj.status = 0;
+						obj.status = 3;
 						this.$store.commit("changeData1", {
 							fileID: id,
 							content: obj
