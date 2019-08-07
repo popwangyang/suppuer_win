@@ -432,6 +432,9 @@
 							<span v-if="scope.row.picture =='4'">
 								MTV
 							</span>
+							<span v-else-if="scope.row.picture =='0'">
+								原版MV
+							</span>
 							<span v-else-if="scope.row.picture =='1'">
 								LIVE
 							</span>
@@ -631,8 +634,9 @@
 	import replaceFile from '../CustomComponents/replaceFile';
 	import Bus from '../bus.js'
 	import axios from 'axios'
-	import Upload from "../upload.js";
+	import Upload from "../upload.js"
 	import config from '../../config'
+	import { validateFormat } from '../util'
 	import {
 		get,
 		baseUrl,
@@ -1160,7 +1164,8 @@
 				var file = this.$refs.replaceUpload.files[0]
 				var type = this.$refs.replaceUpload.files[0].type.split('/')[0]
 				var _this = this;
-				if (type == "video") {
+				console.log(file)
+				if (validateFormat(file.name)) {
 					var send_data = {
 						name: [file.name]
 					}

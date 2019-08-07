@@ -161,7 +161,7 @@ Upload.prototype.getAuth = function(cb) {
 		this.credential = response.data.credential;
 		this.key = Base64.encode(response.data.key);
 		// this.startUpload();
-		cb()
+		// cb()
 	})
 }
 

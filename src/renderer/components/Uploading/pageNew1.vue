@@ -272,6 +272,9 @@
 							<span v-else-if="scope.row.format_type =='3'">
 								其他
 							</span>
+							<span v-else-if="scope.row.format_type =='4'">
+								MKV
+							</span>
 							<span v-else-if="scope.row.format_type ==null" style="color: red;">
 								缺失
 							</span>

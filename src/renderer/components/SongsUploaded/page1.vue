@@ -194,15 +194,19 @@
 				</div>
 			</div>
 		</div>
+		
+		<div class="alert" v-show="alertFlage">
+			<Alert :num="alertNumber"/>
+		</div>
 
 	</div>
 </template>
 
 <script>
+	import Alert from './components/alert.vue'
 	import Bus from '../bus.js'
 	import UploadObj from "../upload.js"
 	import Loading from '../CustomComponents/Loading';
-
 	const fs = require("fs")
 	var filename = `${__dirname}/../../assets/data.json`;
 	import {
@@ -213,6 +217,9 @@
 		get
 	} from '../api.js';
 	export default {
+		components: {
+			Alert
+		},
 		data() {
 			return {
 				deldecteFileID: "",
@@ -228,10 +235,31 @@
 				numberID: 0,
 				BlockLength: 4 * 1024 * 1024,
 				ChunkLength: 1024 * 1024 / 2
-				// fileError:[]
 			}
 		},
 		computed: {
+			alertFlage(){ // 控制警告提示的显示与隐藏
+			    let result = 0;
+				this.fileList.map(item => {
+					if(item.content.status == 1 || item.content.songeState == 2){
+						result++;
+					}
+				})
+				if(result != 0){
+					return true;
+				}else{
+					return false;
+				}
+			},
+			alertNumber(){
+				 let result = 0;
+				this.fileList.map(item => {
+					if(item.content.status == 1 || item.content.songeState == 2){
+						result++;
+					}
+				})
+				return result;
+			},
 			flage() {
 				if (this.$store.state.Counter.data1.length > 0) {
 
@@ -433,30 +461,6 @@
 						offset: 60,
 						duration: 1000
 					});
-					// 						var send_data = {
-					// 							name:arr[i].name
-					// 						}
-					// 						post("music/music/store-credential", send_data).then((response) => {
-					// 							console.log(response.data.credential)
-					// 							   arr[i].credential = response.data.credential;
-					// 								 arr[i].key = Base64.encode(response.data.key);
-					// 								 arr[i].arr = this.sliceFile(arr[i].file);	
-					// 								 arr[i].UploadSize = 0;
-					// 								 this.$store.commit("saveUpload",[arr[i]])
-					// 								 this.$notify({				          
-					// 								 		message: '导入成功！',
-					// 								 		type: 'success',
-					// 								 		offset: 60,
-					// 								 		duration:1000
-					// 								 	});
-					// 						}).catch(() => {
-					// 							this.$notify({				          
-					// 								message: '导入失败！',
-					// 								type: 'error',
-					// 								offset: 60,
-					// 								duration:1000
-					// 							});
-					// 						})
 				}
 
 			},
@@ -707,7 +711,7 @@
 							"file": file,
 							"upload_data": time,
 						}
-						// obj.content.status = 0;
+						obj.content.status = 0;
 						this.saveFile([obj])
 					}
 				})
@@ -885,6 +889,12 @@
 </style>
 
 <style scoped="scoped">
+	.alert{
+		position: absolute;
+		left: 0;
+		top: 30px;
+		width: 100%;
+	}
 	#SongsUploaded i {
 		font-style: normal;
 
@@ -898,6 +908,7 @@
 		display: flex;
 		justify-content: center;
 		font-size: 12px;
+		position: relative;
 
 	}
 
