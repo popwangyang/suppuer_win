@@ -160,7 +160,7 @@
 		post
 	} from '../api.js'
 	import config from '../../config'
-	import { blackBox, chaxun } from '../util'
+	import { blackBox, chaxun, updateStoreDB } from '../util'
 	import { Loading } from 'element-ui';
 	export default {
 		data() {
@@ -510,6 +510,7 @@
 									fileID: id,
 									content: obj
 								})
+								updateStoreDB(this, id, 'content', obj);
 								this.$notify({
 									message: '保存成功！',
 									type: 'success',

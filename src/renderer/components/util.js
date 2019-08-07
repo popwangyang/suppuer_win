@@ -302,11 +302,11 @@ export const validateFormat = function (name){
 	
 }
 /*
- * 黑箱子函数，
- * @param {key} 属性名
- * @param {value}  属性值
- * @param {type}[value, lable]  转换类型，如type值为 value 则函数返回歌曲信息的具体内容（国语）否则返回歌曲信息的数字形式（0）
- */
+* 黑箱子函数，
+* @param {key} 属性名
+* @param {value}  属性值
+* @param {type}[value, lable]  转换类型，如type值为 value 则函数返回歌曲信息的具体内容（国语）否则返回歌曲信息的数字形式（0）
+*/
 export const blackBox = function (key, value, type) {
 	if(value == null){
 		return "";
@@ -341,11 +341,11 @@ export const getDate = () => {
 	return str;
   }
  
- /*
-  * 精确查询函数；
-  * @params {params} 查询的参数，必须为歌曲信息的具体信息；
-  * @function {callback} 查询后的回调函数；
- */
+/*
+* 精确查询函数；
+* @params {params} 查询的参数，必须为歌曲信息的具体信息；
+* @function {callback} 查询后的回调函数；
+*/
 export const chaxun = (params, callback) => {
 	let send_data = {};
 		for(let key in params){
@@ -365,13 +365,13 @@ export const chaxun = (params, callback) => {
 }
 
 /* 
- * 从db数据库中读取数据
- * @params {vm} vue实例对象；
- * @params {key} 查询的关键字
- */
+* 从db数据库中读取数据
+* @params {vm} vue实例对象；
+* @params {key} 查询的关键字
+*/
 export const readStoreDB = (vm, key) => {
 	return new Promise((resolve, reject) => {
-	  vm.$db.find({ name: key}, (err, docs) => {
+	  vm.$db.find( key, (err, docs) => {
 		  if(err) {
 			reject(err)  
 		  }
@@ -380,41 +380,53 @@ export const readStoreDB = (vm, key) => {
 	})
 }
 /* 
- *将数据导入到db数据库中
- * @params {vm} vue实例对象；
- * @params {key} 储存的关键字；
- * @params {data} 储存的数据集；
- * */
- export const saveStoreDB = (vm, key, data) =>{
+* 将数据导入到db数据库中
+* @params {vm} vue实例对象；
+* @params {key} 储存的关键字；
+* @params {data} 储存的数据集；
+*/
+ export const saveStoreDB = (vm, data) =>{
 	return new Promise((resolve, reject) => {
-		readStoreDB(vm, key).then(res => {
-			if(res.length == 0){
-				vm.$db.insert({name: key, value: [data]}, (err, newDoc) => {
-					if(err) {
-						reject(err)  
-					}
-					resolve(newDoc) 
-				}) 
-			}else{
-				vm.$db.update({name: key},{ $push: {value: data} }, (err, newDoc) => {
-					if(err) {
-						reject(err)  
-					}
-					resolve(newDoc) 
-				}) 
-			}
-		})
+			vm.$db.insert( data, (err, newDoc) => {
+				if(err) {
+					reject(err)  
+				}
+				resolve(newDoc) 
+			}) 
 	 })
  }
  
- /* 
- * 从db数据库中删除数据
- * 
- */
+/* 
+* 从db数据库中删除数据
+* @params {vm} vue实例对象；
+* @params {ids} 要删除数据的id集合；
+*/
 
-export const removeStoreDB = (vm, key, ids) => {
-	readStoreDB(vm, key).then(res => {
-		if(res.length == 0) return;
-		
+export const removeStoreDB = (vm, ids) => {
+	return new Promise((resolve, reject) => {
+		let querys = ids.reduce((cur, next) => {
+			cur.push({id: next})
+			return cur;
+		}, [])
+		vm.$db.remove({$or: querys }, { multi: true }, (err, numRemoved) => {
+			if(err) rejecet(err);
+			resolve(numRemoved)
+		})
+	})
+}
+
+/*
+ *修改db数据库中的数据
+ * @params {vm} vue实例对象；
+ * @params {id} 目标数据的id；
+ * @params {key} 修改目标数据的key值；
+ * @params {value} 修改目标数据的value值；
+ */
+export const updateStoreDB = (vm, id, key, value) => {
+	return new Promise((resolve, reject) => {
+		vm.$db.update({id: id}, { $set: {key, value}}, {multi: true}, (err, numReplaced) => {
+			if(err) return reject(err);
+			resolve(numReplaced)
+		})
 	})
 }

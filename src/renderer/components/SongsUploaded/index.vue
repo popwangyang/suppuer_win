@@ -70,7 +70,7 @@
 					"name": data.name,
 					"path": data.path,
 					"type": data.name.split(".")[data.name.split(".").length - 1],
-					"isRepeated": false,
+					"isUpload": false,
 					"size": data.size,
 					"upState": "0",
 					"UploadSize" : 0,
@@ -79,7 +79,7 @@
 					"file": file,
 					"upload_data": getDate(),
 				}
-				saveStoreDB(this, 'songNumbers', obj)
+				saveStoreDB(this, obj)
 				this.$store.commit("saveSong", obj)
 				this.$notify({
 					title: '提示',

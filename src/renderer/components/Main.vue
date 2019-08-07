@@ -930,10 +930,10 @@
 
 	    mounted(){
 			    // this.$db.remove({},{multi: true})
-				readStoreDB(this, 'songNumbers').then(res => {
+				readStoreDB(this, {"isUpload": false}).then(res => {
 					console.log(res)
 					if(res.length > 0){
-						res[0].value.map(item => {
+						res.map(item => {
 							this.$store.commit('saveSong', item)
 						})
 					}

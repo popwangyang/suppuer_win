@@ -151,6 +151,7 @@
 
 <script>
 	import Bus from '../../bus.js'
+	import { removeStoreDB } from '../../util.js'
 	export default{
 		data(){
 			return{
@@ -195,6 +196,7 @@
 			delecteBtn(){
 				this.multipleSelection = [];
 				this.$store.commit('deleteSong', this.deldecteFileIDS);
+				removeStoreDB(this, this.deldecteFileIDS)
 				this.delecteVisible = false;
 			},
 			handleSelectionChange(val){
@@ -208,6 +210,7 @@
 					return cur;
 				}, [])
 				this.$store.commit("uploadSong", ids)
+				removeStoreDB(this, ids)
 				this.multipleSelection = [];
 			})
 			Bus.$on("delected2", () => {
