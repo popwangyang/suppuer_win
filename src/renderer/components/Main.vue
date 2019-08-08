@@ -435,6 +435,7 @@
 	import Bus from './bus.js'
 	import { patch } from "./api.js"
 	import { getDingZiNum, readStoreDB } from "./util.js"
+	import Upload  from './upload'
 	export default{
 		components:{ HistoryRouter },
 		data(){
@@ -927,6 +928,11 @@
 							this.$store.commit('saveSong', item)
 						})
 					}
+				})
+				readStoreDB(this, {"isUpload": true}).then(res => {
+					res.map(item => {
+						new Upload(item, "http://up-z1.qiniup.com")
+					})
 				})
 				var _this = this;
 				setTimeout(()=>{

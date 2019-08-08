@@ -151,7 +151,7 @@
 
 <script>
 	import Bus from '../../bus.js'
-	import { removeStoreDB } from '../../util.js'
+	import { removeStoreDB, updateStoreDB } from '../../util.js'
 	export default{
 		data(){
 			return{
@@ -178,7 +178,9 @@
 		},
 		methods: {
 			uploadFile(id){
-				this.$store.commit("uploadSong", [id])
+				updateStoreDB(this, [id], 'isUpload', true).then(res => {
+					this.$store.commit("uploadSong", [id])
+				})
 			},
 			JumpPage(id){
 				this.$router.push({
@@ -209,8 +211,9 @@
 					cur.push(next.id);
 					return cur;
 				}, [])
-				this.$store.commit("uploadSong", ids)
-				removeStoreDB(this, ids)
+				updateStoreDB(this, ids, 'isUpload', true).then(res => {
+					this.$store.commit("uploadSong", ids)
+				})
 				this.multipleSelection = [];
 			})
 			Bus.$on("delected2", () => {

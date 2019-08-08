@@ -14,14 +14,17 @@ function Upload(data, url) {
 	var UploadIndex = uploadIndex;
 	var uploadState = 0; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除； 6文件读取异常;
 	uploadIndex++;
+	this.data = data;  // 歌曲上传信息
+	console.log(data)
 	this.uploadingStateNum = 3;  // 可以同时上传的总个数；
 	this.id = data.id;  // 上传实例的id
 	this.loading = false;
 	this.content = data.content;  // 上传歌曲信息；
-	this.create_date = data.upload_data;  // 歌曲上传时间；
+	this.create_date = data.upload_data;  // 文件上传日期，用于列表展示；
 	this.size = data.file.size;  // 上传文件的总大小；
 	this.precent = 0;  // 上传文件的进度；
 	this.isSelect = false;  // 文件是否被选中
+	this.isFileObject = typeof data.file.slice == 'function';  // 判定文件是否是file对象；
 	this.file = data.file;
 	this.key = null;
 	this.token = this.getToken();
@@ -43,9 +46,6 @@ function Upload(data, url) {
 	this.arr = [];
 	this.config;
 	
-	this.slice();
-	this.getConfig();
-	this.getAuth(this.startUpload);
 	this.stopFlage = true;
 	this.startTime;
 	this.endTime;
@@ -58,11 +58,14 @@ function Upload(data, url) {
 	this.getUploadIndex = function() {
 		return UploadIndex;
 	}
-	this.getFileExite();
-	Upload.children.push(this);
+	if(this.getFileExite()){
+		this.slice();
+		this.getConfig();
+		this.getAuth(this.startUpload)
+	}
+	Upload.children.push(this)
 }
 Upload.prototype.getFileExite = function(){
-	console.log(this)
 	if(!fs.existsSync(this.file.path)){
 		this.setUploadState(6);
 		this.stopFlage = false;
@@ -70,6 +73,7 @@ Upload.prototype.getFileExite = function(){
 		this.event.sizeEvent = 0;
 		this.event.operationEvent = 0;
 	}
+	return fs.existsSync(this.file.path);
 }
 
 Upload.prototype.slice = function() {
@@ -384,59 +388,72 @@ Upload.prototype.Uploading = function() {
 	this.startTime = new Date().getTime();
 	var _this = this;
 	var obj = this.arr[this.index];
-	// var fileContent = this.file.slice(obj.start, obj.end);
-	console.log(this.arr, this.index, obj)
-	let Buffer = [];
-	let readStream = fs.createReadStream(this.file.path, { start:obj.start, end: obj.end });
-	    readStream.on('data', (data) => {
-		   Buffer.push(data)
-	    })
-		readStream.on('end', () => {
-			let blob = new Blob(Buffer);
-			console.log(blob.size)
-			var xhr = new XMLHttpRequest();
-			xhr.open('post', this.url, true);
-			xhr.setRequestHeader("Content-Type", "text/plain");
-			xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4 && xhr.status == 200) {
-					_this.loading = false;
-					_this.endTime = new Date().getTime();
-					var resDate = JSON.parse(xhr.response)
-					_this.ctx = resDate.ctx;
-					_this.offset = resDate.offset;
-					_this.arr[_this.index].ctx = _this.ctx;
+	if(!this.isFileObject){
+		let Buffer = [];
+		let readStream = fs.createReadStream(this.file.path, { start:obj.start, end: obj.end });
+		    readStream.on('data', (data) => {
+			   Buffer.push(data)
+		    })
+			readStream.on('error', () => {
+				_this.setUploadState(6);
+				_this.event.prograssEvent = 0;
+				_this.event.sizeEvent = 0;
+				_this.event.operationEvent = 0;
+			})
+		    readStream.on('end', () => {
+		    	let blob = new Blob(Buffer);
+		    	this.post(blob)
+		    })
+	}else{
+	   var fileContent = this.file.slice(obj.start, obj.end);
+	       this.post(fileContent)
+	}
+};
+
+Upload.prototype.post = function(blob){
+	var _this = this;
+	var xhr = new XMLHttpRequest();
+	xhr.open('post', this.url, true);
+	xhr.setRequestHeader("Content-Type", "text/plain");
+	xhr.setRequestHeader("Authorization", "UpToken " + this.credential);
+	xhr.onreadystatechange = function() {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			_this.loading = false;
+			_this.endTime = new Date().getTime();
+			var resDate = JSON.parse(xhr.response)
+			_this.ctx = resDate.ctx;
+			_this.offset = resDate.offset;
+			_this.arr[_this.index].ctx = _this.ctx;
+			_this.event.prograssEvent = 0;
+			_this.event.sizeEvent = 0;
+			_this.event.operationEvent = 0;
+			_this.index++;
+			if (_this.index <= _this.arr.length - 1) {
+				_this.changeURL(_this.arr[_this.index]);
+				if (!_this.stopFlage) {
+					_this.Uploading();
+				} else {
 					_this.event.prograssEvent = 0;
 					_this.event.sizeEvent = 0;
 					_this.event.operationEvent = 0;
-					_this.index++;
-					if (_this.index <= _this.arr.length - 1) {
-						_this.changeURL(_this.arr[_this.index]);
-						if (!_this.stopFlage) {
-							_this.Uploading();
-						} else {
-							_this.event.prograssEvent = 0;
-							_this.event.sizeEvent = 0;
-							_this.event.operationEvent = 0;
-							_this.next();
-						}
-					} else {
-						_this.complateUplod();
-					}
-				} else if (xhr.readyState == 4 && xhr.status != 200) {
-					if (_this.repeatnumber > 0) {
-						_this.Uploading();
-						_this.repeatnumber--;
-					} else {
-						_this.event.errorEvent = 0;
-					}
-				} else if (xhr.readyState == 4 && xhr.status == 401) {
-					_this.getAuth(_this.Uploading())
+					_this.next();
 				}
-			};
-			xhr.send(blob);
-		})
-};
+			} else {
+				_this.complateUplod();
+			}
+		} else if (xhr.readyState == 4 && xhr.status != 200) {
+			if (_this.repeatnumber > 0) {
+				_this.Uploading();
+				_this.repeatnumber--;
+			} else {
+				_this.event.errorEvent = 0;
+			}
+		} else if (xhr.readyState == 4 && xhr.status == 401) {
+			_this.getAuth(_this.Uploading())
+		}
+	};
+	xhr.send(blob);
+}
 
 var Upload = Upload;
 Upload.children = [];

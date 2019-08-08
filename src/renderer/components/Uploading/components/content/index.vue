@@ -21,6 +21,7 @@
 	import UpState from './components/upState'
 	import Event from './components/event'
 	import config from '../../../../config'
+	import { removeStoreDB } from '../../../util'
 	export default{
 		components:{
 			TableBody,
@@ -129,11 +130,19 @@
 				}
 			})
 			Bus.$on("DelectUpload",() => {
+				let result = [];
 				if(this.selectArr.length > 0){
-					this.deleteUpload(this.selectArr)
+					result = this.selectArr;
 				}else{
-					this.deleteUpload(this.arr)
+					result = this.arr;
 				}
+				let ids = result.reduce((cur, next) => {
+					cur.push(next.id)
+					return cur;
+				}, []);
+				removeStoreDB(this, ids).then(res => {
+					this.deleteUpload(result)
+				})
 			})
 			Bus.$on("exitLogin", () => {
 				console.log('exitLogin')

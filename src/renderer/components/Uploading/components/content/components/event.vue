@@ -7,12 +7,13 @@
 		<i class="el-icon-sort"  v-if="upState=='2'"  @click="uploadBtn"></i>
 		<i class="el-icon-refresh"  v-if="upState=='3'" title="重新上传" @click="uploadBtn"></i>
 		<i class="el-icon-refresh"  v-if="upState=='4'" title="重新上传" @click="uploadBtn"></i>
-		<i class="el-icon-close" title="删除"  v-if="upState != '0.5' && upState != '6'"  @click="uploadDelect"></i>
+		<i class="el-icon-close" title="删除"  v-if="upState != '0.5'"  @click="uploadDelect"></i>
 		<i class="iconfont icon-icon--" title="打开文件" v-if="upState != '0.5' && upState != '6'"  @click="openFileHandler"></i>
 	</div>
 </template>
 
 <script>
+	import { removeStoreDB } from '../../../../util'
 	const ipcRenderer = require("electron").ipcRenderer;
 	export default{
 		props:{
@@ -29,7 +30,9 @@
 			  shell.showItemInFolder(this.item.file.path);
 			},
 			uploadDelect(){
-				this.item.deleteUpload()
+				removeStoreDB(this, [this.item.id]).then(res => {
+					this.item.deleteUpload()
+				})
 			},
 			uploadBtn(){
 				console.log(this.upState)

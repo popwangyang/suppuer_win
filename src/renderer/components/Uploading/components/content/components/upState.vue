@@ -24,6 +24,7 @@
 
 <script>
 	import Progress from './progress'
+	import { removeStoreDB } from '../../../../util'
 	export default{
 		props:{
 			item: Object,
@@ -33,7 +34,7 @@
 		},
 		data(){
 			return{
-				precent:20,
+				precent:0,
 				speed: '',
 				upState: 0.5,
 				restTime: '-- --',
@@ -47,8 +48,11 @@
 				this.upState = e.uploadState;
 				if(this.upState == 1){
 					this.restTime = e.restTime;
-				}else{
-					this.restTime = "-- --";
+				}else if(this.upState == 6){
+					this.restTime = "";
+				}
+				if(this.upState == 3){  // 上传完成，清除在db数据空中的记录
+				  removeStoreDB(this, [this.item.id])
 				}
 				if(this.upState == 5){
 					this.$emit('change')

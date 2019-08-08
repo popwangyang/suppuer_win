@@ -12,7 +12,6 @@ var package1 = require("../../package.json");
 import {
 	autoUpdater
 } from "electron-updater"
-
 if (process.env.NODE_ENV !== 'development') {
 	global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
@@ -188,7 +187,6 @@ ipcMain.on("window-exitLogin", function() {
 		},
 		icon: path.join(__static, "/denlu.png")
 	})
-	// console.log(template)
 	appIcon.destroy()
 	appIcon = null;
 	createTray()

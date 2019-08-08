@@ -422,12 +422,16 @@ export const removeStoreDB = (vm, ids) => {
  * @params {key} 修改目标数据的key值；
  * @params {value} 修改目标数据的value值；
  */
-export const updateStoreDB = (vm, id, key, value) => {
+export const updateStoreDB = (vm, ids, key, value) => {
 	return new Promise((resolve, reject) => {
 		console.log({key: value})
 		let obj = {};
 		    obj[key] = value;
-		vm.$db.update({id: id}, { $set: obj}, {multi: true}, (err, numReplaced) => {
+		let querys = ids.reduce((cur, next) => {
+			cur.push({id: next})
+			return cur;
+		}, []) 
+		vm.$db.update({$or: querys }, { $set: obj}, {multi: true}, (err, numReplaced) => {
 			if(err) return reject(err);
 			console.log(numReplaced)
 			resolve(numReplaced)

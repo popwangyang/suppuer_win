@@ -22,6 +22,7 @@
 		},
 		mounted(){
 			this.item.on('size', (e) => {
+				console.log(e)
 				this.size = e.size;
 			})
 		}

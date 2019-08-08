@@ -480,7 +480,7 @@
 							fileID: id,
 							content: obj
 						})
-						updateStoreDB(this, id, 'content', obj);
+						updateStoreDB(this, [id], 'content', obj);
 						this.$notify({
 							title: '提示',
 							message: '保存成功！',
