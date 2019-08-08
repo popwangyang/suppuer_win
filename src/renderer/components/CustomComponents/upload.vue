@@ -51,7 +51,7 @@
 		},
 		methods: {
 			start() {
-				
+				console.log(this.file)
 				if (this.file.upState == "1") {
 					this.stopStatus = false
 					var path = this.file.path
@@ -69,7 +69,7 @@
 							
 						}else if (result == 'err'){
 							var obj = {
-								"id": file.id,
+								"id": this.file.id,
 								"key": "upState",
 								"value": "3"
 							}

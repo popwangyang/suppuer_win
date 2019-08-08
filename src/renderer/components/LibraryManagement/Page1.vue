@@ -1304,6 +1304,9 @@
 					case '其他':
 						send_data.format_type = 3;
 						break;
+					case "MKV":
+						send_data.format_type = 4;
+						break;
 				};
 				switch (data.voice_type) {
 					case "消音":
@@ -1329,10 +1332,10 @@
 					case "2":
 						send_data.vocal_track = 1;
 						break;
-					case "左声道":
+					case "左":
 						send_data.vocal_track = 2;
 						break;
-					case "右声道":
+					case "右":
 						send_data.vocal_track = 3;
 						break;
 				};
@@ -1343,22 +1346,23 @@
 					case "2":
 						send_data.voice_track = 1;
 						break;
-					case "左声道":
+					case "左":
 						send_data.voice_track = 2;
 						break;
-					case "右声道":
+					case "右":
 						send_data.voice_track = 3;
 						break;
 				};
 				get("/music/music/store", send_data).then((res) => {
 					if (res.data.results.length > 0) {
 						this.$refs.replaceUpload.value = ""
-						this.$notify({
-							message: '歌曲已存在，请勿重复上传',
-							type: 'error',
-							offset: 120,
-							duration: 3000,
-						});
+						// this.$notify({
+						// 	message: '歌曲已存在，请勿重复上传',
+						// 	type: 'error',
+						// 	offset: 120,
+						// 	duration: 3000,
+						// });
+						this.chaxun1(data, file)
 					} else {
 						this.chaxun1(data, file)
 					}

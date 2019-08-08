@@ -240,7 +240,7 @@ export const fileArray = function(obj, cb){
 export const getAuth = function(obj, type, cb){
 	console.log(obj)
 	var str = obj.singer + "￥" + obj.name + "￥" + obj.singer_type + "￥" + obj.language + "￥" + obj.picture + "￥" + obj.area +
-		"￥" + obj.voice_type + "￥" + obj.format_type + "￥" + obj.voice_track + "￥" + obj.vocal_track + "." + type;
+		"￥" + obj.voice_type + "￥" + obj.format_type + "￥" + obj.voice_track[0] + "￥" + obj.vocal_track[0] + "." + type;
 	var send_data = {
 		name: str
 	}
@@ -319,5 +319,6 @@ export const blackBox = function (key, value, type) {
 			return item.label.indexOf(value) > -1 
 		})[0].value
 	}
+	console.log(value, result)
 	return result;
 }

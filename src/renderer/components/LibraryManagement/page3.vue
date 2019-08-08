@@ -285,8 +285,10 @@
 						result = "第一声轨"
 					}else if(value == '2'){
 						result = "第二声轨"
-					}else{
-						result = value;
+					}else if(value == '左'){
+						result = '左声道';
+					}else if(value == '右'){
+						result = '右声道';
 					}
 				return result;
 			}
@@ -530,6 +532,7 @@
 							fileID: id,
 							content: obj
 						})
+						
 						this.$notify({
 							message: '保存成功！',
 							type: 'success',

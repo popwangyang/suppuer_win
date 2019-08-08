@@ -314,10 +314,10 @@
 								<span v-else-if="scope.row.voice_track =='2'">
 									第2声轨
 								</span>
-								<span v-else-if="scope.row.voice_track =='左' ">
+								<span v-else-if="scope.row.voice_track.indexOf('左') > -1 ">
 									左声道
 								</span>
-								<span v-else-if="scope.row.voice_track =='右'">
+								<span v-else-if="scope.row.voice_track.indexOf('右') > -1">
 									右声道
 								</span>
 								<span v-else-if="scope.row.voice_track ==null" style="color: red;">
@@ -334,10 +334,10 @@
 								<span v-else-if=" scope.row.voice_track =='1'">
 									第2声轨
 								</span>
-								<span v-else-if=" scope.row.voice_track =='2'">
+								<span v-else-if=" scope.row.voice_track.indexOf('左') > -1">
 									左声道
 								</span>
-								<span v-else-if=" scope.row.voice_track =='3'">
+								<span v-else-if=" scope.row.voice_track.indexOf('右') > -1">
 									右声道
 								</span>
 								<span v-else-if="scope.row.voice_track ==null" style="color: red;">
@@ -541,6 +541,7 @@
 				_this.tableData2 = [];
 				obj.content.upload_data = obj.upload_data;
 				_this.tableData2.push(obj.content)
+				console.log(obj.content)
 				var send_data = {
 					name: obj.content.name.trim(),
 					singer: obj.content.singer.trim()

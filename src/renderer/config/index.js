@@ -133,11 +133,11 @@ export default {
 				value:1
 			},
 			{
-				label:'左声道',
+				label:'左',
 				value:2
 			},
 			{
-				label:'右声道',
+				label:'右',
 				value:3
 			},
 			// {
@@ -155,11 +155,11 @@ export default {
 				value:1
 			},
 			{
-				label:'左声道',
+				label:'左',
 				value:2
 			},
 			{
-				label:'右声道',
+				label:'右',
 				value:3
 			},
 			// {

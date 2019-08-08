@@ -179,8 +179,6 @@
 							 v-if="scope.row.content.status == 2"></i>
 							<i class="el-icon-upload" style="font-size: 20px; cursor: pointer; margin: 0px 5px;" @click="uploadFile(scope.row.id)"
 							 v-if="scope.row.content.status == 3"></i>
-
-
 							<i class="el-icon-edit-outline" style="font-size: 20px; cursor: pointer; margin: 0px 5px;" @click="JumpPage(scope.row.id)"></i>
 							<i class="el-icon-delete" style="font-size: 20px; cursor: pointer; margin: 0px 5px;" @click="deleteFile(scope.row.id)"></i>
 						</template>
@@ -190,15 +188,12 @@
 			<div class="box1b">
 				<div class="block lastBlock">
 					<span class="demonstration" style="color: #999999;">已加载{{fileList.length}}条数据</span>
-
 				</div>
 			</div>
-		</div>
-		
+		</div>		
 		<div class="alert" v-show="alertFlage">
 			<Alert :num="alertNumber"/>
 		</div>
-
 	</div>
 </template>
 
@@ -330,21 +325,16 @@
 
 			handleSizeChange(val) {
 				console.log(`每页 ${val} 条`);
-
 			},
 			handleCurrentChange(val) {
 				console.log(`当前页: ${val}`);
-
 			},
 			delecteBtn() {
 				var _this = this
 				this.delecteLoading = true
 				setTimeout(function() {
-
-
 					_this.delecteLoading = false
 					_this.delecteVisible = false
-
 					_this.deletedFile(true)
 				}, 1000)
 			},
@@ -454,6 +444,7 @@
 				for (let i = 0; i < arr.length; i++) {
 					arr[i].UploadSize = 0;
 					arr[i].arr = this.sliceFile(arr[i].file);
+					console.log(arr[i], "////////////")
 					this.$store.commit("saveUpload", [arr[i]])
 					this.$notify({
 						message: '导入成功！',

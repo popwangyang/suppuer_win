@@ -28,10 +28,10 @@ changeData1(state,obj){
 				 item.content = obj.content
 				 item.key = obj.key
 				 item.credential = obj.credential
-				 item.upState = 0
+				 item.upState = obj.content.status == 3 ? 7:0
 			}
 	 })
-console.log(data)
+console.log(data, "changeData1")
 // data[obj.fileID].content = obj.content
 	},
 genXindex1(state){
