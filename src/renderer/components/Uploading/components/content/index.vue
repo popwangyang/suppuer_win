@@ -3,7 +3,7 @@
 	  <div class="title">
 		  <TableTitle :titles="titles" @change='handleCheckAllChange' :isIndeterminate="flage" ref="title"/>
 	  </div>
-	  <div class="body">
+	  <div class="body" id="scroll-1">
 		  <span v-for="item in arr " :key="item.id">
 			  <TableBody :titles="titles" :item="item" @change="getList">
 				  <el-checkbox v-model="item.isSelect" @change="handleCheckChange"/>
@@ -145,7 +145,7 @@
 				})
 			})
 			Bus.$on("exitLogin", () => {
-				console.log('exitLogin')
+				// console.log('exitLogin')
 			})
 		},
 		beforeDestroy(){

@@ -5,7 +5,7 @@
 		   <!--<el-breadcrumb-item>活动管理</el-breadcrumb-item>
 		  <el-breadcrumb-item>活动列表</el-breadcrumb-item>
 		  <el-breadcrumb-item>活动详情</el-breadcrumb-item>-->
-		  <el-breadcrumb-item :to='{path:item.route}' v-for='item in arr'>{{item.name}}</el-breadcrumb-item>
+		  <el-breadcrumb-item :to='{path:item.route}' v-for='(item, index) in arr' :key="index">{{item.name}}</el-breadcrumb-item>
    </el-breadcrumb>
 </template>
 <script>

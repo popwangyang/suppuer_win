@@ -175,7 +175,7 @@ export let getFormat = function(obj){
 		obj.multiple.map((item) => {
 			str += formate(item)+", "
 		})
-		console.log(obj.multiple, str.slice(0, str.length-2))
+		// // console.log(obj.multiple, str.slice(0, str.length-2))
 		
 		return str.slice(0, str.length-2);
 	}	
@@ -199,7 +199,7 @@ export let getConfig = function(file){
 				arr.push(str);	
 		}
 		urlStr = arr.join("\/");
-		console.log(urlStr)
+		// // console.log(urlStr)
 	return urlStr;
 }
 
@@ -233,13 +233,13 @@ export const fileArray = function(obj, cb){
 	};
 	
 	for(let i = 0; i < obj.length; i++){
-		console.log(obj[i].path)
+		// // console.log(obj[i].path)
 		getFile(obj[i].path)
 	};
 }
 
 export const getAuth = function(obj, type, cb){
-	console.log(obj)
+	// // console.log(obj)
 	var str = obj.singer + "￥" + obj.name + "￥" + obj.singer_type + "￥" + obj.language + "￥" + obj.picture + "￥" + obj.area +
 		"￥" + obj.voice_type + "￥" + obj.format_type + "￥" + obj.voice_track + "￥" + obj.vocal_track + "." + type;
 	var send_data = {
@@ -262,10 +262,10 @@ export const getDingZiNum = function(cb){
 			state:0
 		  }
 		get("/music/music/custom-manage", send_data).then((res) => {
-			// console.log(res.data.count);
+			// // // console.log(res.data.count);
 			resolve(res.data.count)
 		}).catch(() => {
-			console.log("pppp")
+			// // console.log("pppp")
 			reject(0)
 		})  
     })
@@ -276,21 +276,21 @@ export const getDingZiNum = function(cb){
 	        state:1
 	      }
 	    get("/music/music/custom-manage", send_data).then((res) => {
-	    	// console.log(res.data.count);
+	    	// // // console.log(res.data.count);
 	    	resolve(res.data.count)
 	    }).catch(() => {
-			console.log("pppp")
+			// // console.log("pppp")
 	    	reject(0)
 	    })  
 	})
 	Promise.all([p1, p2]).then((result) => {
-	  // console.log(result)               //['成功了', 'success']
+	  // // // console.log(result)               //['成功了', 'success']
 	cb(result.reduce((a, b) => {
        return a + b;
      })) 
 	 
 	}).catch((error) => {
-	  console.log(error)
+	  // // console.log(error)
 	})
 }
 
@@ -351,7 +351,7 @@ export const chaxun = (params, callback) => {
 		for(let key in params){
 		  send_data[key] = blackBox(key, params[key], 'label')
 		}
-	get("/music/music/store", send_data).then((res) => {
+	get("/music/music/store-full", send_data).then((res) => {
 	   callback(res.data.results)
 	}).catch(err => {
 	   notify({
@@ -424,7 +424,7 @@ export const removeStoreDB = (vm, ids) => {
  */
 export const updateStoreDB = (vm, ids, key, value) => {
 	return new Promise((resolve, reject) => {
-		console.log({key: value})
+		// // console.log({key: value})
 		let obj = {};
 		    obj[key] = value;
 		let querys = ids.reduce((cur, next) => {
@@ -433,7 +433,7 @@ export const updateStoreDB = (vm, ids, key, value) => {
 		}, []) 
 		vm.$db.update({$or: querys }, { $set: obj}, {multi: true}, (err, numReplaced) => {
 			if(err) return reject(err);
-			console.log(numReplaced)
+			// // console.log(numReplaced)
 			resolve(numReplaced)
 		})
 	})

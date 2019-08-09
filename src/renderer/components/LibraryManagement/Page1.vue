@@ -860,7 +860,7 @@
 		},
 		methods: {
 			changeDate() {
-				console.log(this.formInlineDate)
+				// console.log(this.formInlineDate)
 				if (this.formInlineDate != null) {
 					this.formInline.published_0 = this.formInlineDate[0]
 					this.formInline.published_1 = this.formInlineDate[1] + "  23:59:59"
@@ -899,18 +899,18 @@
 			},
 			album_nameFilter() {
 				this.album_nameFlage = false;
-				console.log(this.radioForm)
+				// console.log(this.radioForm)
 				this.searchHandler()
 			},
 			company_nameFilter() {
 				this.company_nameFlage = false;
-				console.log(this.radioForm)
+				// console.log(this.radioForm)
 				this.searchHandler()
 			},
 			loadAllAlbum() {
 				var _this = this;
 				get("/music/music/album").then(function(res) {
-					console.log(res)
+					// console.log(res)
 					var arr = res.data.results
 					var arr1 = []
 					var arr2 = []
@@ -929,7 +929,7 @@
 					})
 					arr1 = arr1.concat(arr2)
 					_this.album_nameArr = arr1
-					console.log(arr1, "arr")
+					// console.log(arr1, "arr")
 				}).catch(error => {
 					if (error.data.error == "无权限") {
 						_this.albumJurisdictionFlage = false
@@ -990,7 +990,7 @@
 				})
 			},
 			getWidthHead() {
-				console.log(this.$refs.box_head.offsetWidth)
+				// console.log(this.$refs.box_head.offsetWidth)
 				var _this = this
 				var arr = this.widthHead;
 				var num1 = this.$refs.box_head.offsetWidth;
@@ -1042,9 +1042,9 @@
 					}
 					send_data.page = _this.page;
 					send_data.page_size = _this.page_size;
-					console.log(send_data)
+					// console.log(send_data)
 					get("/music/music/store-search", send_data).then(function(res) {
-						console.log(res.data.results)
+						// console.log(res.data.results)
 						_this.isplSolo = true;
 						_this.tableData3 = res.data.results
 						_this.submitContentLoading = false
@@ -1106,7 +1106,7 @@
 				this.percentage = parseInt(percentage)
 			},
 			handleSuccess(response, file, fileList) {
-				console.log(fileList)
+				// console.log(fileList)
 				this.templateFile = fileList[0]
 				this.uploadBtn = false
 			},
@@ -1162,7 +1162,7 @@
 					var send_data = {
 						name: [file.name]
 					}
-					console.log(send_data)
+					// console.log(send_data)
 					post("/music/music/store-verification", send_data).then((res) => {
 						if (res.data[0].status == 0 || res.data[0].status == 3) {
 							this.chaxun(res.data[0], file);
@@ -1504,7 +1504,7 @@
 				}
 				_this.delectesLoading = false
 				_this.delectesVisible = false
-				console.log(_this)
+				// console.log(_this)
 			},
 			//表单的模糊查询
 			querySearch(queryString, callback) {
@@ -1597,7 +1597,7 @@
 				this.tableData = [];
 				this.loading = true;
 				this.onSubmitLoading = true;
-				console.log(send_data)
+				this.tableData3 = []
 				get("/music/music/store", send_data).then(function(res) {
 					_this.loading = false;
 					_this.count = res.data.count;
@@ -1640,7 +1640,7 @@
 				this.rowData = row
 			},
 			changeData(id) {
-				console.log(id)
+				// console.log(id)
 				var arr = this.tableData3;
 				var arr1 = []
 				var obj1 = {}
@@ -1735,7 +1735,7 @@
 				}
 			}
 			Bus.$on("currentWindow", function(flage) {
-				console.log(flage, "currentWindow")
+				// console.log(flage, "currentWindow")
 				setTimeout(function() {
 					_this.height = "height:" + (document.body.clientHeight - 239) + "px"
 					if (_this.$refs.box_head) {
@@ -2020,43 +2020,12 @@
 
 	.aa {
 		overflow: auto;
-		margin-right: 5px;
 		font-size: 14px;
 	}
 
 	.bb {
 		overflow: auto;
-		margin-right: 5px;
 		font-size: 14px;
 	}
 
-	#ulo::-webkit-scrollbar-track,
-	#scroll-1::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		border-radius: 10px;
-		background-color: #f0f0f0;
-	}
-
-	#ulo::-webkit-scrollbar,
-	#scroll-1::-webkit-scrollbar {
-		width: 10px;
-		background-color: #f0f0f0;
-	}
-
-	#ulo::-webkit-scrollbar-thumb,
-	#scroll-1::-webkit-scrollbar-thumb {
-		border-radius: 20px;
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-		background-color: #cfd1d3;
-	}
-
-	#ulo::-webkit-scrollbar-thumb:hover,
-	#scroll-1::-webkit-scrollbar-thumb:hover {
-		background-color: #a7acb1;
-	}
-
-	#ulo::-webkit-scrollbar-thumb:active,
-	#scroll-1::-webkit-scrollbar-thumb:active {
-		background-color: #9da2a7;
-	}
 </style>

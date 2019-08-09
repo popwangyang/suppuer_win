@@ -21,7 +21,7 @@
 		},
 		methods: {
 			change(e) {
-				console.log(this.$refs.file.files[0])
+				// console.log(this.$refs.file.files[0])
 				this.$emit('change', this.$refs.file.files[0])
 				this.$refs.file.value = ""
 			}

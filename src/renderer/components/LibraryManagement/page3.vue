@@ -5,17 +5,17 @@
 				<el-col>
 					<h1 style="color: #666666;margin-left: 20px;">歌曲信息</h1>
 				</el-col>
-				<el-form :label-position="labelPosition" :inline="true" :model="formInline" class="demo-form-inline" size="mini"
+				<el-form :label-position="labelPosition" :inline="true" :model="formInline" class="demo-form-inline" size="default"
 				 status-icon :rules="rules" ref="formInline">
-					<el-col :span="20" :offset="1" style="display: flex;justify-content:space-around;">
-						<el-form-item label="歌曲名称" prop="name">
-							<el-input v-model="formInline.name" placeholder="请输入"></el-input>
+					<el-col :span="20" :offset="1" style="display: flex;">
+						<el-form-item label="歌曲名称" prop="name" style="margin-right: 100px;">
+							<el-input v-model="formInline.name" placeholder="请输入" style="width: 200px;"></el-input>
 						</el-form-item>
-						<el-form-item label="歌手名称" prop="singer">
-							<el-input v-model="formInline.singer" placeholder="请输入"></el-input>
+						<el-form-item label="歌手名称" prop="singer" style="margin-right: 100px;">
+							<el-input v-model="formInline.singer" placeholder="请输入"  style="width: 200px;"></el-input>
 						</el-form-item>
 						<el-form-item label="语言" prop="language">
-							<el-select v-model="formInline.language" placeholder="请选择">
+							<el-select v-model="formInline.language" placeholder="请选择"  style="width: 200px;">
 								<el-option 
 								:label="item.label" 
 								:value="item.value" 
@@ -24,9 +24,9 @@
 							</el-select>
 						</el-form-item>
 					</el-col>
-					<el-col :span="20" :offset="1" style="display: flex;justify-content:space-around;">
-						<el-form-item label="歌手类型" prop="singer_type">
-							<el-select v-model="formInline.singer_type" placeholder="无">
+					<el-col :span="20" :offset="1" style="display: flex;">
+						<el-form-item label="歌手类型" prop="singer_type"  style="margin-right: 100px;">
+							<el-select v-model="formInline.singer_type" placeholder="无"  style="width: 200px;">
 								<el-option 
 								:label="item.label" 
 								:value="item.value" 
@@ -34,8 +34,8 @@
 								:key="index"></el-option>
 							</el-select>
 						</el-form-item>
-						<el-form-item label="地区" prop="area">
-							<el-select v-model="formInline.area" placeholder="无">
+						<el-form-item label="地区" prop="area"  style="margin-right: 100px;">
+							<el-select v-model="formInline.area" placeholder="无" style="width: 200px;">
 								<el-option 
 								:label="item.label" 
 								:value="item.value" 
@@ -44,13 +44,18 @@
 							</el-select>
 						</el-form-item>
 						<el-form-item label="专辑名称" prop="album" v-show="albumJurisdictionFlage">
-							<el-autocomplete class="inline-input" v-model="formInline.album" :fetch-suggestions="querySearch" placeholder="无"
+							<el-autocomplete 
+							class="inline-input" 
+							v-model="formInline.album" 
+							:fetch-suggestions="querySearch" 
+							placeholder="无"  
+							style="width: 200px;"
 							 @select="handleSelect"></el-autocomplete>
 						</el-form-item>
 					</el-col>
-					<el-col :span="20" :offset="1" style="display: flex;justify-content:space-around;">
-						<el-form-item label="唱片公司" prop="company"  v-show="companyJurisdictionFlage">
-							<el-autocomplete class="inline-input" v-model="formInline.company" :fetch-suggestions="querySearch1" placeholder="无"
+					<el-col :span="20" :offset="1" style="display: flex;">
+						<el-form-item label="唱片公司" prop="company"  v-show="companyJurisdictionFlage"  style="margin-right: 100px;">
+							<el-autocomplete class="inline-input"  style="width: 200px;" v-model="formInline.company" :fetch-suggestions="querySearch1" placeholder="无"
 							 @select="handleSelect1"></el-autocomplete>
 						</el-form-item>
 						<el-form-item></el-form-item>
@@ -58,14 +63,14 @@
 					</el-col>
 					<el-col :span="20" :offset="1" style="display: flex;justify-content:flex-start;flex-direction: column;">
 						<div>
-							<i style="color: #c0c4cc;margin-right: 5px;">1.</i><i style="color: #c0c4cc;font-size: 10px;font-style: normal;">若一首歌有多个歌手，则以“名字+名字”格式录入，例如林俊杰+阿Sa;</i>
+							<i style="color: #c0c4cc;margin-right: 5px;">1.</i><i style="color: #c0c4cc;font-size: 12px;font-style: normal;">若一首歌有多个歌手，则以“名字+名字”格式录入，例如林俊杰+阿Sa;</i>
 						</div>
 						<div v-show="albumJurisdictionFlage">
-							<i style="color: #c0c4cc;margin-right: 5px;">2.</i><i style="color: #c0c4cc;font-size: 10px;font-style: normal;">若歌曲为非专辑音乐属性,
+							<i style="color: #c0c4cc;margin-right: 5px;">2.</i><i style="color: #c0c4cc;font-size: 12px;font-style: normal;">若歌曲为非专辑音乐属性,
 								专辑名称请选择“无”或不填写;</i>
 						</div>
 						<div v-show="companyJurisdictionFlage">
-							<i style="color: #c0c4cc;margin-right: 5px;">3.</i><i style="color: #c0c4cc;font-size: 10px;font-style: normal;">若歌曲无唱片公司属性,
+							<i style="color: #c0c4cc;margin-right: 5px;">3.</i><i style="color: #c0c4cc;font-size: 12px;font-style: normal;">若歌曲无唱片公司属性,
 								唱片公司请选择“无”或不填写;</i>
 						</div>
 					</el-col>
@@ -75,74 +80,78 @@
 					<el-col>
 						<h1 style="color: #666666;margin-left: 20px;">文件信息</h1>
 					</el-col>
-					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 30px;'>
+					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 0px;'>
 						<div>
-							<h3 style="color: #666666;">画面</h3>
-							<el-radio-group v-model="formInline.picture" style="margin-left: 20px;">
-								<el-radio 
-								:label="item.value" 
-								 v-for="(item, index) in songInfoData.picture" 
-								:key='index'>
-									<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label}}</i>
-							    </el-radio>
-							</el-radio-group>
+							<el-form-item label="画面" prop="picture">
+								<el-radio-group v-model="formInline.picture" style="margin-left: 20px;">
+									<el-radio 
+									:label="item.value" 
+									 v-for="(item, index) in songInfoData.picture" 
+									:key='index'>
+										<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label}}</i>
+								    </el-radio>
+								</el-radio-group>
+							</el-form-item>
 						</div>
 						<div>
-							<h3 style="color: #666666;">原唱声轨</h3>
-							<el-radio-group v-model="formInline.voice_track" style="margin-left: 20px;">
-								<el-radio 
-								:label="item.value" 
-								 v-for="(item, index) in songInfoData.voice_track" 
-								:key='index'>
-									<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label | filterLabel}}</i>
-								</el-radio>
-							</el-radio-group>
-						</div>
-					</el-col>
-					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 30px;'>
-						<div>
-							<h3 style="color: #666666;">声音版本</h3>
-							<el-radio-group v-model="formInline.voice_type" style="margin-left: 20px;">
-								<el-radio 
-								:label="item.value" 
-								 v-for="(item, index) in songInfoData.voice_type" 
-								:key='index'>
-									<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label}}</i>
-								</el-radio>
-							</el-radio-group>
-						</div>
-						<div>
-							<h3 style="color: #666666;">伴唱声轨</h3>
-							<el-radio-group v-model="formInline.vocal_track" style="margin-left: 20px;">
-							    <el-radio 
-							    :label="item.value" 
-							     v-for="(item, index) in songInfoData.vocal_track" 
-							    :key='index'>
-							    	<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label | filterLabel}}</i>
-							    </el-radio>
-							</el-radio-group>
+							<el-form-item label="原唱声轨"  prop="voice_track">
+								<el-radio-group v-model="formInline.voice_track" style="margin-left: 20px;">
+									<el-radio 
+									:label="item.value" 
+									 v-for="(item, index) in songInfoData.voice_track" 
+									:key='index'>
+										<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label | filterLabel}}</i>
+									</el-radio>
+								</el-radio-group>
+							</el-form-item>
 						</div>
 					</el-col>
-					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 30px;'>
+					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 0px;'>
 						<div>
-							<h3 style="color: #666666;">格式</h3>
-							<el-radio-group v-model="formInline.format_type" style="margin-left: 20px;">
-								<el-radio 
-								:label="item.value" 
-								 v-for="(item, index) in songInfoData.format_type" 
-								:key='index'>
-									<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label}}</i>
-								</el-radio>
-
-							</el-radio-group>
+							<el-form-item label="声音版本"  prop="voice_type">
+								<el-radio-group v-model="formInline.voice_type" style="margin-left: 20px;">
+									<el-radio 
+									:label="item.value" 
+									 v-for="(item, index) in songInfoData.voice_type" 
+									:key='index'>
+										<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label}}</i>
+									</el-radio>
+								</el-radio-group>
+							</el-form-item>
+						</div>
+						<div>
+							<el-form-item label="伴唱声轨"  prop="vocal_track">
+								<el-radio-group v-model="formInline.vocal_track" style="margin-left: 20px;">
+								    <el-radio 
+								    :label="item.value" 
+								     v-for="(item, index) in songInfoData.vocal_track" 
+								    :key='index'>
+								    	<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label | filterLabel}}</i>
+								    </el-radio>
+								</el-radio-group>
+							</el-form-item>
+						</div>
+					</el-col>
+					<el-col :span="22" :offset="1" style='display: flex;justify-content: space-between;margin-bottom: 0px;'>
+						<div>
+							<el-form-item label="格式"  prop="format_type">
+								<el-radio-group v-model="formInline.format_type" style="margin-left: 20px;">
+									<el-radio 
+									:label="item.value" 
+									 v-for="(item, index) in songInfoData.format_type" 
+									:key='index'>
+										<i style="display: inline-block;width: 50px;font-style: normal;color: #666666;">{{item.label}}</i>
+									</el-radio>
+								</el-radio-group>
+							</el-form-item>
 						</div>
 					</el-col>
 					<el-col :span="22" :offset="1">
 						<i style="display: block;width: 100%;height: 1px;border-top: 1px solid #efeded;margin: 20px 0;"></i>
 					</el-col>
 					<el-col :span="22" :offset="1">
-						<el-button size="mini" @click="resetForm('formInline')" style="margin-bottom: 150px;">重置</el-button>
-						<el-button type="primary" size="mini" @click="submitForm('formInline')">保存</el-button>
+						<el-button  @click="resetForm('formInline')" style="margin-bottom: 150px;">重置</el-button>
+						<el-button type="primary"  @click="submitForm('formInline')">保存</el-button>
 					</el-col>
 				</el-form>
 			</el-row>
@@ -164,27 +173,7 @@
 	import { Loading } from 'element-ui';
 	export default {
 		data() {
-			var validateSongName = (rule, value, callback) => {
-				if (value === '') {
-					callback(new Error('请填写歌名'));
-				} else {
-					callback();
-				}
-			};
-			var validateSingerName = (rule, value, callback) => {
-				if (value === '') {
-					callback(new Error('歌手名不能为空'));
-				} else {
-					callback();
-				}
-			};
-			var validateLanguage = (rule, value, callback) => {
-				if (value === '') {
-					callback(new Error('请选择语言'));
-				} else {
-					callback();
-				}
-			};
+		
 			var validateAlbumName = (rule, value, callback) => {
 				if (value.length > 20) {
 
@@ -197,20 +186,6 @@
 				if (value.length > 20) {
 
 					callback();
-				} else {
-					callback();
-				}
-			};
-			var validateArea = (rule, value, callback) => {
-				if (value === '') {
-					callback(new Error('请选择曲风'));
-				} else {
-					callback();
-				}
-			};
-			var validateSinger_type = (rule, value, callback) => {
-				if (value === '') {
-					callback(new Error('请选择歌手类型'));
 				} else {
 					callback();
 				}
@@ -229,9 +204,8 @@
 					voice_track: '',
 					voice_type: '',
 					format_type: '',
-					area: "",
-					singer_type: ""
-
+					area: '',
+					singer_type: ''
 				},
 				albumJurisdictionFlage: true,
 				companyJurisdictionFlage: true,
@@ -242,17 +216,17 @@
 				rules: {
 					name: [{
 						required: true,
-						validator: validateSongName,
+						message: '歌曲名不能为空' ,
 						trigger: ['blur', 'change']
 					}],
 					singer: [{
 						required: true,
-						validator: validateSingerName,
+						message: '歌曲名不能为空',
 						trigger: ['blur', 'change']
 					}],
 					language: [{
 						required: true,
-						validator: validateLanguage,
+						message: '请选择语言',
 						trigger: ['blur', 'change']
 					}],
 					album: [{
@@ -265,14 +239,39 @@
 					}],
 					area: [{
 						required: true,
-						validator: validateArea,
+						message: '请选择地区',
 						trigger: ['blur', 'change']
 					}],
 					singer_type: [{
 						required: true,
-						validator: validateSinger_type,
+						message: '请选择歌手类型',
 						trigger: ['blur', 'change']
-					}]
+					}],
+					picture: [{
+						required: true,
+						message: '画面不可为空',
+						trigger: ['blur', 'change']
+					}],
+					vocal_track:[{
+						required: true,
+						message: '伴唱声轨不可为空',
+						trigger: ['blur', 'change']
+					}],
+					voice_track:[{
+						required: true,
+						message: '原唱声轨不可为空',
+						trigger: ['blur', 'change']
+					}],
+					voice_type: [{
+						required: true,
+						message: '声音版本不可为空',
+						trigger: ['blur', 'change']
+					}],
+					format_type: [{
+						required: true,
+						message: '格式不可为空',
+						trigger: ['blur', 'change']
+					}],
 				},
 				labelPosition: 'top',
 
@@ -370,7 +369,7 @@
 					var arr = this.restaurants1;
 					var flage = true;
 					arr.map(function(item) {
-						console.log(item.value)
+						// console.log(item.value)
 						if (item.value == str) {
 							flage = false;
 							send_data.company = item.id
@@ -399,7 +398,7 @@
 					var str = this.formInline.album;
 					var arr = this.restaurants;
 					var flage = true;
-					console.log(str, arr)
+					// console.log(str, arr)
 					arr.map(function(item) {
 						if (item.value == str && str != '') {
 							flage = false;
@@ -447,7 +446,7 @@
 				for (var key in this.formInline) {
 					obj[key] = blackBox(key, this.formInline[key], 'value')
 				}
-				console.log(obj, this.formInline)
+				// console.log(obj, this.formInline)
 				if (obj.company == '无') {
 					obj.company == ''
 				}
@@ -704,9 +703,9 @@
 
 	}
 
-	#editPage .el-form-item__content {
+	/* #editPage .el-form-item__content {
 		width: 250px;
-	}
+	} */
 
 	#editPage .el-select--mini {
 		width: 250px;

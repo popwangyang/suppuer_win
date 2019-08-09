@@ -125,7 +125,7 @@
 					<template slot-scope="scope">
 						<i class="el-icon-upload uploadIcon" @click="uploadFile(scope.row.id)"
 						 v-if="scope.row.content.status == 0"></i>
-						<i class="el-icon-upload uploadIcon" 
+						<i class="el-icon-upload uploadIcon uploadIcon-not-allowed" 
 						 v-if="scope.row.content.status == 1"></i>
 						<i class="el-icon-upload uploadIcon uploadIcon-not-allowed" 
 						 v-if="scope.row.content.status == 2"></i>
@@ -175,7 +175,7 @@
 		},
 		watch: {
 			multipleSelection(newValue, oldValue) {
-				console.log(newValue)
+				// console.log(newValue)
 				if (newValue.length > 0) {
 					Bus.$emit('val2', "1")
 				} else {
@@ -196,7 +196,7 @@
 							}
 						}, {})
 					}
-					console.log(obj, "pppppppppppppppppp")
+					// console.log(obj, "pppppppppppppppppp")
 					updateStoreDB(this, [this.repeatID], 'file', obj.file).then(res => {
 						this.$store.commit("setData", obj)
 						this.uploadFile(this.repeatID)
@@ -206,7 +206,7 @@
 				}
 			},
 			getRepeat(data){
-				console.log(data)
+				// console.log(data)
 				this.repeatID = data.id;
 				let obj = {}
 				for(let key in data.content){
@@ -221,7 +221,7 @@
 					singer: data.content.singer.trim()
 				}
 				get("/music/music/store", send_data).then( res => {
-					console.log(res)
+					// console.log(res)
 					res.data.results.map(function(item, index) {
 						if (item.official_is_publish == '0') {
 							res.data.results.splice(index, 1)

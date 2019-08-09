@@ -52,6 +52,7 @@
 					this.restTime = "";
 				}
 				if(this.upState == 3){  // 上传完成，清除在db数据空中的记录
+				  this.restTime = "";
 				  removeStoreDB(this, [this.item.id])
 				}
 				if(this.upState == 5){

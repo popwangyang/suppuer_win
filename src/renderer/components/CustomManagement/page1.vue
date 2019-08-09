@@ -1,5 +1,5 @@
 <template>
-	<div id="CustomManagement">
+	<div class="CustomManagement">
 		<div ref="box_head" style="height: 57px;width: 100%;" class="box_head">
 			<ul>
 				<li>
@@ -304,10 +304,8 @@
 
 		methods: {
 			goo() { //鼠标移到查看原因点时隐藏滚动条；
-				console.log(this.$refs)
 				var box = this.$refs.scroll_1;
 				box.style.overflow = 'hidden'
-				// box.bind("scroll",function (){box.scrollTop(box.scrollTop); });
 			},
 			goo1() { //鼠标移处查看原因点时显示滚动条；
 				var box = this.$refs.scroll_1;
@@ -318,9 +316,7 @@
 				rowIndex
 			}) {
 				var arr = this.warningArr;
-
 				var str = arr.indexOf(rowIndex)
-				console.log(str)
 				if (str !== -1) {
 					return 'warning-row';
 				} else {
@@ -328,7 +324,6 @@
 				}
 				return '';
 			},
-
 			handleCheckAllChange(val) {
 				this.isIndeterminate = false;
 				this.checkAll = val
@@ -337,11 +332,9 @@
 					arr.forEach(row => {
 						this.$refs.multipleTable.toggleRowSelection(row, true);
 					})
-
 				} else {
 					this.$refs.multipleTable.clearSelection();
 				}
-				console.log(this.multipleSelection, "multipleSelection")
 			},
 			handleSelectionChange(val) {
 				this.multipleSelection = val;
@@ -363,11 +356,8 @@
 				}
 			},
 			songeStateFilterHandler() {
-				console.log(this.songStateradio)
 				this.detail()
-
 			},
-
 			showBackReasonDialog(id) {
 				this.BackReasonFileID = id
 				this.dialogVisible = true
@@ -381,13 +371,11 @@
 				} else {
 					this.notThroughLoading = true;
 					var str = this.formLabelAlign.reason + "\n" + this.formLabelAlign.otherReason
-
 					var send_data = {
 						state: '3',
 						refuse_reason: str
 					}
 					patch('/music/music/custom-manage/' + id + '', send_data).then(function(res) {
-						console.log(res)
 						_this.notThroughLoading = false;
 						_this.dialogVisible = false;
 						_this.formLabelAlign = {
@@ -413,7 +401,6 @@
 			},
 			AllNotThroughBtn() {
 				var _this = this;
-				console.log(this.formLabelAlign)
 				if (this.formLabelAlign.reason == "" && this.formLabelAlign.otherReason == "") {
 					this.backReasonFlage = true
 				} else {
@@ -422,7 +409,6 @@
 					var arr = this.multipleSelection;
 					var ids = [];
 					arr.map(function(item) {
-						// console.log(item)
 						ids.push(item.id)
 					})
 					var send_data = {
@@ -431,8 +417,6 @@
 						reason: str
 					}
 					post("/music/music/custom-batch", send_data).then((res) => {
-
-						// console.log(res.date.task_id)
 						this.asyncNotThrough(res.data.task_id)
 					}).catch((error) => {
 						_this.notThroughLoading = false;
@@ -443,10 +427,7 @@
 							offset: 120,
 							duration: 2000,
 						});
-
-
 					})
-
 				}
 			},
 			asyncNotThrough(id) {
@@ -467,10 +448,7 @@
 					}
 				})
 			},
-
-
 			handleClose() {
-				console.log("oooo")
 				this.formLabelAlign = {
 					reason: "",
 					otherReason: ""
@@ -481,7 +459,6 @@
 			make(id) {
 				var arr = this.tableData;
 				var data = "";
-				console.log(arr)
 				arr.map(function(item) {
 					if (item.id == id) {
 						data = item
@@ -492,9 +469,7 @@
 				var send_data = {
 					state: "1"
 				}
-				console.log(send_data)
 				patch('/music/music/custom-manage/' + id + '', send_data).then(function(res) {
-					console.log(res)
 					arr.map(function(item) {
 						if (item.id == id) {
 							item.state = '1';
@@ -513,19 +488,16 @@
 			btnUpload(id) {
 				var arr = this.tableData
 				var _this = this;
-				console.log(arr)
 				arr.map(function(item) {
 					if (item.id == id) {
 						item.state = '4';
 						return
 					}
 				})
-
 				var send_data = {
 					state: '2'
 				}
 				patch('/music/music/custom-manage/' + id + '', send_data).then(function(res) {
-					console.log(res)
 					arr.map(function(item) {
 						if (item.id == id) {
 							item.state = '2';
@@ -533,7 +505,6 @@
 					})
 					Bus.$emit("getDingZiNum");
 				}).catch(error => {
-					console.log(error)
 					if (error.data[0] == "未找到歌曲，确认上传失败") {
 						_this.$notify({
 							message: '请先上传歌曲',
@@ -551,20 +522,17 @@
 				})
 			},
 			handleSizeChange(val) {
-				console.log(`每页 ${val} 条`);
 				this.tableData = []
 				this.page = 1;
 				this.page_size = val;
 				this.detail()
 			},
 			handleCurrentChange(val) {
-				console.log(`当前页: ${val}`);
 				this.tableData = []
 				this.page = val;
 				this.detail()
 			},
 			getWidthHead() {
-				console.log(this.$refs.box_head.offsetWidth)
 				var _this = this
 				var arr = this.widthHead;
 				var num1 = this.$refs.box_head.offsetWidth;
@@ -580,7 +548,6 @@
 					_this.widthHead1.push(str)
 					return arr[index] = item + num3;
 				})
-				console.log(this.widthHead1)
 			},
 			RomveRepeat(arr) {
 				var res = [];
@@ -596,7 +563,6 @@
 			detail() {
 				var _this = this
 				this.loading = false
-
 				var send_data = {
 					page: this.page,
 					page_size: this.page_size,
@@ -604,18 +570,12 @@
 				}
 				get("/music/music/custom-manage", send_data).then(function(response) {
 					_this.count = response.data.count
-
-
 					_this.loading = true
 					response.data.results.map((item) => {
-
 						item.format = getFormat(JSON.parse(item.format))
 					})
-					console.log(response.data.results, "ppppooo")
 					_this.tableData = response.data.results
 					_this.count = response.data.count;
-				}).catch(function(response) {
-					console.log(response); //发生错误时执行的代码
 				})
 			},
 			asyncFunc(id) {
@@ -624,9 +584,6 @@
 					"task_id": id
 				}
 				get("/music/music/task-result", send_id).then(function(res1) {
-					console.log(res1.data)
-					console.log(baseUrl + "/music/file/excel/" + res1.data)
-					// console.log(ipcRenderer)
 					var str = baseUrl + "/music/file/excel/" + res1.data
 					ipcRenderer.send('download', str);
 
@@ -641,37 +598,27 @@
 
 		},
 		mounted() {
-			console.log(os.totalmem(), "ppppppososso")
 			var _this = this
 			this.height = "height:" + (document.body.clientHeight - 187) + "px"
 			this.getWidthHead()
 			this.detail()
-			console.log(this.putTimeArr)
-
 			window.onresize = function() {
-				console.log(document.body.clientHeight)
 				setTimeout(function() {
 					_this.height = "height:" + (document.body.clientHeight - 187) + "px"
 					_this.getWidthHead()
-					console.log(_this.height)
 				}, 2)
 			}
-
 			Bus.$on("UploadFileOK", function() {
 				var arr = _this.tableData;
 				var flage = false;
-				console.log(arr)
 				_this.warningArr = [];
 				arr.map(function(item, index) {
-
 					if (item.state != 1 && _this.multipleSelection.indexOf(item) > -1) {
-						console.log("ll")
 						_this.warningArr.push(index)
 						flage = true
 					}
 
 				})
-				console.log(_this.warningArr, "warningArr")
 				if (flage) {
 					this.$notify({
 						message: '存在不符的文件',
@@ -712,19 +659,14 @@
 			Bus.$on("makeFile", function() {
 				var arr = _this.tableData;
 				var flage = false;
-				// console.log(arr)
 				_this.warningArr = [];
 				arr.map(function(item, index) {
-
 					if (item.state != 0 && _this.multipleSelection.indexOf(item) > -1) {
-						console.log("ll")
-						console.log(item.state)
 						_this.warningArr.push(index)
 						flage = true
 					}
 
 				})
-				console.log(_this.warningArr, "warningArr")
 				if (flage) {
 					this.$notify({
 						message: '存在不符的文件',
@@ -738,7 +680,6 @@
 						IDlist.push(item.id)
 						item.state = '4'
 					})
-
 					var send_data = {
 						id: IDlist,
 						type: 1
@@ -755,13 +696,10 @@
 			Bus.$on("Disagree", function() {
 					var arr = _this.tableData;
 					var flage = false;
-					// console.log(arr)
 					_this.warningArr = [];
 					arr.map(function(item, index) {
 
 						if (item.state != 0 && _this.multipleSelection.indexOf(item) > -1) {
-							// console.log("ll")
-							// console.log(item.state)
 							_this.warningArr.push(index)
 							flage = true
 						}
@@ -775,34 +713,20 @@
 							duration: 2000,
 						});
 					} else {
-						// console.log(_this.dialogVisible)
 						_this.dialogAllVisible = true;
 					}
-
-
-
-
-
-
 				}),
 				Bus.$on("exportFile1", function() {
 					var arr = [];
 					_this.multipleSelection.map(function(item) {
 						arr.push(item.id)
 					})
-					// ipcRenderer.sendSync('download',"pppp");
 					var send_data = {
 						id: arr,
 						type: 2
 					}
 					post("/music/music/custom-batch", send_data).then(function(res) {
-						console.log(res.data)
-						// 							var send_id = {
-						// 								"task_id":res.data.task_id
-						// 							}
 						_this.asyncFunc(res.data.task_id)
-
-
 					})
 				})
 		},
@@ -838,25 +762,24 @@
 		color: #66b1ff;
 	}
 
-	#CustomManagement .cell {
+	.CustomManagement .cell {
 		text-align: center;
 		font-size: 14px;
 	}
 
-	#CustomManagement {
+	.CustomManagement {
 		height: 100%;
 		display: flex;
 		flex-direction: column;
 		position: relative;
 	}
 
-	#CustomManagement .box {
+	.CustomManagement .box {
 		overflow: auto;
-		margin-right: 5px;
 		font-size: 14px;
 	}
 
-	#CustomManagement .box_head ul {
+	.CustomManagement .box_head ul {
 		display: flex;
 		width: 100%;
 		height: 100%;
@@ -865,7 +788,7 @@
 		border-bottom: 1px solid #ebeef5;
 	}
 
-	#CustomManagement .box_head ul li {
+	.CustomManagement .box_head ul li {
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -875,25 +798,25 @@
 
 	}
 
-	#CustomManagement .box_head li:nth-child(1) {
+	.CustomManagement .box_head li:nth-child(1) {
 		width: 55px;
 	}
 
-	#CustomManagement .songStateSpan {
+	.CustomManagement .songStateSpan {
 		cursor: pointer;
 		color: #909399;
 		font-weight: 600;
 	}
 
-	#CustomManagement .box_head .a {
+	.CustomManagement .box_head .a {
 		flex: 1;
 	}
 
-	#CustomManagement .has-gutter {
+	.CustomManagement .has-gutter {
 		display: none;
 	}
 
-	#CustomManagement .lastBlock {
+	.CustomManagement .lastBlock {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
@@ -921,7 +844,7 @@
 		border-bottom: 1px solid #efeded;
 	}
 
-	#CustomManagement .el-dialog__body {
+	.CustomManagement .el-dialog__body {
 		padding: 30px 20px 10px 20px;
 	}
 
@@ -968,35 +891,5 @@
 
 	.el-select-dropdown__item {
 		font-size: 14px;
-	}
-
-	#scroll-1::-webkit-scrollbar-track,
-	.el-checkbox-group::-webkit-scrollbar-track {
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
-		border-radius: 10px;
-		background-color: #f0f0f0;
-	}
-
-	#scroll-1::-webkit-scrollbar,
-	.el-checkbox-group::-webkit-scrollbar {
-		width: 10px;
-		background-color: #f0f0f0;
-	}
-
-	#scroll-1::-webkit-scrollbar-thumb,
-	.el-checkbox-group::-webkit-scrollbar-thumb {
-		border-radius: 20px;
-		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
-		background-color: #cfd1d3;
-	}
-
-	#scroll-1::-webkit-scrollbar-thumb:hover,
-	.el-checkbox-group::-webkit-scrollbar-thumb:hover {
-		background-color: #a7acb1;
-	}
-
-	#scroll-1::-webkit-scrollbar-thumb:active,
-	.el-checkbox-group::-webkit-scrollbar-thumb:active {
-		background-color: #9da2a7;
 	}
 </style>

@@ -444,7 +444,7 @@
 				let password = /^(?![\d]+$)(?![a-zA-Z]+$)(?![!#$%^&*]+$)[\da-zA-Z]{6,20}$/;
            // let password = /^[a-zA-Z0-9_-]{6,20}$/
                 if (value === '') {
-									console.log(pro.test(value))
+									// console.log(pro.test(value))
                     callback(new Error('请输入密码'));
                 } else if(!password.test(value)){
 									  callback(new Error('请输入6-20位数字和字母组合'));
@@ -581,14 +581,14 @@
 			    submitForm(formName) {
 						    var _this = this;
                 this.$refs[formName].validate((valid) => {
-									console.log("lllllllll")
+									// console.log("lllllllll")
                     if (valid) {
 											  this.ruleForm2BtnLoading = true;
                         let user_id = JSON.parse(localStorage.getItem('UserInformation')).user_id;
                         let obj={};
                         obj.password_origin=this.ruleForm2.password_origin;
                         obj.password=this.ruleForm2.password;
-                        console.log(obj,"表单提交表单提交表单提交表单提交")
+                        // console.log(obj,"表单提交表单提交表单提交表单提交")
                         patch('music/perm/password/'+user_id,obj).then(res=>{
 													
                             if(res.status==200){
@@ -614,7 +614,7 @@
                             }
                         }).catch(error => {
 													_this.ruleForm2BtnLoading = false;
-													  console.log(error.data.errors)
+													  // console.log(error.data.errors)
 													_this.$notify({				          
 																		message: error.data.errors,
 																		type: 'error',
@@ -622,10 +622,10 @@
 																		duration:2000,
 																	});
 												})
-                        console.log(this.ruleForm2,"提交的数据")
+                        // console.log(this.ruleForm2,"提交的数据")
 
                     } else {
-                        console.log('error submit!!');
+                        // console.log('error submit!!');
                         return false;
                     }
 
@@ -644,8 +644,8 @@
 				this.flage = false;
 				this.childWindowFlage = true;
 				// localStorage.setItem('automaticLogon','0')
-				console.log("pppp",this.flage)
-			    console.log(this.$store.getters.number)
+				// console.log("pppp",this.flage)
+			    // console.log(this.$store.getters.number)
 				// ipcRenderer.send('exitLogin')
 				if(this.childWindowFlage){
 					if(this.$store.getters.number>0){
@@ -668,7 +668,7 @@
 				Bus.$emit("exitLogin")
 				this.dialogUploadBtnLoading = true;
 				setTimeout( ()=> {
-					console.log(this.dialogUploadBtnLoading)
+					// console.log(this.dialogUploadBtnLoading)
 					this.$store.commit("signOut");
 					this.dialogUploadBtnLoading = false;
 					this.dialogUploadVisible = false;
@@ -805,7 +805,7 @@
 				this.flage = false
 			},
 			addParentTotle(str){
-				console.log(str,"ppppoo444444444o")
+				// console.log(str,"ppppoo444444444o")
 				this.pageBtn1 = false
 				this.pageBtn2 = false
 				this.pageBtn3 = false
@@ -867,7 +867,7 @@
 			},
 			DRfoo(){
 				var currentFile = this.$refs.file.files[0]	
-				console.log("Main_DRfoo")
+				// console.log("Main_DRfoo")
 				Bus.$emit("DRfoo",currentFile)
 				this.$refs.file.value = ""
 			},
@@ -938,10 +938,10 @@
 				setTimeout(()=>{
 					this.updateStep = 1;
 					ipcRenderer.send('force-update');
-					console.log('force-update')
+					// console.log('force-update')
 				},500)
 				ipcRenderer.on("QZmessage",function(event,message){
-					console.log(message,"QZmessage")
+					// console.log(message,"QZmessage")
 					
 					if(message == "update-available"){
 						_this.dialogQZupdateVisible = true;
@@ -972,7 +972,7 @@
 					}
 				})
 				ipcRenderer.on("HDmessage",function(event,message){
-					console.log(message,"HDmessage")
+					// console.log(message,"HDmessage")
 					_this.HDmessage = message;
 					if(message == "update-available"){
 						_this.dialogHDupdateVisible = true;
@@ -998,14 +998,14 @@
 					}
 				})
 	    	ipcRenderer.on("downloadProgress",function(event,Progress){
-					  console.log(Progress)
+					  // console.log(Progress)
 						_this.progressPrecent = Math.ceil(Progress.percent) > 100 ? 100:Math.ceil(Progress.percent)
 				})
 
         this.getVersion();
 				window.ononline = function() {
 						// alert("链接上网络了");
-						console.log(_this.$store.state.Router.historyRoute)
+						// console.log(_this.$store.state.Router.historyRoute)
 						_this.$router.push(_this.$store.state.Router.historyRoute[_this.$store.state.Router.historyRoute.length-1])
 					}
 				window.onoffline = function() {
@@ -1021,7 +1021,7 @@
 						ev.preventDefault();				   
 				}
 	      	window.onresize=function(){
-	      		// console.log('currentWindow.isMaximized()',currentWindow.isMaximized())
+	      		// // console.log('currentWindow.isMaximized()',currentWindow.isMaximized())
 	      		   
 	      			_this.screenFlage = !currentWindow.isMaximized()
 	      		Bus.$emit("currentWindow",_this.screenFlage)
@@ -1071,25 +1071,25 @@
             }
        })
 			 ipcRenderer.on("closeWindow",function(){
-				 console.log("closeWindow")
+				 // console.log("closeWindow")
 				 _this.Close1()
 			 })
 		    getDingZiNum((num) => {
 			 	this.DZnumber = num
-			 	console.log(num)
+			 	// console.log(num)
 			 })
 			 
 			 setInterval(() => {
 			 	getDingZiNum((num) => {
 			 		this.DZnumber = num
-			 		console.log(num)
+			 		// console.log(num)
 			 	})
 			 	
 			 },1000*20)
 			 Bus.$on("getDingZiNum",() => {
 				  getDingZiNum((num) => {
 				  	this.DZnumber = num
-				  	console.log(num)
+				  	// console.log(num)
 				  })
 			 })
 	    }
@@ -1127,10 +1127,40 @@ body{
 .PLSOSU .el-progress-bar__innerText{
 	display: none;
 }
+	#scroll-1::-webkit-scrollbar-track,
+	.el-table__body-wrapper::-webkit-scrollbar-track
+	 {
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		border-radius: 10px;
+		background-color: #f0f0f0;
+	}
 
-/*#Main .el-menu-item:nth-child(1){
-	background: #F1F1F1;
-}	*/
+	#scroll-1::-webkit-scrollbar,
+	.el-table__body-wrapper::-webkit-scrollbar
+	{
+		width: 10px;
+		background-color: #f0f0f0;
+	}
+
+	#scroll-1::-webkit-scrollbar-thumb,
+	.el-table__body-wrapper::-webkit-scrollbar-thumb
+	{
+		border-radius: 20px;
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+		background-color: #cfd1d3;
+	}
+
+	#scroll-1::-webkit-scrollbar-thumb:hover,
+	.el-table__body-wrapper::-webkit-scrollbar-thumb:hover
+	{
+		background-color: #a7acb1;
+	}
+
+	#scroll-1::-webkit-scrollbar-thumb:active,
+	.el-table__body-wrapper::-webkit-scrollbar-thumb:active
+	{
+		background-color: #9da2a7;
+	}
 </style>
 
 <style scoped="scoped">

@@ -55,15 +55,24 @@
 							}
 						})
 					}else{
+						
 						this.saveFile(data, res);
 					}
 				})
 			},
 			saveFile(data, res){
-				let file = {}
+				let file = {};
+				let flage = true;
 				for(let key in data){
 					file[key] = data[key]
+				};
+				for(let key in res.data[0]){
+					if(res.data[0][key] == null){
+						flage = false;
+					}
 				}
+				res.data[0].status = flage ? 0:1;
+				// console.log(res.data[0])
 				let obj = {
 					"currentNum": 0,
 					"id": new Date().getTime(),

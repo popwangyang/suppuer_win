@@ -252,12 +252,12 @@
 						</el-table-column>
 						<el-table-column label="操作">
 							<template slot-scope="scope">
-								<el-button type="text" @click="xinZheng" v-if="scope.row.status == 3" style="font-size: 12px;">新增</el-button>
+								<el-button type="text" @click="xinZheng" v-if="scope.row.status == 3" style="font-size: 14px;">新增</el-button>
 								<span v-else-if="scope.row.user_id == user_id">
-									<el-button type="text" @click="tihuan(scope.row.id)" style="font-size: 12px;">替换</el-button>
+									<el-button type="text" @click="tihuan(scope.row.id)" style="font-size: 14px;">替换</el-button>
 								</span>
 								<span v-else>
-									<el-button type="text" :disabled="true" style="font-size: 12px;">替换</el-button>
+									<el-button type="text" :disabled="true" style="font-size: 14px;">替换</el-button>
 								</span>
 							</template>
 						</el-table-column>
@@ -295,4 +295,7 @@
 </script>
 
 <style>
+	.el-table .new-row {
+		background: oldlace;
+	}
 </style>
