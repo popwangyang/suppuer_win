@@ -674,7 +674,7 @@
 						break;
 				};
 				console.log(send_data)
-				get("/music/music/store", send_data).then((res) => {
+				get("/music/music/store-full", send_data).then((res) => {
 					console.log(res)
 					if (res.data.results.length > 0) {
 						// this.$refs.replaceUpload.value = ""

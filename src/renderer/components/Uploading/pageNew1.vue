@@ -331,13 +331,13 @@
 								<span v-if=" scope.row.voice_track =='0'">
 									第1声轨
 								</span>
-								<span v-else-if=" scope.row.voice_track =='1'">
+								<span v-else-if="scope.row.voice_track =='1'">
 									第2声轨
 								</span>
-								<span v-else-if=" scope.row.voice_track.indexOf('左') > -1">
+								<span v-else-if="scope.row.voice_track == 2">
 									左声道
 								</span>
-								<span v-else-if=" scope.row.voice_track.indexOf('右') > -1">
+								<span v-else-if="scope.row.voice_track == 3">
 									右声道
 								</span>
 								<span v-else-if="scope.row.voice_track ==null" style="color: red;">

@@ -422,7 +422,6 @@
 						})
 						promisArr.push(p2)
 					}
-
 				}
 				Promise.all(promisArr).then((res) => {
 					patch('/music/music/store/' + id + '', send_data).then((res) => {
@@ -515,7 +514,7 @@
 				for(let key in data){
 					send_data[key] = blackBox(key, data[key], 'label')
 				}
-				get("/music/music/store", send_data).then((res) => {
+				get("/music/music/store-full", send_data).then((res) => {
 					console.log(res)
 					if (res.data.results.length > 0) {
 						this.$notify({
