@@ -176,17 +176,13 @@ export default {
 				value:1
 			},
 			{
-				label:'左声道',
+				label:'左',
 				value:2
 			},
 			{
-				label:'右声道',
+				label:'右',
 				value:3
-			},
-			{
-				label:'无',
-				value:4
-			},
+			}
 		],
 		vocal_track: [
 			{
@@ -198,16 +194,12 @@ export default {
 				value:1
 			},
 			{
-				label:'左声道',
+				label:'左',
 				value:2
 			},
 			{
-				label:'右声道',
+				label:'右',
 				value:3
-			},
-			{
-				label:'无',
-				value:4
 			}
 		],
 		singer_type:[
@@ -226,10 +218,6 @@ export default {
 			{
 				label:'合唱',
 				value:3
-			},
-			{
-				label:'无',
-				value:4
 			}
 		],
 		save_sign: [

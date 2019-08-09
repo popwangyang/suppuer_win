@@ -41,7 +41,6 @@
 					<template slot-scope="scope">
 						<span v-if="scope.row.content.area == null" style="color: red;">缺失</span>
 						<span v-else>{{scope.row.content.area}}</span>
-				
 					</template>
 				</el-table-column>
 				<el-table-column prop="content.format_type" label="格式" min-width="60">
@@ -130,14 +129,13 @@
 						 v-if="scope.row.content.status == 1"></i>
 						<i class="el-icon-upload uploadIcon uploadIcon-not-allowed" 
 						 v-if="scope.row.content.status == 2"></i>
-						<i class="el-icon-upload uploadIcon" @click="uploadFile(scope.row.id)"
+						<i class="el-icon-upload uploadIcon" @click="getRepeat(scope.row)"
 						 v-if="scope.row.content.status == 3"></i>
 						<i class="el-icon-edit-outline uploadIcon" @click="JumpPage(scope.row.id)"></i>
 						<i class="el-icon-delete uploadIcon" @click="deleteFile(scope.row.id)"></i>
 					</template>
 				</el-table-column>
 		</el-table>
-		
 		<!-- 删除提示弹框 -->
 		<el-dialog title="提示" :visible.sync="delecteVisible" custom-class="DELECT" width="30%" top='30vh'>
 			<span><i class="el-icon-warning" style="color: #e6a23c;margin-right: 10px;font-size: 16px;"></i>{{deldecteFileTxt}}, 是否继续?</span>
@@ -146,19 +144,28 @@
 				<el-button type="primary" @click="delecteBtn" size="mini">确 定</el-button>
 			</span>
 		</el-dialog>
+		<!-- 重复列表弹出框 -->
+		<RepeatModal ref="RepeatModal" :tableData="repeatData" @change="repeatChanage"/>
 	</div>
 </template>
 
 <script>
 	import Bus from '../../bus.js'
-	import { removeStoreDB, updateStoreDB } from '../../util.js'
+	import { removeStoreDB, updateStoreDB, blackBox } from '../../util.js'
+	import { get } from '../../api.js'
+	import RepeatModal from './components/repeatModal.vue'
 	export default{
+		components: {
+			RepeatModal
+		},
 		data(){
 			return{
 				delecteVisible: false,
 				deldecteFileIDS: [], // 需要删除的列表集合。
 				multipleSelection: [], // table中多选的集合
-				deldecteFileTxt: '此操作将删除该文件', 
+				deldecteFileTxt: '此操作将删除该条导入记录',
+				repeatData:[],
+				repeatID:'',  // 操作重复数据的时间戳id
 			}
 		},
 		computed: {
@@ -177,9 +184,57 @@
 			}
 		},
 		methods: {
+			repeatChanage(fileID){
+				if(!!fileID){
+					let obj = {
+						fileID: this.repeatID,
+						file: this.data.reduce((cur, next) => {
+							if(next.id == this.repeatID){
+								next.file.id = fileID
+								cur = next.file;
+								return cur;
+							}
+						}, {})
+					}
+					console.log(obj, "pppppppppppppppppp")
+					updateStoreDB(this, [this.repeatID], 'file', obj.file).then(res => {
+						this.$store.commit("setData", obj)
+						this.uploadFile(this.repeatID)
+					})
+				}else{
+					this.uploadFile(this.repeatID)
+				}
+			},
+			getRepeat(data){
+				console.log(data)
+				this.repeatID = data.id;
+				let obj = {}
+				for(let key in data.content){
+					obj[key] = blackBox(key, data.content[key], 'lable')
+				}
+				this.repeatData = [obj];
+				String.prototype.trim = function() {
+					return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+				}
+				let send_data = {
+					name: data.content.name.trim(),
+					singer: data.content.singer.trim()
+				}
+				get("/music/music/store", send_data).then( res => {
+					console.log(res)
+					res.data.results.map(function(item, index) {
+						if (item.official_is_publish == '0') {
+							res.data.results.splice(index, 1)
+						}
+					})
+					this.repeatData = this.repeatData.concat(res.data.results)
+					this.$refs.RepeatModal.moveRepeatVisible = true;
+				})
+			},
 			uploadFile(id){
 				updateStoreDB(this, [id], 'isUpload', true).then(res => {
 					this.$store.commit("uploadSong", [id])
+					this.$refs.RepeatModal.moveRepeatVisible = false;
 				})
 			},
 			JumpPage(id){
@@ -221,7 +276,7 @@
 					cur.push(next.id);
 					return cur;
 				}, []);
-				this.deldecteFileTxt = '此操作将删除选中文件';
+				this.deldecteFileTxt = '此操作将删除选中导入记录';
 				this.delecteVisible = true;
 			})
 		},

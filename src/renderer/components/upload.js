@@ -10,7 +10,7 @@ import {
 } from './api'
 const fs = require("fs");
 
-function Upload(data, url) {
+function Upload(data, url, platform) {
 	var UploadIndex = uploadIndex;
 	var uploadState = 0; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除； 6文件读取异常;
 	uploadIndex++;
@@ -24,7 +24,7 @@ function Upload(data, url) {
 	this.size = data.file.size;  // 上传文件的总大小；
 	this.precent = 0;  // 上传文件的进度；
 	this.isSelect = false;  // 文件是否被选中
-	this.isFileObject = typeof data.file.slice == 'function';  // 判定文件是否是file对象；
+	this.isFileObject = require("fs") ? false:true;  // 判定文件是否是file对象；
 	this.file = data.file;
 	this.key = null;
 	this.token = this.getToken();
@@ -74,6 +74,12 @@ Upload.prototype.getFileExite = function(){
 		this.event.operationEvent = 0;
 	}
 	return fs.existsSync(this.file.path);
+}
+Upload.prototype.getFileName = function(){
+	let obj = this.content
+	let str = obj.singer + "￥" + obj.name + "￥" + obj.singer_type + "￥" + obj.language + "￥" + obj.picture + "￥" + obj.area +
+		"￥" + obj.voice_type + "￥" + obj.format_type + "￥" + obj.voice_track + "￥" + obj.vocal_track + "." + this.data.type;
+	return str;
 }
 
 Upload.prototype.slice = function() {
@@ -191,7 +197,7 @@ Upload.prototype.getUplaodingFlage = function() {
 
 Upload.prototype.getAuth = function(cb) {
 	var send_data = {
-		name: this.file.name
+		name: this.getFileName()
 	}
 	post("/music/music/store-credential", send_data).then((response) => {
 		this.credential = response.data.credential;
