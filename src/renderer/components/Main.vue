@@ -167,6 +167,10 @@
 								<span slot="title" v-else>正在上传 <span style="display: inline-block;height: 100%;width: 21px;"></span></span>
 
 				      </el-menu-item>
+					  <el-menu-item index="Video">
+					    <i class="el-icon-upload"></i>						
+						 <span slot="title">视频播放 <span style="display: inline-block;height: 100%;width: 21px;"></span></span>
+					  </el-menu-item>
 				    </el-menu>
 				</el-col>	    		
 	    	</el-row>	    	

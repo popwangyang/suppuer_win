@@ -40,6 +40,12 @@ export default new Router({
 				meta: {keepAlive: false},
     	    	component: require('@/components/SongsUploaded').default
     	    },
+			{
+				path:'/Video',
+				name:'Video',
+				meta: {keepAlive: false},
+				component: require('@/components/Video').default
+			},
     	    {
     	    	path:'/Uploading',
     	    	name:'Uploading',

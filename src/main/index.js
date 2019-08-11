@@ -6,6 +6,9 @@ import {
 	Tray,
 	dialog 
 } from 'electron'
+import { videoSupport } from './ffmpeg-helper'
+
+import { Express } from './express'
 const macObj = require('getmac')
 const path = require('path')
 var package1 = require("../../package.json");
@@ -18,6 +21,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow
 let childWindow
+let express
 let appIcon = null
 const template = [
 
@@ -121,6 +125,8 @@ function createWindow() {
 			}
 		})
 	})
+	express = new Express()
+	express.createServer()
 }
 
 function createTray() {
