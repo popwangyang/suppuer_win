@@ -570,6 +570,9 @@
 					case "韩语":
 						send_data.language = 5;
 						break;
+					case "其他":
+						send_data.language = 6;
+						break;
 				};
 				switch (data.picture) {
 					case "MTV":
@@ -611,6 +614,9 @@
 						break;
 					case "MP4":
 						send_data.format_type = 2;
+						break;
+				    case "MKV":
+				    	send_data.format_type = 4;
 						break;
 					case '其他':
 						send_data.format_type = 3;
@@ -685,9 +691,7 @@
 							duration: 2000,
 						});
 					} else {
-
 						var time = this.getDate();
-
 						var obj = {
 							"currentNum": 0,
 							"id": new Date().getTime(),

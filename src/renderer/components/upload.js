@@ -176,6 +176,7 @@ Upload.prototype.getConfig = function() {
 		}
 		obj.auth = this.token
 		obj.uid = localStorage.getItem("user_id");
+		obj.suffix = this.file.name.split('.')[this.file.name.split('.').length - 1];
 		var arr = []
 		var urlStr = "";
 		for (var key in obj) {
@@ -183,7 +184,7 @@ Upload.prototype.getConfig = function() {
 			arr.push(str);
 		}
 		urlStr = arr.join("\/");
-		console.log(urlStr);
+		console.log(urlStr, obj);
 		this.config = urlStr;
 	})
 }

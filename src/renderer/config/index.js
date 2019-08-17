@@ -92,10 +92,6 @@ export default {
 				label:'MP4',
 				value:2
 			},
-			// {
-			// 	label:'其他',
-			// 	value:3
-			// },
 			{
 				label:'MKV',
 				value:4

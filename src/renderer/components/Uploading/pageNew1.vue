@@ -298,7 +298,7 @@
 								remix
 							</span>
 							<span v-else-if="scope.row.voice_type =='4'" style="color: red;">
-								缺失
+								其他
 							</span>
 							<span v-else>
 								{{scope.row.voice_type}}
