@@ -3,7 +3,6 @@ import {
 	BrowserWindow,
 	ipcMain,
 	Menu,
-	Tray,
 	dialog
 } from 'electron'
 const macObj = require('getmac')
@@ -19,41 +18,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow
 let childWindow
-let appIcon = null
-const template = [
 
-	{
-		label: "登录",
-		click() {
-
-		},
-		icon: path.join(__static, "/denlu.png")
-	},
-
-	{
-		label: "注销             ",
-		click: function() {
-			if (numWindow == 2) {
-				mainWindow.webContents.send('closeChild')
-			} else {
-				mainWindow.webContents.send('exitLogin')
-			}
-		}
-	},
-	{
-		label: '退出            ',
-		click: function() {
-			// mainWindow.close()
-			if (numWindow == 2) {
-				mainWindow.webContents.send('closeChild')
-			} else {
-				mainWindow.webContents.send('closeWindow')
-			}
-		},
-		icon: path.join(__static, "/tuchu.png")
-	}
-
-]
 var numWindow = 1
 const winURL = process.env.NODE_ENV === 'development' ?
 	`http://localhost:9080` :
@@ -99,7 +64,6 @@ function createWindow() {
 
 		mainWindow = null
 	})
-	createTray();
 	mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
 		//设置文件存放位置
 		// item.setSavePath("C:\Users\Administrator\Desktop");
@@ -124,37 +88,11 @@ function createWindow() {
 	})
 }
 
-function createTray() {
-	const iconName = process.platform === 'win32' ? '1.ico' : 'iconTemplate.png'
-	const iconPath = path.join(__static, "/1.ico")
-	// const iconPath = `file://${__dirname}/renderer/assets/logo.png`
-	// console.log(iconPath)
-	appIcon = new Tray(iconPath)
-	const contextMenu = Menu.buildFromTemplate(template)
-	appIcon.on('click', () => {
-		// mainWindow.isVisible() ? "" : mainWindow.show()
-		var flage = mainWindow.isVisible();
-		var flage1 = mainWindow.isMaximized();
-		console.log(flage, flage1)
-		if (!flage) {
-			mainWindow.show()
-
-		} else {
-			if (!flage1) {
-				mainWindow.restore()
-			}
-		}
-	})
-	appIcon.setToolTip('娱网正音')
-	appIcon.setContextMenu(contextMenu)
-}
 
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
-		appIcon.destroy()
-		appIcon = null;
 		app.quit()
 	}
 })
@@ -164,42 +102,13 @@ app.on('activate', () => {
 		createWindow()
 	}
 })
-ipcMain.on("window-login", function(event, user) {
-	console.log(user)
-	template.shift()
-	template.unshift({
-		label: user,
-		click() {
-
-		},
-		icon: path.join(__static, "/denlu.png")
-	}, )
-	// console.log(template)
-	appIcon.destroy()
-	appIcon = null;
-	createTray()
-})
-ipcMain.on("window-exitLogin", function() {
-	template.shift()
-	template.unshift({
-		label: "登录",
-		click() {
-
-		},
-		icon: path.join(__static, "/denlu.png")
-	})
-	// console.log(template)
-	appIcon.destroy()
-	appIcon = null;
-	createTray()
-
-})
+ipcMain.on("window-login", function(event, user) {})
+ipcMain.on("window-exitLogin", function() {})
 ipcMain.on('window-minSize', function() {
 	mainWindow.minimize()
 })
 
 ipcMain.on('window-close', function() {
-	// console.log(childWindow)
 	if (numWindow == 2) {
 		mainWindow.webContents.send('closeChild')
 	} else {
@@ -207,13 +116,11 @@ ipcMain.on('window-close', function() {
 	}
 })
 ipcMain.on("exitLogin", function() {
-
 	if (numWindow == 2) {
 		mainWindow.webContents.send('closeChild')
 	}
 })
 ipcMain.on('download', function(event, arg) {
-	console.log(arg); // prints "ping"
 	mainWindow.webContents.downloadURL(arg);
 });
 
@@ -225,7 +132,6 @@ ipcMain.on('synchronous-message', (event, arg) => {
 		case 'mac':
 			macObj.getMac(function(err, macAddress) {
 				if (err) throw err;
-
 				event.returnValue = macAddress
 			});
 			break;
@@ -256,11 +162,7 @@ ipcMain.on('childWindow', function() {
 			opcity: 0,
 			titleBarStyle: 'hiddenInset'
 		})
-
-
-
-
-		// childWindow.webContents.openDevTools();
+		childWindow.webContents.openDevTools();
 		const childURL = process.env.NODE_ENV === 'development' ?
 			`http://localhost:9080/index.html#/backGround` :
 			`file://${__dirname}/index.html#/backGround`
@@ -270,20 +172,10 @@ ipcMain.on('childWindow', function() {
 			numWindow--
 			childWindow = null
 		})
-
-
 		numWindow++
 	} else {
-
 		childWindow.webContents.send('song')
-
-
-
 	}
-
-
-
-
 });
 
 
@@ -303,7 +195,6 @@ ipcMain.on("handle-update", function(event, arg) {
 	var str = "https://test.bjywkd.com/supplier_win/Test_HDupdate/"
 	// var str = "https://test.bjywkd.com/supplier_win/Master_HDupdate/"
 	if (process.env.NODE_ENV !== 'development') {
-
 		foo(str)
 	}
 });
@@ -320,22 +211,16 @@ function foo(url) {
 	if (!flage) {
 		autoUpdater.autoDownload = false;
 	}
-
 	autoUpdater.setFeedURL(updateFeedUrl);
-
 	//执行自动更新检查
 	autoUpdater.checkForUpdates();
-
-
 }
 
 function QZsendMessage(text) {
-
 	mainWindow.webContents.send('QZmessage', text)
 };
 
 function HDsendMessage(text) {
-
 	mainWindow.webContents.send('HDmessage', text)
 }
 
@@ -343,8 +228,6 @@ function HDsendMessage(text) {
 //autoUpdater的监听事件；
 autoUpdater.on('error', function(error) {
 	sendQZUpdateMessage('error')
-
-
 });
 autoUpdater.on('checking-for-update', function() {
 
@@ -368,42 +251,25 @@ autoUpdater.on('update-available', function(info) {
 
 });
 autoUpdater.on('update-not-available', function(info) {
-	console.log("ooooooopppppppppppppp")
 	if (flage) {
 		flage = false;
 		QZsendMessage('update-not-available')
-
 	} else {
-
 		HDsendMessage('update-not-available')
-
 	}
-
-
-
-
 });
 autoUpdater.on('download-progress', function(progressObj) {
 	mainWindow.webContents.send('downloadProgress', progressObj)
 })
 
 autoUpdater.on('update-downloaded', function(event, releaseNotes, releaseName, releaseDate, updateUrl, quitAndUpdate) {
-
 	if (flage) {
-
 		QZsendMessage('update-downloaded')
-
 	} else {
-
 		HDsendMessage('update-downloaded')
-
 	}
-
 	mainWindow.webContents.send('programInformation', releaseName)
 	ipcMain.on("startInstall", function() {
-
 		autoUpdater.quitAndInstall();
-
 	})
-
 });
