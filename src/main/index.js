@@ -57,7 +57,7 @@ function createWindow() {
 		titleBarStyle: 'hiddenInset',
 		maximizable: false //Boolean类型（可选参数）- 窗口是否可以最大化。这个参数在Linux中是无效的。默认为true。       
 	})
-	mainWindow.webContents.openDevTools();
+	// mainWindow.webContents.openDevTools();
 	mainWindow.loadURL(winURL)
 
 	mainWindow.on('closed', () => {
@@ -162,7 +162,7 @@ ipcMain.on('childWindow', function() {
 			opcity: 0,
 			titleBarStyle: 'hiddenInset'
 		})
-		childWindow.webContents.openDevTools();
+		// childWindow.webContents.openDevTools();
 		const childURL = process.env.NODE_ENV === 'development' ?
 			`http://localhost:9080/index.html#/backGround` :
 			`file://${__dirname}/index.html#/backGround`
