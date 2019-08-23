@@ -8,14 +8,6 @@ ffmpeg.setFfmpegPath(ffmpegPath);
 ffmpeg.setFfprobePath(ffprobePath);
 var express = require('express');
 var app = new express();
-var http = require('http');
-var opt = {
-	host: 'localhost',
-	port: '4398',
-	path: 'http://testmusiccdn.bjywkd.com/639101ea-c3bb-11e9-b8c9-00163e0e12f4.mpg?e=1566548974&token=2rQOHCtd0arWFy6PWwOLWrIGpf9fN06dAz_IxVZd:ikEkaVt4zwJSmpvryVvNOLoXpnA='
-}
-
-
 
 export const Express = function(){
 	this.videoSourceInfo;
@@ -34,10 +26,6 @@ Express.prototype.createServer = function(){
 		var startTime = req.query.startTime;
 		let videoCodec = this.videoSourceInfo.checkResult.videoCodecSupport ? 'copy' : 'libx264';
 		let audioCodec = this.videoSourceInfo.checkResult.audioCodecSupport ? 'copy' : 'aac';
-	    
-		let aa = http.request(opt, (result => {
-			console.log(result)
-		}))
 		let readStream = fs.createReadStream(this.videoSourceInfo.videoSourcePath);
 		this.killFfmpegCommand();
 		this._ffmpegCommand = ffmpeg()
