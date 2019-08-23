@@ -135,8 +135,6 @@
 				<li :style="widthHead1[1]">歌曲名称</li>
 				<li :style="widthHead1[2]">歌手名称</li>
 				<li :style="widthHead1[3]">
-
-
 					<el-dropdown trigger="click" size="mini">
 						<span class="el-dropdown-link" style="cursor: pointer;">
 							歌手类型<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -235,7 +233,6 @@
 					<span v-if="!albumJurisdictionFlage">
 						专辑名称
 					</span>
-
 					<span v-else>
 						<span class="el-dropdown-link" style="cursor: pointer;" @click.self.stop="album_nameFlage = !album_nameFlage;company_nameFlage = false;">
 							专辑名称<i class="el-icon-caret-bottom el-icon--right"></i>
@@ -429,7 +426,6 @@
 					</el-table-column>
 					<el-table-column label="画面" :width="widthHead[5]">
 						<template slot-scope="scope">
-							
 							<span v-if="scope.row.picture =='4'">
 								MTV
 							</span>
