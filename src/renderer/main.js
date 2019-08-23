@@ -3,6 +3,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import Video from 'video.js'
 import App from './App'
 import router from './router'
 import store from './store'
@@ -12,6 +13,7 @@ import './assets/font1/iconfont.css'
 
 // import "./assets/style.css"
 Vue.use(ElementUI);
+Vue.prototype.$video = Video;
 
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios

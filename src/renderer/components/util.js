@@ -438,3 +438,16 @@ export const updateStoreDB = (vm, ids, key, value) => {
 		})
 	})
 }
+
+/* 
+ *监听文档拖拽事件；
+ * @params {el} DOM结构；
+ * @function {callback} 回调函数
+ */
+export const dorpDOM = (el, callback) => {
+	el.ondragover = (e) => e.preventDefault();
+	el.ondrop = (e) => {
+		e.preventDefault();
+		callback(e.dataTransfer.files);
+	}
+}

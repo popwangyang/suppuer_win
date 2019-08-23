@@ -3,29 +3,19 @@ import { fixPathForAsarUnpack } from './util.js'
 const ffmpegPath = fixPathForAsarUnpack(require('@ffmpeg-installer/ffmpeg').path);
 const ffprobePath = fixPathForAsarUnpack(require('@ffprobe-installer/ffprobe').path);
 const ffmpeg = require('fluent-ffmpeg');
+const fs = require('fs');
 ffmpeg.setFfmpegPath(ffmpegPath);
 ffmpeg.setFfprobePath(ffprobePath);
 var express = require('express');
 var app = new express();
+var http = require('http');
+var opt = {
+	host: 'localhost',
+	port: '4398',
+	path: 'http://testmusiccdn.bjywkd.com/639101ea-c3bb-11e9-b8c9-00163e0e12f4.mpg?e=1566548974&token=2rQOHCtd0arWFy6PWwOLWrIGpf9fN06dAz_IxVZd:ikEkaVt4zwJSmpvryVvNOLoXpnA='
+}
 
 
-
-
-// export default class Express {
-// 	constructor(props) {
-// 		this.url;
-// 	}
-// 	
-// 	createServer() {
-// 		app.get('/', function (req, res) {
-// 			console.log('ssss', req.query.startTime, this.url)
-// 			
-// 		   res.send('Hello World');
-// 		})
-// 		 
-// 		app.listen(4398)
-// 	}
-// }
 
 export const Express = function(){
 	this.videoSourceInfo;
@@ -44,9 +34,14 @@ Express.prototype.createServer = function(){
 		var startTime = req.query.startTime;
 		let videoCodec = this.videoSourceInfo.checkResult.videoCodecSupport ? 'copy' : 'libx264';
 		let audioCodec = this.videoSourceInfo.checkResult.audioCodecSupport ? 'copy' : 'aac';
+	    
+		let aa = http.request(opt, (result => {
+			console.log(result)
+		}))
+		let readStream = fs.createReadStream(this.videoSourceInfo.videoSourcePath);
 		this.killFfmpegCommand();
 		this._ffmpegCommand = ffmpeg()
-		    .input(this.videoSourceInfo.videoSourcePath)
+		    .input(readStream)
 		    .nativeFramerate() // 以本机帧速率读取输入
 		    .videoCodec(videoCodec)
 		    .audioCodec(audioCodec)
@@ -54,10 +49,10 @@ Express.prototype.createServer = function(){
 		    .seekInput(startTime)
 		    .outputOptions('-movflags', 'frag_keyframe+empty_moov') // 转换x264到Fragmented MP4格式
 		    .on('progress', function (progress) {
-		        console.log('time: ' + progress.timemark);
+		        // console.log('time: ' + progress.timemark);
 		    })
 		    .on('error', function (err) {
-		        console.log('An error occurred: ' + err.message);
+		        // console.log('An error occurred: ' + err.message);
 		    })
 		    .on('end', function () {
 		        console.log('Processing finished !');

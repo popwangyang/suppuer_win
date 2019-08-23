@@ -125,6 +125,16 @@ function createWindow() {
 			}
 		})
 	})
+	ipcMain.on('fileDrop', (event, arg) => {
+		videoSupport(arg).then((checkResult) => {
+			 express.videoSourceInfo = {videoSourcePath:arg, checkResult: checkResult};
+			 console.log(express)
+			 mainWindow.webContents.send('duration', checkResult.duration);
+		}).catch(err => {
+			 mainWindow.webContents.send('error', err);
+		})
+	})
+	
 	express = new Express()
 	express.createServer()
 }
