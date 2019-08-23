@@ -1,4 +1,4 @@
-import { get } from './api.js'
+import axios from 'axios'
 
  export default class Download{
 	constructor(url) {
@@ -19,7 +19,9 @@ import { get } from './api.js'
 	}
 	down(){
 		return new Promise((resolve, reject) => {
-			get(this.url).then(res => {
+			axios.get(this.url, {
+        	responseType: 'blob'
+        }).then(res => {
 				resolve(res)
 			}).catch(err => {
 				reject(err)
