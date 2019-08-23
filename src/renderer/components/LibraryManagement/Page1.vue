@@ -588,8 +588,8 @@
 
 					<el-table-column label="操作" :width="widthHead[14]">
 						<template slot-scope="scope">
-							<i class="iconfont icon-bofang" style="font-size: 20px;cursor: pointer;margin: 0 5px;" @click="play(scope.row.id)"
-							 title="播放"></i>
+							<!-- <i class="iconfont icon-bofang" style="font-size: 20px;cursor: pointer;margin: 0 5px;" @click="play(scope.row.id)"
+							 title="播放"></i> -->
 							<span v-show="user_id == scope.row.user_id">
 								<i class="iconfont icon-bianji" style="font-size: 20px;cursor: pointer;margin: 0 5px;" @click="JumpPage(scope.row.id)"
 								 title="编辑"></i>
@@ -618,7 +618,7 @@
 		</div>
 		<div class="rightBox" ref='pppp'>
 			<ul>
-				<li @click="newBox">播放视频</li>
+				<!-- <li @click="newBox">播放视频</li> -->
 				<li @click="JumpPageRight" v-show="user_id == rowData.user_id">编辑</li>
 				<li @click="replaceFileRight" v-show="user_id == rowData.user_id">替换</li>
 				<li @click="deleteFileRight" v-show="user_id == rowData.user_id">删除</li>
@@ -1954,7 +1954,7 @@
 
 	#LibraryManagement .rightBox {
 		width: 0px;
-		height: 140px;
+		height: 100px;
 		background: yellow;
 		position: absolute;
 		z-index: 20000;

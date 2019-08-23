@@ -36,7 +36,6 @@ function Upload(data, url, platform) {
 	this.ChunkLength = 1024 * 1024 / 2;
 	this.event = {
 		_prograssEvent: 1,
-		_errorEvent: 1,
 		_sizeEvent:1,
 		_operationEvent:1,
 	};
@@ -45,7 +44,6 @@ function Upload(data, url, platform) {
 	this.offset;
 	this.arr = [];
 	this.config;
-	
 	this.stopFlage = true;
 	this.startTime;
 	this.endTime;
@@ -217,6 +215,7 @@ Upload.prototype.getConfig = function() {
 		}
 		obj.auth = this.token
 		obj.uid = localStorage.getItem("user_id");
+		obj.suffix = this.file.path.split('.').pop();
 		var arr = []
 		var urlStr = "";
 		for (var key in obj) {
@@ -297,15 +296,6 @@ Upload.prototype.progressEvent = function(callback) {
 	})
 };
 
-Upload.prototype.errorEvent = function(callback) {
-	var _this = this;
-	Object.defineProperty(this.event, "errorEvent", {
-		set: function(newValue) {
-			this.setUploadState(4);
-			callback(newValue);
-		}
-	})
-};
 
 Upload.prototype.sizeEvent = function(callback) {
 	var _this = this;
@@ -344,9 +334,6 @@ Upload.prototype.on = function(key, callback) {
 			this.progressEvent(callback);
 			this.event.prograssEvent = 0;
 			break;
-		case "error":
-			this.errorEvent(callback);
-			break;
 		case  "size":
 		    this.sizeEvent(callback)
 			this.event.sizeEvent = 0;
@@ -384,36 +371,42 @@ Upload.prototype.complateUplod = function() {
 		}else if (xhr.readyState == 4 && xhr.status == 401) {
 			_this.getAuth(_this.complateUplod())
 		}else if(xhr.readyState == 4) {
-			_this.event.errorEvent = 0;
+			_this.setUploadState(4);
+			_this.event.prograssEvent = 0;
 		} 
 	};
 	xhr.send(str);
 };
 
 Upload.prototype.Uploading = function() {
-	this.startTime = new Date().getTime();
-	var _this = this;
-	var obj = this.arr[this.index];
-	if(!this.isFileObject){
-		let Buffer = [];
-		let readStream = fs.createReadStream(this.file.path, { start:obj.start, end: obj.end });
-		    readStream.on('data', (data) => {
-			   Buffer.push(data)
-		    })
-			readStream.on('error', () => {
-				_this.setUploadState(6);
-				_this.event.prograssEvent = 0;
-				_this.event.sizeEvent = 0;
-				_this.event.operationEvent = 0;
-			})
-		    readStream.on('end', () => {
-		    	let blob = new Blob(Buffer);
-		    	this.post(blob)
-		    })
-	}else{
-	   var fileContent = this.file.slice(obj.start, obj.end);
-	       this.post(fileContent)
-	}
+		this.startTime = new Date().getTime();
+		var _this = this;
+		var obj = this.arr[this.index];
+		if(!this.isFileObject){
+			let Buffer = [];
+			let readStream = fs.createReadStream(this.file.path, { start:obj.start, end: obj.end });
+			    readStream.on('data', (data) => {
+				   Buffer.push(data)
+			    })
+				readStream.on('error', () => {
+					_this.loading = false;
+					_this.setUploadState(6);
+					_this.event.prograssEvent = 0;
+					_this.event.sizeEvent = 0;
+					_this.event.operationEvent = 0;
+				})
+			    readStream.on('end', () => {
+			    	let blob = new Blob(Buffer);
+			    	this.post(blob)
+			    })
+		}else{
+		   var fileContent = this.file.slice(obj.start, obj.end);
+		   if(fileContent){
+			    this.post(fileContent)
+		   }else{
+			   _this.setUploadState(6);
+		   } 
+		}
 };
 
 Upload.prototype.post = function(blob){
@@ -452,7 +445,8 @@ Upload.prototype.post = function(blob){
 				_this.Uploading();
 				_this.repeatnumber--;
 			} else {
-				_this.event.errorEvent = 0;
+				_this.setUploadState(4);
+				_this.event.prograssEvent = 0;
 			}
 		} else if (xhr.readyState == 4 && xhr.status == 401) {
 			_this.getAuth(_this.Uploading())

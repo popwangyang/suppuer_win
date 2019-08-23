@@ -43,6 +43,7 @@
 		},
 		mounted(){
 			this.item.on('prograss', (e) => {
+				console.log(e)
 				this.precent = e.precent;
 				this.speed = e.speed;
 				this.upState = e.uploadState;

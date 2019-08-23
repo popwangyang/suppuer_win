@@ -295,9 +295,10 @@ export const getDingZiNum = function(cb){
 }
 
 export const validateFormat = function (name){
-	var formate = name.split(".")[name.split(".").length - 1];
+	var formate = name.split(".").pop();
 	var formateArr = [ 'mp4', 'mpg', 'mpeg', 'mkv'];
 	var flage = formateArr.indexOf(formate) == -1 ? false:true;
+	console.log(formate)
 	return flage;   
 	
 }
@@ -366,7 +367,7 @@ export const chaxun = (params, callback) => {
 
 /* 
 * 从db数据库中读取数据
-* @params {vm} vue实例对象；
+* @params {vm} vue实例对象
 * @params {key} 查询的关键字
 */
 export const readStoreDB = (vm, key) => {

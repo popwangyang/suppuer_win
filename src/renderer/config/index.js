@@ -94,11 +94,7 @@ export default {
 			{
 				label:'MTV',
 				value:4
-			},
-			{
-				label:'其他',
-				value:5
-			},
+			}
 		],
 		area:[
 			{

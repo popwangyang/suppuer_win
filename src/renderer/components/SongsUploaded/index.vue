@@ -55,7 +55,6 @@
 							}
 						})
 					}else{
-						
 						this.saveFile(data, res);
 					}
 				})
@@ -71,8 +70,7 @@
 						flage = false;
 					}
 				}
-				res.data[0].status = flage ? 0:1;
-				// console.log(res.data[0])
+				res.data[0].status = flage ? res.data[0].status:1;
 				let obj = {
 					"currentNum": 0,
 					"id": new Date().getTime(),
@@ -124,16 +122,6 @@
 					result = true;
 				}
 				if(result) return true;
-				if (data.type.split('/')[0] != 'video') {
-					this.$notify.error({
-					  type: 'error',
-					  title: '提示',
-					  message: '请导入视频文件！',
-					  offset: 60,
-					  duration: 2000
-					});
-					result = true;
-				} 
 				return result;
 			}
 		},
