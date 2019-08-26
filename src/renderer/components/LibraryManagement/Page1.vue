@@ -21,11 +21,11 @@
 				<el-upload ref="upload" v-show="showUpload" :headers="headers" class="upload-demo" drag :on-progress="handleProgress"
 				 :on-success="handleSuccess" :on-error="handleError" :before-upload="handleUpload" :action="actionUrl">
 					<i class="el-icon-upload"></i>
-					<div class="el-upload__text" style="font-size: 14px;" v-show="TJerror">将文件拖到此处，或<em>点击上传</em></div>
-					<div class="el-upload__text" style="font-size: 14px;color: red;" v-show="!TJerror">{{fileName}}上传失败，请重新上传</div>
+					<div class="el-upload__text" style="font-size: 12px;" v-show="TJerror">将文件拖到此处，或<em>点击上传</em></div>
+					<div class="el-upload__text" style="font-size: 12px;color: red;" v-show="!TJerror">{{fileName}}上传失败，请重新上传</div>
 				</el-upload>
 			</span>
-			<p style="margin: 0;padding: 0; text-align: left;margin-top: 20px;font-size: 14px;">请先上传模板文件已完成批量搜索
+			<p style="margin: 0;padding: 0; text-align: left;margin-top: 20px;font-size: 12px;">请先上传模板文件已完成批量搜索
 				<a style="color:#7f74ef;cursor: pointer;text-decoration: underline;" @click="MBdown">下载模板</a>
 			</p>
 			<span slot="footer" class="dialog-footer">
@@ -89,7 +89,7 @@
 		</el-dialog>
 		<div class="soushuo">
 			<el-row>
-				<el-col :span="20" style="height: 50px;display: flex;align-items: center;font-size: 14px;">
+				<el-col :span="20" style="height: 50px;display: flex;align-items: center;font-size: 12px;">
 					<el-form :inline="true" :model="formInline" class="demo-form-inline" label-width="80px" size="mini">
 						<el-form-item label="歌曲名称">
 							<el-autocomplete class="inline-input" v-model="formInline.name" :fetch-suggestions="querySearch" placeholder="请输入内容"
@@ -278,11 +278,11 @@
 										border-radius: 4px;
 										box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);"
 								        id="ulo">
-									<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 14px;">
-										<el-radio v-model="radioForm.album_name" :label="100" @change="album_nameFilter(100)"><span style="font-size: 14px;">全部</span></el-radio>
+									<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 12px;">
+										<el-radio v-model="radioForm.album_name" :label="100" @change="album_nameFilter(100)"><span style="font-size: 12px;">全部</span></el-radio>
 									</li>
-									<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 14px;" v-for="item in album_nameArr">
-										<el-radio v-model="radioForm.album_name" :label="item.value" @change="album_nameFilter()"><span style="font-size: 14px;">{{item.value}}</span></el-radio>
+									<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 12px;" v-for="item in album_nameArr">
+										<el-radio v-model="radioForm.album_name" :label="item.value" @change="album_nameFilter()"><span style="font-size: 12px;">{{item.value}}</span></el-radio>
 									</li>
 								</ul>
 							</span>
@@ -336,11 +336,11 @@
 										border-radius: 4px;
 										box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);"
 							 id="ulo">
-								<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 14px;">
-									<el-radio v-model="radioForm.company_name" :label="100" @change="company_nameFilter(100)"><span style="font-size: 14px;">全部</span></el-radio>
+								<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 12px;">
+									<el-radio v-model="radioForm.company_name" :label="100" @change="company_nameFilter(100)"><span style="font-size: 12px;">全部</span></el-radio>
 								</li>
-								<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 14px;" v-for="item in company_nameArr">
-									<el-radio v-model="radioForm.company_name" :label="item.value" @change="company_nameFilter()"><span style="font-size: 14px;">{{item.value}}</span></el-radio>
+								<li style="list-style: none;text-align: left;margin: 5px 0;font-size: 12px;" v-for="item in company_nameArr">
+									<el-radio v-model="radioForm.company_name" :label="item.value" @change="company_nameFilter()"><span style="font-size: 12px;">{{item.value}}</span></el-radio>
 								</li>
 							</ul>
 						</span>
@@ -353,7 +353,7 @@
 		<div style="flex: 1; 100%;position: relative;" id="box">
 			<div :class="{aa:flageClass,bb:!flageClass}" :style="height" id="scroll-1" @contextmenu.stop='rightMeun'>
 				<el-table ref="multipleTable" :data="tableData3" tooltip-effect="dark" @selection-change="handleSelectionChange"
-				 @row-contextmenu="hoo" style="width: 100%;font-size: 14px;color: #666666;">
+				 @row-contextmenu="hoo" style="width: 100%;font-size: 12px;color: #666666;">
 					<el-table-column type="selection" width="40">
 					</el-table-column>
 					<el-table-column prop="music_code" label="编号" :width="widthHead[0]">
@@ -429,15 +429,14 @@
 					</el-table-column>
 					<el-table-column label="画面" :width="widthHead[5]">
 						<template slot-scope="scope">
-							
 							<span v-if="scope.row.picture =='4'">
 								MTV
 							</span>
+							<span v-else-if="scope.row.picture =='5'">
+								写真
+							</span>
 							<span v-else-if="scope.row.picture =='1'">
 								LIVE
-							</span>
-							<span v-else-if="scope.row.picture =='0'">
-								原版MV
 							</span>
 							<span v-else-if="scope.row.picture =='2'">
 								舞曲
@@ -448,6 +447,7 @@
 							<span v-else style="color: red;">
 								缺失
 							</span>
+
 						</template>
 					</el-table-column>
 					<el-table-column label="地区" :width="widthHead[6]">
@@ -581,7 +581,6 @@
 							<span v-else>
 								<div>{{scope.row.upload_time.split(" ")[0]}}</div>
 								<div>{{scope.row.upload_time.split(" ")[1]}}</div>
-
 							</span>
 						</template>
 					</el-table-column>
@@ -634,8 +633,9 @@
 	import replaceFile from '../CustomComponents/replaceFile';
 	import Bus from '../bus.js'
 	import axios from 'axios'
-	import Upload from "../upload.js";
+	import Upload from "../upload.js"
 	import config from '../../config'
+	import { validateFormat } from '../util'
 	import {
 		get,
 		baseUrl,
@@ -758,7 +758,7 @@
 				page: 1,
 				page_size: 100,
 				count: 0,
-				widthHead: [110, 70, 80, 80, 60, 70, 50, 60, 80, 70, 70, 80, 80, 100, 150],
+				widthHead: [50, 70, 80, 80, 60, 70, 50, 60, 80, 70, 70, 80, 80, 90, 160],
 				widthHead1: [],
 				arrLanguage: [{
 						text: "国语",
@@ -860,7 +860,7 @@
 		},
 		methods: {
 			changeDate() {
-				// console.log(this.formInlineDate)
+				console.log(this.formInlineDate)
 				if (this.formInlineDate != null) {
 					this.formInline.published_0 = this.formInlineDate[0]
 					this.formInline.published_1 = this.formInlineDate[1] + "  23:59:59"
@@ -899,18 +899,22 @@
 			},
 			album_nameFilter() {
 				this.album_nameFlage = false;
-				// console.log(this.radioForm)
+				console.log(this.radioForm)
 				this.searchHandler()
 			},
 			company_nameFilter() {
 				this.company_nameFlage = false;
-				// console.log(this.radioForm)
+				console.log(this.radioForm)
 				this.searchHandler()
 			},
 			loadAllAlbum() {
 				var _this = this;
-				get("/music/music/album").then(function(res) {
-					// console.log(res)
+				let send_data = {
+					page:1,
+					page_size: 99999999
+				}
+				get("/music/music/album", send_data).then(function(res) {
+					console.log(res)
 					var arr = res.data.results
 					var arr1 = []
 					var arr2 = []
@@ -929,7 +933,7 @@
 					})
 					arr1 = arr1.concat(arr2)
 					_this.album_nameArr = arr1
-					// console.log(arr1, "arr")
+					console.log(arr1, "arr")
 				}).catch(error => {
 					if (error.data.error == "无权限") {
 						_this.albumJurisdictionFlage = false
@@ -938,7 +942,11 @@
 			},
 			loadAllCompany() {
 				var _this = this;
-				get("/music/music/company").then(function(res) {
+				let send_data = {
+					page:1,
+					page_size: 99999999
+				}
+				get("/music/music/company", send_data).then(function(res) {
 					var arr = res.data.results
 					var arr1 = []
 					var arr2 = []
@@ -990,7 +998,7 @@
 				})
 			},
 			getWidthHead() {
-				// console.log(this.$refs.box_head.offsetWidth)
+				console.log(this.$refs.box_head.offsetWidth)
 				var _this = this
 				var arr = this.widthHead;
 				var num1 = this.$refs.box_head.offsetWidth;
@@ -1042,9 +1050,9 @@
 					}
 					send_data.page = _this.page;
 					send_data.page_size = _this.page_size;
-					// console.log(send_data)
+					console.log(send_data)
 					get("/music/music/store-search", send_data).then(function(res) {
-						// console.log(res.data.results)
+						console.log(res.data.results)
 						_this.isplSolo = true;
 						_this.tableData3 = res.data.results
 						_this.submitContentLoading = false
@@ -1052,7 +1060,6 @@
 						_this.loading = false
 					}).catch(error => {
 						_this.$notify({
-							title: '提示',
 							message: '搜索失败，请重试',
 							type: 'warning',
 							offset: 120,
@@ -1065,7 +1072,6 @@
 					})
 				}).catch(errro => {
 					_this.$notify({
-						title: '提示',
 						message: '提交失败，请重试',
 						type: 'warning',
 						offset: 120,
@@ -1106,7 +1112,7 @@
 				this.percentage = parseInt(percentage)
 			},
 			handleSuccess(response, file, fileList) {
-				// console.log(fileList)
+				console.log(fileList)
 				this.templateFile = fileList[0]
 				this.uploadBtn = false
 			},
@@ -1119,7 +1125,6 @@
 					this.percentage = 0
 				} else {
 					this.$notify({
-						title: '提示',
 						message: '上传文件格式不正确',
 						type: 'warning',
 						offset: 150,
@@ -1158,18 +1163,18 @@
 				var file = this.$refs.replaceUpload.files[0]
 				var type = this.$refs.replaceUpload.files[0].type.split('/')[0]
 				var _this = this;
-				if (type == "video") {
+				console.log(file)
+				if (validateFormat(file.name)) {
 					var send_data = {
 						name: [file.name]
 					}
-					// console.log(send_data)
+					console.log(send_data)
 					post("/music/music/store-verification", send_data).then((res) => {
 						if (res.data[0].status == 0 || res.data[0].status == 3) {
 							this.chaxun(res.data[0], file);
 						} else {
 							this.$refs.replaceUpload.value = ""
 							this.$notify({
-								title: '提示',
 								message: '文件名有误无法上传',
 								type: 'error',
 								offset: 120,
@@ -1179,7 +1184,6 @@
 					})
 				} else {
 					this.$notify({
-						title: '提示',
 						message: '请上传视频文件',
 						type: 'warning',
 						offset: 120,
@@ -1199,7 +1203,6 @@
 				if (data.status == 1 || data.status == 2 || !flag) {
 					this.$refs.replaceUpload.value = ""
 					this.$notify({
-						title: '提示',
 						message: '文件名有误无法上传',
 						type: 'error',
 						offset: 120,
@@ -1300,6 +1303,9 @@
 					case '其他':
 						send_data.format_type = 3;
 						break;
+					case "MKV":
+						send_data.format_type = 4;
+						break;
 				};
 				switch (data.voice_type) {
 					case "消音":
@@ -1325,10 +1331,10 @@
 					case "2":
 						send_data.vocal_track = 1;
 						break;
-					case "左声道":
+					case "左":
 						send_data.vocal_track = 2;
 						break;
-					case "右声道":
+					case "右":
 						send_data.vocal_track = 3;
 						break;
 				};
@@ -1339,23 +1345,23 @@
 					case "2":
 						send_data.voice_track = 1;
 						break;
-					case "左声道":
+					case "左":
 						send_data.voice_track = 2;
 						break;
-					case "右声道":
+					case "右":
 						send_data.voice_track = 3;
 						break;
 				};
 				get("/music/music/store", send_data).then((res) => {
 					if (res.data.results.length > 0) {
 						this.$refs.replaceUpload.value = ""
-						this.$notify({
-							title: '提示',
-							message: '歌曲已存在，请勿重复上传',
-							type: 'error',
-							offset: 120,
-							duration: 3000,
-						});
+						// this.$notify({
+						// 	message: '歌曲已存在，请勿重复上传',
+						// 	type: 'error',
+						// 	offset: 120,
+						// 	duration: 3000,
+						// });
+						this.chaxun1(data, file)
 					} else {
 						this.chaxun1(data, file)
 					}
@@ -1368,7 +1374,6 @@
 				this.$refs.replaceUpload.value = ""
 				var name = "已替换" + this.songName + "歌曲文件"
 				this.$notify({
-					title: '提示',
 					message: name,
 					type: 'success',
 					offset: 120,
@@ -1426,7 +1431,6 @@
 					_this.delecteLoading = false
 					_this.delecteVisible = false
 					_this.$notify({
-						title: '提示',
 						message: '删除成功！',
 						type: 'success',
 						offset: 120,
@@ -1436,7 +1440,6 @@
 					_this.delecteLoading = false
 					_this.delecteVisible = false
 					_this.$notify({
-						title: '提示',
 						message: '删除失败！',
 						type: 'error',
 						offset: 120,
@@ -1504,7 +1507,7 @@
 				}
 				_this.delectesLoading = false
 				_this.delectesVisible = false
-				// console.log(_this)
+				console.log(_this)
 			},
 			//表单的模糊查询
 			querySearch(queryString, callback) {
@@ -1546,11 +1549,13 @@
 					this.isIndeterminate = true;
 					this.checkAll = false;
 					Bus.$emit('val', "1")
-				}else if(this.multipleSelection.length == 0) {
+				}
+				if (this.multipleSelection.length == 0) {
 					this.isIndeterminate = false;
 					this.checkAll = false;
 					Bus.$emit('val', "0")
-				}else if(this.multipleSelection.length == this.tableData3.length) {
+				}
+				if (this.multipleSelection.length == this.tableData3.length) {
 					this.isIndeterminate = false;
 					this.checkAll = true;
 					Bus.$emit('val', "1")
@@ -1597,7 +1602,7 @@
 				this.tableData = [];
 				this.loading = true;
 				this.onSubmitLoading = true;
-				this.tableData3 = []
+				console.log(send_data)
 				get("/music/music/store", send_data).then(function(res) {
 					_this.loading = false;
 					_this.count = res.data.count;
@@ -1640,7 +1645,7 @@
 				this.rowData = row
 			},
 			changeData(id) {
-				// console.log(id)
+				console.log(id)
 				var arr = this.tableData3;
 				var arr1 = []
 				var obj1 = {}
@@ -1663,9 +1668,6 @@
 			detail(id) {
 				var _this = this
 				this.loading = true
-				this.isIndeterminate = false;
-				this.checkAll = false;
-				this.handleSelectionChange([])
 				if (id) {
 					get("/music/music/store/" + id + "").then(function(res) {
 						_this.loading = false
@@ -1689,7 +1691,6 @@
 						_this.tableData3 = response.data.results
 					}).catch(function(response) {})
 				}
-				
 			},
 			loadAll() {
 				var _this = this
@@ -1735,7 +1736,7 @@
 				}
 			}
 			Bus.$on("currentWindow", function(flage) {
-				// console.log(flage, "currentWindow")
+				console.log(flage, "currentWindow")
 				setTimeout(function() {
 					_this.height = "height:" + (document.body.clientHeight - 239) + "px"
 					if (_this.$refs.box_head) {
@@ -1775,6 +1776,19 @@
 	#LibraryManagement .has-gutter {
 		display: none;
 	}
+
+	.el-notification {
+		display: flex;
+		align-items: center;
+	}
+
+	.el-notification .el-notification__content {
+		margin: 0;
+		font-size: 12px;
+		color: #959595;
+		font-weight: 600;
+	}
+
 	#LibraryManagement .fileinput-button {
 		position: relative;
 		display: inline-block;
@@ -1795,7 +1809,7 @@
 	}
 
 	#LibraryManagement .el-button {
-		font-size: 14px;
+		font-size: 12px;
 	}
 
 	#LibraryManagement .cell {
@@ -1840,7 +1854,7 @@
 	}
 
 	#LibraryManagement .PLSOSU .el-dialog__header .el-dialog__title {
-		font-size: 14px;
+		font-size: 12px;
 		color: #666666;
 	}
 
@@ -1856,7 +1870,7 @@
 	#LibraryManagement .PLSOSU .el-dialog__body .el-upload-dragger {
 		border: none;
 		background-color: rgba(255, 255, 255, 0);
-		font-size: 14px;
+		font-size: 12px;
 	}
 
 	#LibraryManagement .PLSOSU .el-dialog__footer {
@@ -2020,12 +2034,43 @@
 
 	.aa {
 		overflow: auto;
-		font-size: 14px;
+		margin-right: 5px;
+		font-size: 12px;
 	}
 
 	.bb {
 		overflow: auto;
-		font-size: 14px;
+		margin-right: 5px;
+		font-size: 12px;
 	}
 
+	#ulo::-webkit-scrollbar-track,
+	#scroll-1::-webkit-scrollbar-track {
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+		border-radius: 10px;
+		background-color: #f0f0f0;
+	}
+
+	#ulo::-webkit-scrollbar,
+	#scroll-1::-webkit-scrollbar {
+		width: 10px;
+		background-color: #f0f0f0;
+	}
+
+	#ulo::-webkit-scrollbar-thumb,
+	#scroll-1::-webkit-scrollbar-thumb {
+		border-radius: 20px;
+		-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+		background-color: #cfd1d3;
+	}
+
+	#ulo::-webkit-scrollbar-thumb:hover,
+	#scroll-1::-webkit-scrollbar-thumb:hover {
+		background-color: #a7acb1;
+	}
+
+	#ulo::-webkit-scrollbar-thumb:active,
+	#scroll-1::-webkit-scrollbar-thumb:active {
+		background-color: #9da2a7;
+	}
 </style>
