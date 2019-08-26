@@ -210,8 +210,8 @@
 					</el-table-column>
 					<el-table-column prop="picture" min-width="50" label="画面">
 						<template slot-scope="scope">
-							<span v-if="scope.row.picture =='0' || scope.row.picture == '原版MV'">
-								原版MV
+							<span v-if="scope.row.picture =='5' || scope.row.picture == '写真'">
+								写真
 							</span>
 							<span v-else-if="scope.row.picture =='1' || scope.row.picture == 'LIVE' ">
 								LIVE

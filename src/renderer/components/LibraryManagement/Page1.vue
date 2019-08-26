@@ -432,8 +432,8 @@
 							<span v-if="scope.row.picture =='4'">
 								MTV
 							</span>
-							<span v-else-if="scope.row.picture =='0'">
-								原版MV
+							<span v-else-if="scope.row.picture =='5'">
+								写真
 							</span>
 							<span v-else-if="scope.row.picture =='1'">
 								LIVE

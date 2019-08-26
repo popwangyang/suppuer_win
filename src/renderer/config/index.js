@@ -32,10 +32,10 @@ export default {
 			},
 		],
 		picture: [
-			{
-				label:'原版MV',
-				value:0
-			},
+			// {
+			// 	label:'原版MV',
+			// 	value:0
+			// },
 			{
 				label:'LIVE',
 				value:1
@@ -52,10 +52,10 @@ export default {
 				label:'MTV',
 				value:4
 			},
-			// {
-			// 	label:'其他',
-			// 	value:5
-			// },
+			{
+				label:'写真',
+				value:5
+			},
 		],
 		area:[
 			{
