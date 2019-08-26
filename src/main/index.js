@@ -3,7 +3,6 @@ import {
 	BrowserWindow,
 	ipcMain,
 	Menu,
-	Tray,
 	dialog 
 } from 'electron'
 const macObj = require('getmac')
@@ -18,41 +17,7 @@ if (process.env.NODE_ENV !== 'development') {
 
 let mainWindow
 let childWindow
-let appIcon = null
-const template = [
 
-	{
-		label: "登录",
-		click() {
-
-		},
-		icon: path.join(__static, "/denlu.png")
-	},
-
-	{
-		label: "注销             ",
-		click: function() {
-			if (numWindow == 2) {
-				mainWindow.webContents.send('closeChild')
-			} else {
-				mainWindow.webContents.send('exitLogin')
-			}
-		}
-	},
-	{
-		label: '退出            ',
-		click: function() {
-			// mainWindow.close()
-			if (numWindow == 2) {
-				mainWindow.webContents.send('closeChild')
-			} else {
-				mainWindow.webContents.send('closeWindow')
-			}
-		},
-		icon: path.join(__static, "/tuchu.png")
-	}
-
-]
 var numWindow = 1
 const winURL = process.env.NODE_ENV === 'development' ?
 	`http://localhost:9080` :
@@ -98,7 +63,6 @@ function createWindow() {
 
 		mainWindow = null
 	})
-	createTray();
 	mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
 		//设置文件存放位置
 		// item.setSavePath("C:\Users\Administrator\Desktop");
@@ -123,37 +87,10 @@ function createWindow() {
 	})
 }
 
-function createTray() {
-	const iconName = process.platform === 'win32' ? '1.ico' : 'iconTemplate.png'
-	const iconPath = path.join(__static, "/1.ico")
-	// const iconPath = `file://${__dirname}/renderer/assets/logo.png`
-	// console.log(iconPath)
-	appIcon = new Tray(iconPath)
-	const contextMenu = Menu.buildFromTemplate(template)
-	appIcon.on('click', () => {
-		// mainWindow.isVisible() ? "" : mainWindow.show()
-		var flage = mainWindow.isVisible();
-		var flage1 = mainWindow.isMaximized();
-		console.log(flage, flage1)
-		if (!flage) {
-			mainWindow.show()
-
-		} else {
-			if (!flage1) {
-				mainWindow.restore()
-			}
-		}
-	})
-	appIcon.setToolTip('娱网正音')
-	appIcon.setContextMenu(contextMenu)
-}
-
 app.on('ready', createWindow)
 
 app.on('window-all-closed', () => {
 	if (process.platform !== 'darwin') {
-		appIcon.destroy()
-		appIcon = null;
 		app.quit()
 	}
 })
@@ -163,67 +100,40 @@ app.on('activate', () => {
 		createWindow()
 	}
 })
+
 ipcMain.on("window-login", function(event, user) {
-	console.log(user)
-	template.shift()
-	template.unshift({
-		label: user,
-		click() {
-
-		},
-		icon: path.join(__static, "/denlu.png")
-	}, )
-	// console.log(template)
-	appIcon.destroy()
-	appIcon = null;
-	createTray()
 })
+
 ipcMain.on("window-exitLogin", function() {
-	template.shift()
-	template.unshift({
-		label: "登录",
-		click() {
-
-		},
-		icon: path.join(__static, "/denlu.png")
-	})
-	appIcon.destroy()
-	appIcon = null;
-	createTray()
-
 })
+
 ipcMain.on('window-minSize', function() {
 	mainWindow.minimize()
 })
 
 ipcMain.on('window-close', function() {
-	// console.log(childWindow)
 	if (numWindow == 2) {
 		mainWindow.webContents.send('closeChild')
 	} else {
 		mainWindow.close()
 	}
 })
-ipcMain.on("exitLogin", function() {
 
+ipcMain.on("exitLogin", function() {
 	if (numWindow == 2) {
 		mainWindow.webContents.send('closeChild')
 	}
 })
+
 ipcMain.on('download', function(event, arg) {
-	console.log(arg); // prints "ping"
 	mainWindow.webContents.downloadURL(arg);
 });
 
-
-
 ipcMain.on('synchronous-message', (event, arg) => {
-	console.log(arg)
 	switch (arg) {
 		case 'mac':
 			macObj.getMac(function(err, macAddress) {
 				if (err) throw err;
-
 				event.returnValue = macAddress
 			});
 			break;

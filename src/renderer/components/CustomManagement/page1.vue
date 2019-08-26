@@ -121,10 +121,6 @@
 
 					</template>
 				</el-table-column>
-
-
-
-
 				<el-table-column prop="songState" label="歌曲状态" sortable :width="widthHead[6]">
 					<template slot-scope="scope">
 						<div style="display: flex;align-items: center;justify-content: center;" v-if="scope.row.state=='0'">

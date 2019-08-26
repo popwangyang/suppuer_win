@@ -186,32 +186,6 @@ saveUpload(state,arr){
 		state.data = arr;		 
 		 // console.log('getters.number')
 	},
-	signOut(state) {
-		state.data = [];
-	  state.data1 = [];
-	  state.UPnumber =  0;
-	  state.DRnumber = 0;
-	},
-// 	hackResetFalse(){
-// 		var arr = state.data;
-// 		var id = state.currentID;
-// 		arr.map(function(item){
-// 			 if(item.id == id){
-// 				 item.hackReset = false;
-// 			 }
-// 		})
-// 		state.data = arr;
-// 	},
-// 	hackResetTrue(){
-// 		var arr = state.data;
-// 		var id = state.currentID;
-// 		arr.map(function(item){
-// 			if(item.id == id){
-// 				item.hackReset = true;
-// 			}
-// 		})
-// 		state.data = arr;
-// 	},
   delect1(state,id){
 		var arr = state.data1;
 		console.log(arr,id,"Counter delect")

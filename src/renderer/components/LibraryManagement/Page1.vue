@@ -378,172 +378,59 @@
 					</el-table-column>
 					<el-table-column label="歌手类型" :width="widthHead[3]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.singer_type =='0'">
-								男歌手
-							</span>
-							<span v-if="scope.row.singer_type =='1'">
-								女歌手
-							</span>
-							<span v-if="scope.row.singer_type =='2'">
-								组合
-							</span>
-							<span v-if="scope.row.singer_type =='3'">
-								合唱
-							</span>
-							<span v-if="scope.row.singer_type =='4'" style="color: red;">
-								缺失
+							<span v-if="scope.row.singer_type == null || scope.row.singer_type == ''" style="color: red;">缺失</span>
+							<span v-else>
+								{{scope.row.singer_type}}
 							</span>
 						</template>
 					</el-table-column>
-					<el-table-column prop="language" label="语言" :width="widthHead[4]" :filters="arrLanguage" :filter-method="filterHandler"
-					 filter-placement="bottom-end">
+					<el-table-column prop="language" label="语言" :width="widthHead[4]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.language =='0'">
-								国语
-							</span>
-							<span v-if="scope.row.language =='1'">
-								粤语
-							</span>
-							<span v-if="scope.row.language =='2'">
-								闽南语
-							</span>
-							<span v-if="scope.row.language =='3'">
-								英语
-							</span>
-							<span v-if="scope.row.language =='4'">
-								日语
-							</span>
-							<span v-if="scope.row.language =='5'">
-								韩语
-							</span>
-							<span v-if="scope.row.language =='6'">
-								其他
-							</span>
-							<span v-if="scope.row.language ==null" style="color: red;">
-								缺失
-							</span>
+							<span v-if="scope.row.language == null || scope.row.language == ''" style="color: red;">缺失</span>
+							<span v-else>{{scope.row.language}}</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="画面" :width="widthHead[5]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.picture =='4'">
-								MTV
-							</span>
-							<span v-else-if="scope.row.picture =='1'">
-								LIVE
-							</span>
-							<span v-else-if="scope.row.picture =='0'">
-								原版MV
-							</span>
-							<span v-else-if="scope.row.picture =='2'">
-								舞曲
-							</span>
-							<span v-else-if="scope.row.picture =='3'">
-								配置画面
-							</span>
-							<span v-else style="color: red;">
-								缺失
-							</span>
+							<span v-if="scope.row.picture == null || scope.row.picture == ''" style="color: red;">缺失</span>
+							<span v-else>{{scope.row.picture}}</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="地区" :width="widthHead[6]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.area =='0'">
-								大陆
-							</span>
-							<span v-if="scope.row.area =='1'">
-								港台
-							</span>
-							<span v-if="scope.row.area =='2'">
-								日韩
-							</span>
-							<span v-if="scope.row.area =='3'">
-								欧美
-							</span>
-							<span v-if="scope.row.area =='4'">
-								其他
-							</span>
-							<span v-if="scope.row.area ==null" style="color: red;">
-								缺失
-							</span>
+							<span v-if="scope.row.area == null || scope.row.area == ''" style="color: red;">缺失</span>
+							<span v-else>{{scope.row.area}}</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="格式" :width="widthHead[7]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.format_type =='0'">
-								高清
-							</span>
-							<span v-if="scope.row.format_type =='1'">
-								DVD
-							</span>
-							<span v-if="scope.row.format_type =='2'">
-								MP4
-							</span>
-							<span v-if="scope.row.format_type =='4'">
-								MKV
-							</span>
-							<span v-if="scope.row.format_type =='3'" style="color: red;">
-								缺失
+							<span v-if="scope.row.format_type == null || scope.row.format_type == ''" style="color: red;">缺失</span>
+							<span>
+								{{scope.row.format_type}}
 							</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="声音版本" :width="widthHead[8]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.voice_type =='0'">
-								消音
-							</span>
-							<span v-if="scope.row.voice_type =='1'">
-								原版伴奏
-							</span>
-							<span v-if="scope.row.voice_type =='2'">
-								演唱会
-							</span>
-							<span v-if="scope.row.voice_type =='3'">
-								remix
-							</span>
-							<span v-if="scope.row.voice_type =='4'">
-								其他
-							</span>
-							<span v-if="scope.row.voice_type ==null" style="color: red;">
-								缺失
+							<span v-if="scope.row.voice_type == null || scope.row.voice_type == ''" style="color: red;">缺失</span>
+							<span>
+								{{scope.row.voice_type}}
 							</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="原唱声轨" :width="widthHead[9]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.voice_track =='0'">
-								第1声轨
-							</span>
-							<span v-if="scope.row.voice_track =='1'">
-								第2声轨
-							</span>
-							<span v-if="scope.row.voice_track =='2'">
-								左声道
-							</span>
-							<span v-if="scope.row.voice_track =='3'">
-								右声道
-							</span>
-							<span v-if="scope.row.voice_track =='4'" style="color: red;">
-								缺失
+							<span v-if="scope.row.voice_track == null || scope.row.voice_track == ''" style="color: red;">缺失</span>
+							<span v-else>
+								{{scope.row.voice_track}}
 							</span>
 						</template>
 					</el-table-column>
 					<el-table-column label="伴唱声轨" :width="widthHead[10]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.vocal_track =='0'">
-								第1声轨
-							</span>
-							<span v-if="scope.row.vocal_track =='1'">
-								第2声轨
-							</span>
-							<span v-if="scope.row.vocal_track =='2'">
-								左声道
-							</span>
-							<span v-if="scope.row.vocal_track =='3'">
-								右声道
-							</span>
-							<span v-if="scope.row.vocal_track =='4'" style="color: red;">
-								缺失
+							<span v-if="scope.row.vocal_track == null || scope.row.vocal_track == ''" style="color: red;">缺失</span>
+							<span>
+								{{scope.row.vocal_track}}
 							</span>
 						</template>
 					</el-table-column>
@@ -557,7 +444,6 @@
 							</span>
 						</template>
 					</el-table-column>
-
 					<el-table-column prop="company" label="唱片公司" :width="widthHead[12]">
 						<template slot-scope="scope">
 							<span v-if="scope.row.company ==null ">
@@ -568,7 +454,6 @@
 							</span>
 						</template>
 					</el-table-column>
-
 					<el-table-column prop="upload_time" label="上传日期" :width="widthHead[13]">
 						<template slot-scope="scope">
 							<span v-if="scope.row.upload_time ==null " style="color: red;">
@@ -577,11 +462,9 @@
 							<span v-else>
 								<div>{{scope.row.upload_time.split(" ")[0]}}</div>
 								<div>{{scope.row.upload_time.split(" ")[1]}}</div>
-
 							</span>
 						</template>
 					</el-table-column>
-
 					<el-table-column label="操作" :width="widthHead[14]">
 						<template slot-scope="scope">
 							<!-- <i class="iconfont icon-bofang" style="font-size: 20px;cursor: pointer;margin: 0 5px;" @click="play(scope.row.id)"
@@ -626,12 +509,12 @@
 <script>
 	const ipcRenderer = require('electron').ipcRenderer;
 	import Loading from '../CustomComponents/Loading';
-	// import Error from "../CustomComponents/Error"
 	import replaceFile from '../CustomComponents/replaceFile';
 	import Bus from '../bus.js'
 	import axios from 'axios'
 	import Upload from "../upload.js";
 	import config from '../../config'
+	import { transformData, validateFormat, chaxun } from '../util'
 	import {
 		get,
 		baseUrl,
@@ -723,6 +606,7 @@
 				checkAll: false,
 				isIndeterminate: false,
 				songName: "",
+				singerName: '',
 				restaurants: [],
 				rowData: "",
 				height: "",
@@ -756,35 +640,6 @@
 				count: 0,
 				widthHead: [110, 70, 80, 80, 60, 70, 50, 60, 80, 70, 70, 80, 80, 100, 150],
 				widthHead1: [],
-				arrLanguage: [{
-						text: "国语",
-						value: "国语"
-					},
-					{
-						text: "粤语",
-						value: "粤语"
-					},
-					{
-						text: "闽南语",
-						value: "闽南语"
-					},
-					{
-						text: "英语",
-						value: "英语"
-					},
-					{
-						text: "日语",
-						value: "日语"
-					},
-					{
-						text: "韩语",
-						value: "韩语"
-					},
-					{
-						text: "其他",
-						value: "其他"
-					}
-				],
 				radioForm: {
 					singer_type: 100,
 					language: 100,
@@ -976,7 +831,7 @@
 				get("/music/music/store", send_data).then(function(res) {
 					_this.loading = false
 					_this.count = res.data.count
-					_this.tableData3 = res.data.results
+					_this.tableData3 = res.data.results ;
 				}).catch(() => {
 					_this.loading = false
 					_this.$notify.error({
@@ -1007,7 +862,6 @@
 					li[i].style.Width = arr[i]
 				}
 			},
-			filterHandler(value, row, column) {},
 			TipsCloseBtn() {
 				this.TipsFlage1 = false;
 			},
@@ -1038,9 +892,7 @@
 					}
 					send_data.page = _this.page;
 					send_data.page_size = _this.page_size;
-					// console.log(send_data)
 					get("/music/music/store-search", send_data).then(function(res) {
-						// console.log(res.data.results)
 						_this.isplSolo = true;
 						_this.tableData3 = res.data.results
 						_this.submitContentLoading = false
@@ -1102,7 +954,6 @@
 				this.percentage = parseInt(percentage)
 			},
 			handleSuccess(response, file, fileList) {
-				// console.log(fileList)
 				this.templateFile = fileList[0]
 				this.uploadBtn = false
 			},
@@ -1147,215 +998,84 @@
 			replaceFile(row) {
 				this.replaceVisible = true
 				this.replaceID = row.id;
-				this.songName = row.name
+				this.songName = row.name;
+				this.singerName = row.singer;
 				this.replacefileName = "替换" + "-" + row.name + "-" + row.singer
 			},
-			replaceBeforeUpload(file) {
-				var file = this.$refs.replaceUpload.files[0]
-				var type = this.$refs.replaceUpload.files[0].type.split('/')[0]
-				var _this = this;
-				if (type == "video") {
-					var send_data = {
+			replaceBeforeUpload() {
+				let file = this.$refs.replaceUpload.files[0]
+				if (validateFormat(file.name)) {
+					let send_data = {
 						name: [file.name]
 					}
-					// console.log(send_data)
 					post("/music/music/store-verification", send_data).then((res) => {
-						if (res.data[0].status == 0 || res.data[0].status == 3) {
-							this.chaxun(res.data[0], file);
+						var flag;
+						var name = res.data[0].name;
+						var singer = res.data[0].singer;
+						if (this.songName == name && this.singerName == singer) {
+							flag = true;
 						} else {
-							this.$refs.replaceUpload.value = ""
+							flag = false;
+						};
+						if([1, 2].includes(res.data[0].status) || !flag){
 							this.$notify({
 								title: '提示',
-								message: '文件名有误无法上传',
+								message: '文件名有误, 无法上传',
 								type: 'error',
 								offset: 120,
-								duration: 2000,
+								duration: 3000,
 							});
-						};
+						}else if(res.data[0].status == 3){
+							chaxun(res.data[0], (results) => {
+								if(results.length > 0){
+									this.$refs.replaceUpload.value = ""
+									this.$notify({
+										title: '提示',
+										message: '歌曲已存在，请勿重复上传',
+										type: 'error',
+										offset: 120,
+										duration: 3000,
+									});
+								}else{
+									console.log(res.data[0])
+									this.uploadFile(file, res.data[0]);
+								}
+							})
+						}else{
+							// this.uploadFile(file, res.data[0]);
+						}
 					})
 				} else {
 					this.$notify({
 						title: '提示',
-						message: '请上传视频文件',
+						message: '请上传正确格式的文件',
 						type: 'warning',
 						offset: 120,
 						duration: 2000,
 					});
 				}
 			},
-			chaxun1(data, file) {
-				var flag;
-				var name = this.replacefileName.split("-")[1];
-				var singer = this.replacefileName.split("-")[2];
-				if (data.name == name && data.singer == singer) {
-					flag = true;
-				} else {
-					flag = false;
-				};
-				if (data.status == 1 || data.status == 2 || !flag) {
-					this.$refs.replaceUpload.value = ""
-					this.$notify({
-						title: '提示',
-						message: '文件名有误无法上传',
-						type: 'error',
-						offset: 120,
-						duration: 3000,
-					});
-				} else {
-					this.isReplacefileName = file.name
-					this.showUpload1 = true
-					this.replaceBtn = false
-					file.id = this.replaceID;
-					file.content = data;
-					var token = "Bearer " + localStorage.getItem('token');
-					this.repFile = new Upload(file, "http://up-z1.qiniup.com", {
-						axios: this.$http,
-						token: token
-					})
+			uploadFile(file, data){
+				this.isReplacefileName = file.name
+				this.showUpload1 = true
+				this.replaceBtn = false
+				file.id = this.replaceID;
+				let obj = {
+					"currentNum": 0,
+					"id": new Date().getTime(),
+					"name": file.name,
+					"path": file.path,
+					"type": file.name.split(".").pop(),
+					"isUpload": false,
+					"size": file.size,
+					"upState": "0",
+					"UploadSize" : 0,
+					"startFlage": true,
+					"content": data,
+					"file": file,
 				}
-			},
-			chaxun(data, file) {
-				var send_data = {};
-				send_data.name = data.name;
-				send_data.singer = data.singer;
-				switch (data.singer_type) {
-					case "男歌手":
-						send_data.singer_type = 0;
-						break;
-					case "女歌手":
-						send_data.singer_type = 1;
-						break;
-					case "组合":
-						send_data.singer_type = 2;
-						break;
-					case "合唱":
-						send_data.singer_type = 3;
-						break;
-				};
-				switch (data.language) {
-					case "国语":
-						send_data.language = 0;
-						break;
-					case "粤语":
-						send_data.language = 1;
-						break;
-					case "闽南语":
-						send_data.language = 2;
-						break;
-					case "英语":
-						send_data.language = 3;
-						break;
-					case "日语":
-						send_data.language = 4;
-						break;
-					case "韩语":
-						send_data.language = 5;
-						break;
-				};
-				switch (data.picture) {
-					case "MTV":
-						send_data.picture = 4;
-						break;
-					case "LIVE":
-						send_data.picture = 1;
-						break;
-					case "舞曲":
-						send_data.picture = 2;
-						break;
-					case "配置画面":
-						send_data.picture = 3;
-						break;
-				};
-				switch (data.area) {
-					case "大陆":
-						send_data.area = 0;
-						break;
-					case "港台":
-						send_data.area = 1;
-						break;
-					case "日韩":
-						send_data.area = 2;
-						break;
-					case "欧美":
-						send_data.area = 3;
-						break;
-					case "其他":
-						send_data.area = 4;
-						break;
-				};
-				switch (data.format_type) {
-					case "高清":
-						send_data.format_type = 0;
-						break;
-					case "DVD":
-						send_data.format_type = 1;
-						break;
-					case "MP4":
-						send_data.format_type = 2;
-						break;
-					case '其他':
-						send_data.format_type = 3;
-						break;
-				};
-				switch (data.voice_type) {
-					case "消音":
-						send_data.voice = 0;
-						break;
-					case "原版伴奏":
-						send_data.voice = 1;
-						break;
-					case "演唱会":
-						send_data.voice = 2;
-						break;
-					case "remix":
-						send_data.voice = 3;
-						break;
-					case "其他":
-						send_data.voice = 4;
-						break;
-				};
-				switch (data.vocal_track) {
-					case "1":
-						send_data.vocal_track = 0;
-						break;
-					case "2":
-						send_data.vocal_track = 1;
-						break;
-					case "左声道":
-						send_data.vocal_track = 2;
-						break;
-					case "右声道":
-						send_data.vocal_track = 3;
-						break;
-				};
-				switch (data.voice_track) {
-					case "1":
-						send_data.voice_track = 0;
-						break;
-					case "2":
-						send_data.voice_track = 1;
-						break;
-					case "左声道":
-						send_data.voice_track = 2;
-						break;
-					case "右声道":
-						send_data.voice_track = 3;
-						break;
-				};
-				get("/music/music/store", send_data).then((res) => {
-					if (res.data.results.length > 0) {
-						this.$refs.replaceUpload.value = ""
-						this.$notify({
-							title: '提示',
-							message: '歌曲已存在，请勿重复上传',
-							type: 'error',
-							offset: 120,
-							duration: 3000,
-						});
-					} else {
-						this.chaxun1(data, file)
-					}
-				})
+				this.repFile =  new Upload(obj, "http://up-z1.qiniup.com");
+				this.repFile.stopUpload();
 			},
 			replaceSuccess() {
 				this.replaceVisible = false;
@@ -1396,7 +1116,7 @@
 			},
 			replaceFileBtn() {
 				this.replaceFileBtnStatus = true
-				var file = this.repFile;
+				console.log(this.repFile)
 				this.$refs.replaceFileTemp.start()
 			},
 			//  单个删除文件         
@@ -1516,14 +1236,6 @@
 			},
 			handleSelect(item) {
 			},
-			play(id) {
-				this.changeData(id)
-				ipcRenderer.send('childWindow')
-			},
-			newBox() {
-				this.changeData(this.rowData.id)
-				ipcRenderer.send('childWindow')
-			},
 			handleCheckAllChange(val) {
 				this.isIndeterminate = false;
 				this.checkAll = val
@@ -1635,63 +1347,33 @@
 			hoo(row, event) {
 				this.rowData = row
 			},
-			changeData(id) {
-				// console.log(id)
-				var arr = this.tableData3;
-				var arr1 = []
-				var obj1 = {}
-				var num;
-				arr.map(function(item, index) {
-					var obj = {}
-					if (item.id == id) {
-						num = index
-					}
-					obj.id = item.id;
-					obj.name = item.name + "--" + item.singer;
-					obj.http = baseUrl + "/music/download/download-file?file=video/" + item.source_path;
-					arr1.push(obj)
-				})
-				obj1.currentID = num;
-				obj1.content = arr1;
-				obj1.id = arr[0].id
-				localStorage.setItem('videoPlayList', JSON.stringify(obj1))
-			},
-			detail(id) {
-				var _this = this
+			detail() {
 				this.loading = true
 				this.isIndeterminate = false;
 				this.checkAll = false;
 				this.handleSelectionChange([])
-				if (id) {
-					get("/music/music/store/" + id + "").then(function(res) {
-						_this.loading = false
-						var arr = res.data;
-						_this.tableData3 = [arr]
-					}).catch(function(response) {})
-				} else {
-					var send_data = this.formInline
-					for (var key in this.radioForm) {
-						if (this.radioForm[key] == 100) {
-							send_data[key] = ""
-						} else {
-							send_data[key] = this.radioForm[key]
-						}
+				var send_data = this.formInline
+				for (var key in this.radioForm) {
+					if (this.radioForm[key] == 100) {
+						send_data[key] = ""
+					} else {
+						send_data[key] = this.radioForm[key]
 					}
-					send_data.page = this.page;
-					send_data.page_size = this.page_size;
-					get('/music/music/store', send_data).then(function(response) {
-						_this.loading = false
-						_this.count = response.data.count
-						_this.tableData3 = response.data.results
-					}).catch(function(response) {})
 				}
-				
+				send_data.page = this.page;
+				send_data.page_size = this.page_size;
+				get('/music/music/store', send_data).then( (response) => {
+					this.loading = false
+					this.count = response.data.count
+					transformData(response.data.results)
+					this.tableData3 = response.data.results
+				})
 			},
 			loadAll() {
 				var _this = this
 				axios.get('http://localhost:8888/data1').then(function(response) {
 					_this.restaurants = response.data
-				}).catch(function(response) {})
+				})
 			},
 			asyncFunc(id) {
 				var _this = this;

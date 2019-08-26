@@ -43,15 +43,18 @@ const mutations = {
 	uploadSong(state, ids) {
 		let results = []
 		state.songNumbers.forEach((item, index) => {
-			if(ids.indexOf(item.id) > -1){
+			if(ids.includes(item.id)){
 				new Upload(item, "http://up-z1.qiniup.com");
-				
 			}else{
 				results.push(item);
 			}
 		})
 		state.songNumbers = results;
 		state.uploadSongNumbers += ids.length;
+	},
+	signOut(state) {
+		state.songNumbers = [];
+		Upload.children = [];
 	}
 }
 

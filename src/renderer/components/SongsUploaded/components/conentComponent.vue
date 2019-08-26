@@ -196,7 +196,6 @@
 							}
 						}, {})
 					}
-					// console.log(obj, "pppppppppppppppppp")
 					updateStoreDB(this, [this.repeatID], 'file', obj.file).then(res => {
 						this.$store.commit("setData", obj)
 						this.uploadFile(this.repeatID)

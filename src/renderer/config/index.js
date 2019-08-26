@@ -75,10 +75,10 @@ export default {
 			},
 		],
 		picture: [
-			{
-				label:'原版MV',
-				value:0
-			},
+			// {
+			// 	label:'原版MV',
+			// 	value:0
+			// },
 			{
 				label:'LIVE',
 				value:1
@@ -94,6 +94,10 @@ export default {
 			{
 				label:'MTV',
 				value:4
+			},
+			{
+				label: '写真',
+				value: 5
 			}
 		],
 		area:[
@@ -215,20 +219,6 @@ export default {
 				label:'合唱',
 				value:3
 			}
-		],
-		save_sign: [
-			{
-			   label:'老哥',
-			   value:0
-			},
-			{
-			   label:'授权歌曲',
-			   value:1
-			},
-			{
-			   label:'新歌',
-			   value:2
-			},
 		]
 	}
 

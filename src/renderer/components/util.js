@@ -297,10 +297,7 @@ export const getDingZiNum = function(cb){
 export const validateFormat = function (name){
 	var formate = name.split(".").pop();
 	var formateArr = [ 'mp4', 'mpg', 'mpeg', 'mkv'];
-	var flage = formateArr.indexOf(formate) == -1 ? false:true;
-	console.log(formate)
-	return flage;   
-	
+	return formateArr.includes(formate);
 }
 /*
 * 黑箱子函数，
@@ -353,15 +350,10 @@ export const chaxun = (params, callback) => {
 		  send_data[key] = blackBox(key, params[key], 'label')
 		}
 	get("/music/music/store-full", send_data).then((res) => {
+		console.log(res)
 	   callback(res.data.results)
 	}).catch(err => {
-	   notify({
-		title: '提示',
-	   	message: '保存失败！',
-	   	type: 'error',
-	   	offset: 60,
-	   	duration: 1000,
-	   });
+		console.log(err)
 	})
 }
 
@@ -438,4 +430,18 @@ export const updateStoreDB = (vm, ids, key, value) => {
 			resolve(numReplaced)
 		})
 	})
+}
+
+/* 
+ *将请求过来的数据转换成对应的歌曲信息文字；
+ * @params {dataList} 从后端获取的原始信息；
+ * */
+
+export const transformData = (dataList) => {
+	dataList.map(item => {
+		for(var key in config.songInfoData){
+			item[key] = blackBox(key, item[key], 'value')
+		}
+	})
+	return dataList;
 }
