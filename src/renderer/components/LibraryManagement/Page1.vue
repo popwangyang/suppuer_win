@@ -1060,7 +1060,7 @@
 				this.showUpload1 = true
 				this.replaceBtn = false
 				file.id = this.replaceID;
-				let obj = {
+				this.repFile = {
 					"currentNum": 0,
 					"id": new Date().getTime(),
 					"name": file.name,
@@ -1074,8 +1074,6 @@
 					"content": data,
 					"file": file,
 				}
-				this.repFile =  new Upload(obj, "http://up-z1.qiniup.com");
-				this.repFile.stopUpload();
 			},
 			replaceSuccess() {
 				this.replaceVisible = false;
@@ -1116,7 +1114,8 @@
 			},
 			replaceFileBtn() {
 				this.replaceFileBtnStatus = true
-				console.log(this.repFile)
+				this.repFile =  new Upload(obj, "http://up-z1.qiniup.com");
+				this.repFile.stopUpload();
 				this.$refs.replaceFileTemp.start()
 			},
 			//  单个删除文件         
