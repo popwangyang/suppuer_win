@@ -28,14 +28,14 @@ Express.prototype.createServer = function(){
 		let videoCodec = this.videoSourceInfo.checkResult.videoCodecSupport ? 'copy' : 'libx264';
 		let audioCodec = this.videoSourceInfo.checkResult.audioCodecSupport ? 'copy' : 'aac';
 		console.log('result');
-		axios.get('http://testmusiccdn.bjywkd.com/cf7e4e58-c58c-11e9-b835-00163e0e12f4.mpeg?e=1566558361&token=2rQOHCtd0arWFy6PWwOLWrIGpf9fN06dAz_IxVZd:e2rFgR_CkOgH76yKX3RduvXZF9U=', {
+		axios.get('http://testmusiccdn.bjywkd.com/a2797b90-c58b-11e9-b835-00163e0e12f4.mp4?e=1566786850&token=2rQOHCtd0arWFy6PWwOLWrIGpf9fN06dAz_IxVZd:OIEj3PN3oRtEUH4fGU36a30bGzQ=', {
 			responseType: 'blob'
 		}).then(result => {
-			console.log('result');
-			// let readStream = fs.createReadStream(this.videoSourceInfo.videoSourcePath);
+			console.log('result', result.data.length);
+			let readStream = fs.createWriteStream(result.data);
 			this.killFfmpegCommand();
-			this._ffmpegCommand = ffmpeg()
-			    .input(result)
+			this._ffmpegCommand = ffmpeg({ source: file_url });
+			    // .input(result.data)
 			    .nativeFramerate() // 以本机帧速率读取输入
 			    .videoCodec(videoCodec)
 			    .audioCodec(audioCodec)
