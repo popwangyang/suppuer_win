@@ -10,12 +10,11 @@ import {
 } from './api'
 const fs = require("fs");
 
-function Upload(data, url, platform) {
+function Upload(data, url, isRepeat) {
 	var UploadIndex = uploadIndex;
 	var uploadState = 0; // 0 暂停； 1 上传中； 2 等待中；3 上传完成；4 上传出错；5删除； 6文件读取异常;
 	uploadIndex++;
 	this.data = data;  // 歌曲上传信息
-	console.log(data)
 	this.uploadingStateNum = 3;  // 可以同时上传的总个数；
 	this.id = data.id;  // 上传实例的id
 	this.loading = false;
@@ -25,6 +24,7 @@ function Upload(data, url, platform) {
 	this.precent = 0;  // 上传文件的进度；
 	this.isSelect = false;  // 文件是否被选中
 	this.isFileObject = require("fs") ? false:true;  // 判定文件是否是file对象；
+	this.isRepeat = isRepeat;  // 判定上传文件是否是替换上传操作；
 	this.file = data.file;
 	this.key = null;
 	this.token = this.getToken();
@@ -59,9 +59,15 @@ function Upload(data, url, platform) {
 	if(this.getFileExite()){
 		this.slice();
 		this.getConfig();
-		this.getAuth(this.startUpload)
+		if(isRepeat != 'repeat'){
+		  this.getAuth(this.startUpload)
+		}else{
+		  this.getAuth()
+		}
 	}
-	Upload.children.push(this)
+	if(isRepeat != 'repeat'){
+	  Upload.children.push(this)
+	}
 }
 Upload.prototype.getFileExite = function(){
 	if(!fs.existsSync(this.file.path)){
@@ -186,7 +192,7 @@ Upload.prototype.getUplaodingFlage = function() {
 		}
 	};
 	
-	if (num < this.uploadingStateNum) {
+	if (num < this.uploadingStateNum || this.isRepeat == 'repeat') {
 		return true;
 	} else {
 		return false;
@@ -200,7 +206,9 @@ Upload.prototype.getAuth = function(cb) {
 	post("/music/music/store-credential", send_data).then((response) => {
 		this.credential = response.data.credential;
 		this.key = Base64.encode(response.data.key);
-		cb.bind(this)()
+		if(this.isRepeat != 'repeat'){
+			cb.bind(this)()
+		}
 	})
 }
 

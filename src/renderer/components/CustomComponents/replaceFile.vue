@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<el-progress :stroke-width="2" :percentage="replacePercentage"></el-progress>
-		<!--	<el-button @click="start">按钮</el-button>-->
 	</div>
 </template>
 <script>
@@ -10,16 +9,17 @@
 		data() {
 			return {
 				replacePercentage: 0,
+				flag: true
 			}
 		},
 		methods: {
 			start() {
 				var _this = this;
-				this.file.on('prograss', function(event) {
-                
-					_this.replacePercentage = event.precent;
-					if (event.displayFlage) {
-						_this.$emit("onSuccess")
+				this.file.on('prograss', (event) => {
+					this.replacePercentage = event.precent;
+					if (event.precent == 100 && this.flag) {
+						this.flag = false;
+						this.$emit("onSuccess")
 					}
 				})
 				this.file.on('error', function(error) {

@@ -613,25 +613,6 @@
 				errorNumber: 0,
 				onSubmitLoading: false,
 				actionUrl: baseUrl + "/music/music/excel-upload",
-				msg: [{
-						content: '播放'
-					},
-					{
-						content: '编辑'
-					},
-					{
-						content: '替换'
-					},
-					{
-						content: "删除"
-					},
-					{
-						content: "搜索"
-					},
-					{
-						content: "批量搜索"
-					}
-				],
 				tableData3: [],
 				multipleSelection: [],
 				videoData: [],
@@ -662,7 +643,6 @@
 						return ""
 					}
 				} else {
-
 					return "exception"
 				}
 			},
@@ -674,7 +654,6 @@
 						return ""
 					}
 				} else {
-
 					return "exception"
 				}
 			},
@@ -711,7 +690,6 @@
 		},
 		methods: {
 			changeDate() {
-				// console.log(this.formInlineDate)
 				if (this.formInlineDate != null) {
 					this.formInline.published_0 = this.formInlineDate[0]
 					this.formInline.published_1 = this.formInlineDate[1] + "  23:59:59"
@@ -725,37 +703,29 @@
 				ipcRenderer.send('download', str);
 			},
 			singer_typeFilter(n) {
-				// this.radioForm.singer_type = n
 				this.searchHandler()
 			},
 			languageFilter(n) {
-				// this.radioForm.language = n
 				this.searchHandler()
 			},
 			pictureFilter(n) {
-				// this.radioForm.picture = n
 				this.searchHandler()
 			},
 			areaFilter(n) {
-				// this.radioForm.area = n
 				this.searchHandler()
 			},
 			formatFilter(n) {
-				// this.radioForm.format = n
 				this.searchHandler()
 			},
 			voice_typeFilter(n) {
-				// this.radioForm.voice = n
 				this.searchHandler()
 			},
 			album_nameFilter() {
 				this.album_nameFlage = false;
-				// console.log(this.radioForm)
 				this.searchHandler()
 			},
 			company_nameFilter() {
 				this.company_nameFlage = false;
-				// console.log(this.radioForm)
 				this.searchHandler()
 			},
 			loadAllAlbum() {
@@ -765,7 +735,6 @@
 					var arr = res.data.results
 					var arr1 = []
 					var arr2 = []
-
 					arr.map(function(item) {
 						var obj = {
 							'value': item.name,
@@ -776,11 +745,9 @@
 						} else {
 							arr2.push(obj)
 						}
-
 					})
 					arr1 = arr1.concat(arr2)
 					_this.album_nameArr = arr1
-					// console.log(arr1, "arr")
 				}).catch(error => {
 					if (error.data.error == "无权限") {
 						_this.albumJurisdictionFlage = false
@@ -841,7 +808,6 @@
 				})
 			},
 			getWidthHead() {
-				// console.log(this.$refs.box_head.offsetWidth)
 				var _this = this
 				var arr = this.widthHead;
 				var num1 = this.$refs.box_head.offsetWidth;
@@ -1042,7 +1008,7 @@
 								}
 							})
 						}else{
-							// this.uploadFile(file, res.data[0]);
+							this.uploadFile(file, res.data[0]);
 						}
 					})
 				} else {
@@ -1060,7 +1026,7 @@
 				this.showUpload1 = true
 				this.replaceBtn = false
 				file.id = this.replaceID;
-				this.repFile = {
+				let obj = {
 					"currentNum": 0,
 					"id": new Date().getTime(),
 					"name": file.name,
@@ -1074,6 +1040,7 @@
 					"content": data,
 					"file": file,
 				}
+				this.repFile =  new Upload(obj, "http://up-z1.qiniup.com", 'repeat');
 			},
 			replaceSuccess() {
 				this.replaceVisible = false;
@@ -1114,8 +1081,6 @@
 			},
 			replaceFileBtn() {
 				this.replaceFileBtnStatus = true
-				this.repFile =  new Upload(obj, "http://up-z1.qiniup.com");
-				this.repFile.stopUpload();
 				this.$refs.replaceFileTemp.start()
 			},
 			//  单个删除文件         
