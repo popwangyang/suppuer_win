@@ -398,13 +398,9 @@
 					<el-table-column label="上传时间" min-width="80">
 						<template slot-scope="scope">
 							<span v-if="scope.row.upload_data">
-								<!-- <div> {{scope.row.create_date.split("　")[0]}}</div>				
-						<div>{{scope.row.create_date.split("　")[1]}}</div> -->
 								{{scope.row.upload_data}}
 							</span>
 							<span v-else>
-								<!-- <div> {{scope.row.upload_data.split("　")[0]}}</div>				
-						<div>{{scope.row.upload_data.split("　")[1]}}</div> 				 -->
 								{{scope.row.upload_time}}
 							</span>
 						</template>
@@ -415,7 +411,7 @@
 								无
 							</span>
 							<span v-if="scope.row.album !=null">
-								{{scope.row.album.name}}
+								{{scope.row.album_name}}
 							</span>
 						</template>
 					</el-table-column>
@@ -425,7 +421,7 @@
 								无
 							</span>
 							<span v-if="scope.row.company !=null">
-								{{scope.row.company.name}}
+								{{scope.row.company_name}}
 							</span>
 						</template>
 					</el-table-column>
@@ -537,6 +533,8 @@
 				String.prototype.trim = function() {
 					return this.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 				}
+				obj.content.album_name = obj.content.album;
+				obj.content.company_name = obj.content.company;
 				var _this = this;
 				_this.tableData2 = [];
 				obj.content.upload_data = obj.upload_data;

@@ -553,26 +553,24 @@
 					</el-table-column>
 					<el-table-column prop="album" label="专辑名称" :width="widthHead[11]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.album ==null ">
+							<span v-if="scope.row.album_name ==null ">
 								无
 							</span>
 							<span v-else>
-								{{scope.row.album.name}}
+								{{scope.row.album_name}}
 							</span>
 						</template>
 					</el-table-column>
-
 					<el-table-column prop="company" label="唱片公司" :width="widthHead[12]">
 						<template slot-scope="scope">
-							<span v-if="scope.row.company ==null ">
+							<span v-if="scope.row.company_name ==null ">
 								无
 							</span>
 							<span v-else>
-								{{scope.row.company.name}}
+								{{scope.row.company_name}}
 							</span>
 						</template>
 					</el-table-column>
-
 					<el-table-column prop="upload_time" label="上传日期" :width="widthHead[13]">
 						<template slot-scope="scope">
 							<span v-if="scope.row.upload_time ==null " style="color: red;">
@@ -581,11 +579,9 @@
 							<span v-else>
 								<div>{{scope.row.upload_time.split(" ")[0]}}</div>
 								<div>{{scope.row.upload_time.split(" ")[1]}}</div>
-
 							</span>
 						</template>
 					</el-table-column>
-
 					<el-table-column label="操作" :width="widthHead[14]">
 						<template slot-scope="scope">
 							<i class="iconfont icon-bofang" style="font-size: 20px;cursor: pointer;margin: 0 5px;" @click="play(scope.row.id)"
@@ -803,6 +799,12 @@
 				isplSolo: false
 			}
 		},
+		filters: {
+			filterCompany(value) {
+				console.log(this, );
+				return 'value';
+			}
+		},
 		computed: {
 			percentageStatus: function() {
 				if (!this.uploaderror) {
@@ -812,7 +814,6 @@
 						return ""
 					}
 				} else {
-
 					return "exception"
 				}
 			},
@@ -824,7 +825,6 @@
 						return ""
 					}
 				} else {
-
 					return "exception"
 				}
 			},
@@ -842,8 +842,8 @@
 				var arr1 = []
 				arr.map(function(item) {
 					if (item.name == null || item.singer == null || item.singer_type == 4 || item.language == null || item.picture ==
-						null || item.picture == 5 || item.area == null || item.format_type == null || item.format_type == 3 || item.voice_type ==
-						null || item.voice_track == null || item.voice_track == 4 || item.vocal_track == null || item.vocal_track == 4 ||
+						null || item.picture == null || item.area == null || item.format_type == null || item.format_type == null || item.voice_type ==
+						null || item.voice_track == null || item.voice_track == null || item.vocal_track == null || item.vocal_track == null ||
 						item.update_date == null) {
 						n++;
 						arrError.push(item)
@@ -919,7 +919,6 @@
 					var arr = res.data.results
 					var arr1 = []
 					var arr2 = []
-
 					arr.map(function(item) {
 						var obj = {
 							'value': item.name,
@@ -930,7 +929,6 @@
 						} else {
 							arr2.push(obj)
 						}
-
 					})
 					arr1 = arr1.concat(arr2)
 					_this.album_nameArr = arr1
@@ -973,7 +971,6 @@
 			searchHandler() {
 				this.isplSolo = false;
 				this.tableData3 = []
-				var _this = this;
 				this.loading = true;
 				var send_data = this.formInline; 
 				for (var key in this.radioForm) {
@@ -986,13 +983,13 @@
 				send_data.page = this.page;
 				send_data.page_size = this.page_size;
 				send_data.voice = send_data.voice_type;
-				get("/music/music/store", send_data).then(function(res) {
-					_this.loading = false
-					_this.count = res.data.count
-					_this.tableData3 = res.data.results
+				get("/music/music/store", send_data).then(res => {
+					this.loading = false
+					this.count = res.data.count
+					this.tableData3 = res.data.results
 				}).catch(() => {
-					_this.loading = false
-					_this.$notify.error({
+					this.loading = false
+					this.$notify.error({
 						title: '错误',
 						message: '加载失败，请重试！！'
 					});
@@ -1039,49 +1036,46 @@
 				this.submitContentLoading = true
 				this.tableData3
 				this.loading = true;
-				var _this = this
 
 				var send_id = {
 					task_id: this.templateFile.response.task_id
 				}
-				get("/music/music/task-result", send_id).then(function(res) {
+				get("/music/music/task-result", send_id).then(res => {
 					var send_data = {
 						name: res.data.filter_json.songs.join(","),
 						singer: res.data.filter_json.singer.join(","),
 					}
-					send_data.page = _this.page;
-					send_data.page_size = _this.page_size;
-					console.log(send_data)
+					send_data.page = this.page;
+					send_data.page_size = this.page_size;
 					get("/music/music/store-search", send_data).then(function(res) {
-						console.log(res.data.results)
-						_this.isplSolo = true;
-						_this.tableData3 = res.data.results
-						_this.submitContentLoading = false
-						_this.count = res.data.count;
-						_this.loading = false
+						this.isplSolo = true;
+						this.tableData3 = res.data.results
+						this.submitContentLoading = false
+						this.count = res.data.count;
+						this.loading = false
 					}).catch(error => {
-						_this.$notify({
+						this.$notify({
 							message: '搜索失败，请重试',
 							type: 'warning',
 							offset: 120,
 							duration: 2000,
 						});
-						_this.$refs.upload.clearFiles()
-						_this.showUpload = true
-						_this.uploadBtn = true
-						_this.submitContentLoading = false
+						this.$refs.upload.clearFiles()
+						this.showUpload = true
+						this.uploadBtn = true
+						this.submitContentLoading = false
 					})
 				}).catch(errro => {
-					_this.$notify({
+					this.$notify({
 						message: '提交失败，请重试',
 						type: 'warning',
 						offset: 120,
 						duration: 2000,
 					});
-					_this.TJerror = false
-					_this.showUpload = true
-					_this.uploadBtn = true
-					_this.submitContentLoading = false
+					this.TJerror = false
+					this.showUpload = true
+					this.uploadBtn = true
+					this.submitContentLoading = false
 				})
 			},
 			JumpPageRight() {
@@ -1273,6 +1267,9 @@
 					case "配置画面":
 						send_data.picture = 3;
 						break;
+					case "写真":
+						send_data.picture = 5;
+						break;
 				};
 				switch (data.area) {
 					case "大陆":
@@ -1356,12 +1353,6 @@
 				get("/music/music/store", send_data).then((res) => {
 					if (res.data.results.length > 0) {
 						this.$refs.replaceUpload.value = ""
-						// this.$notify({
-						// 	message: '歌曲已存在，请勿重复上传',
-						// 	type: 'error',
-						// 	offset: 120,
-						// 	duration: 3000,
-						// });
 						this.chaxun1(data, file)
 					} else {
 						this.chaxun1(data, file)
@@ -1667,10 +1658,9 @@
 				localStorage.setItem('videoPlayList', JSON.stringify(obj1))
 			},
 			detail(id) {
-				var _this = this
 				this.loading = true
 				if (id) {
-					get("/music/music/store/" + id + "").then(function(res) {
+					get("/music/music/store/" + id + "").then(res => {
 						_this.loading = false
 						var arr = res.data;
 						_this.tableData3 = [arr]
@@ -1686,31 +1676,29 @@
 					}
 					send_data.page = this.page;
 					send_data.page_size = this.page_size;
-					get('/music/music/store', send_data).then(function(response) {
-						_this.loading = false
-						_this.count = response.data.count
-						_this.tableData3 = response.data.results
-					}).catch(function(response) {})
+					get('/music/music/store', send_data).then(response => {
+						this.loading = false
+						this.count = response.data.count
+						this.tableData3 = response.data.results
+					})
 				}
 			},
 			loadAll() {
-				var _this = this
-				axios.get('http://localhost:8888/data1').then(function(response) {
-					_this.restaurants = response.data
-				}).catch(function(response) {})
+				axios.get('http://localhost:8888/data1').then(response => {
+					this.restaurants = response.data
+				})
 			},
 			asyncFunc(id) {
-				var _this = this;
 				var send_id = {
 					"task_id": id
 				}
-				get("/music/music/task-result", send_id).then(function(res1) {
+				get("/music/music/task-result", send_id).then(res1 => {
 					var str = baseUrl + "/music/file/excel/" + res1.data
 					ipcRenderer.send('download', str);
 				}).catch(function(error) {
 					if (error.status == 400) {
 						setTimeout(function() {
-							_this.asyncFunc(id)
+							this.asyncFunc(id)
 						}, 500)
 					}
 				})

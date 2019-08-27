@@ -587,6 +587,9 @@
 					case "配置画面":
 						send_data.picture = 3;
 						break;
+					case "写真":
+					   send_data.picture = 5;
+					   break;
 				};
 				switch (data.area) {
 					case "大陆":

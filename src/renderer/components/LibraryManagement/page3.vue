@@ -649,8 +649,8 @@
 								this.formInline[key] = data[key]
 							}
 						}
-						this.formInline.album = data.album != null ?  data.album.name:'';
-						this.formInline.company = data.company != null ? data.company.name:'';
+						this.formInline.album = data.album != null ?  data.album_name:'';
+						this.formInline.company = data.company != null ? data.company_name:'';
 						this.$nextTick(() => { // 以服务的方式调用的 Loading 需要异步关闭
 						  this.loadingInstance.close();
 						});
