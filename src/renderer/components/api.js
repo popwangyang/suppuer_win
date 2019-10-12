@@ -3,7 +3,7 @@ import axios from 'axios';
 // export const baseUrl = "https://dev.bjywkd.com";
 // export const baseUrl = "https://test.bjywkd.com";
 //正式服地址
-export const baseUrl = "http://59.63.188.34:8080";
+export const baseUrl = "http://music.bjywkd.com";
 
 const http = axios.create({
         baseURL: baseUrl,
