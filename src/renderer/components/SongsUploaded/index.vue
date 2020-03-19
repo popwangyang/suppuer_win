@@ -6,6 +6,7 @@
 </template>
 
 <script>
+	import UploadFile from '@/libs/upload'
 	import Bus from '../bus.js'
 	import config from '../../config'
 	import { validateFormat, getDate, blackBox, chaxun, saveStoreDB } from '../util.js'
@@ -95,6 +96,7 @@
 					offset: 60,
 					duration: 1000
 				});
+				this.uploadTest(file, res.data[0]);
 			},
 			testFile(data){
 				let result = false;
@@ -123,6 +125,12 @@
 				}
 				if(result) return true;
 				return result;
+			},
+			uploadTest(file, data){
+				console.log(file)
+				let upload = new UploadFile(file, data);
+				
+				
 			}
 		},
 	    mounted(){
@@ -149,6 +157,7 @@
 			Bus.$on("DRfoo", (data) => { //Main导入函数；
 				this.getName(data)
 			})
+			this.uploadTest();
 		}
 	}
 </script>
