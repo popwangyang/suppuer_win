@@ -38,7 +38,7 @@
 				if(this.testFile(data)) return;
 				let name = data.name;
 				let send_data = {
-					  name: [name]
+					name: [name]
 				};
 				post("/music/music/store-verification", send_data).then( res => {
 					if(res.data[0].status == 3){
@@ -127,8 +127,8 @@
 				return result;
 			},
 			uploadTest(file, data){
-				console.log(file)
-				let upload = new UploadFile(file, data);
+				// console.log(file)
+				// let upload = new UploadFile(file, data);
 				
 				
 			}

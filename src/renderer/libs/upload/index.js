@@ -10,13 +10,13 @@ import SliceFile from './sliceFile.js'  // 切分文件
 class UploadFile extends EventEmitter {
 	constructor(file, data) {
 	    super();
+		this.file = file;
+		this.data = data;
 		let sliceFile = new SliceFile(file);
 		this.token = this.getToken();
 		this.sliceArr = sliceFile.sliceArr;
 		this.uploadName = file.name;
 		this.config = this.getConfig();
-		this.file = file;
-		this.data = data;
 		this.credential = '';
 		this.key = '';
 		this.index = 0; // 上传的位置
@@ -45,6 +45,7 @@ class UploadFile extends EventEmitter {
 	
 	getConfig(){
 		var obj = {};
+		console.log(this.file);
 		if (this.file.id) {
 			obj.id = this.file.id;
 		}
